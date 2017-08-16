@@ -2,6 +2,8 @@ pragma solidity ^0.4.11;
 
 import './main.sol';
 
+import './erc20.sol';
+
 contract Vault {
     /*
         Defines how the vault will behave when a donor donates some ether.
@@ -83,8 +85,8 @@ contract Vault {
                 /*
                 Oracle oracle = Oracle(behavior.oracleAddress);
                 uint inputCurrencyPriceInWeis = oracle.getPrice();
-                Token token = Token(behavior.tokenAddress());
-                token.grant(behavior.multiplier * msg.value / inputCurrencyPriceInWeis);
+                ERC20 token = ERC20(behavior.tokenAddress());
+                token.transfer(msg.sender, behavior.multiplier * msg.value / inputCurrencyPriceInWeis);
                 */
             }
         }
