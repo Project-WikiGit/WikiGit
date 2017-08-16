@@ -3,7 +3,6 @@ pragma solidity ^0.4.11;
 import './main.sol';
 
 contract Vault {
-
     /*
         Defines how the vault will behave when a donor donates some ether.
         For each donation, the vault will grant multiplier * donationInWei / inputCurrencyPriceInWei
