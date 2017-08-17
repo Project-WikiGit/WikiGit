@@ -43,6 +43,12 @@ contract Vault {
         _;
     }
 
+    modifier onlyPrevVault {
+        Main mainContract = Main(mainAddress);
+        require(msg.sender == mainContract.moduleAddresses['VAULT']);
+        _;
+    }
+
     function Vault(address mainAddr){
         mainAddress = mainAddr;
     }
@@ -76,8 +82,24 @@ contract Vault {
         delete payBehaviors;
     }
 
-    //Handles incoming donation.
+    //Import and export functions for updating modules.
 
+    //Called by the old vault to transfer data to the new vault.
+    function importFromVault(PayBehavior[] behaviors) onlyPrevVault {
+        payBehaviors = behaviors;
+    }
+
+    //Transfers all data and funds to the new vault.
+    function exportToVault(address newVaultAddr, bool burn) onlyDao {
+        Vault newVault = Vault(newVaultAddr);
+        newVault.importFromVault(payBehaviors);
+        newVault.transfer(this.balance);
+        if(burn) {
+            selfdestruct();
+        }
+    }
+
+    //Handles incoming donation.
     function () payable {
         for(uint i = 0; i < payBehaviors.length; i++) {
             PayBehavior behavior = payBehaviors[i];
