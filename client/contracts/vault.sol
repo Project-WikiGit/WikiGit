@@ -95,7 +95,7 @@ contract Vault {
         newVault.importFromVault(payBehaviors);
         newVault.transfer(this.balance);
         if(burn) {
-            selfdestruct();
+            this.selfdestruct();
         }
     }
 
@@ -104,6 +104,7 @@ contract Vault {
         for(uint i = 0; i < payBehaviors.length; i++) {
             PayBehavior behavior = payBehaviors[i];
             if (block.number < behavior.untilBlockNumber) {
+                //Todo: implement specific interface for oracle and token
                 /*
                 Oracle oracle = Oracle(behavior.oracleAddress);
                 uint inputCurrencyPriceInWeis = oracle.getPrice();
