@@ -4,7 +4,7 @@ import './main.sol';
 
 import './erc20.sol';
 
-contract Vault {
+contract Vault is Module {
     /*
         Defines how the vault will behave when a donor donates some ether.
         For each donation, the vault will grant multiplier * donationInWei / inputCurrencyPriceInWei
@@ -34,18 +34,11 @@ contract Vault {
         */
         uint untilBlockNumber;
     }
-    address public constant mainAddress; //Address of the main contract.
+
     PayBehavior[] public payBehaviors; //Array of pay behaviors.
 
-    modifier onlyDao {
-        Main mainContract = Main(mainAddress);
-        require(msg.sender == mainContract.moduleAddresses['DAO']);
-        _;
-    }
-
     modifier onlyPrevVault {
-        Main mainContract = Main(mainAddress);
-        require(msg.sender == mainContract.moduleAddresses['VAULT']);
+        require(msg.sender == moduleAddresses['VAULT']);
         _;
     }
 
@@ -53,10 +46,10 @@ contract Vault {
         mainAddress = mainAddr;
     }
 
-    function withdraw(uint amountInWeis, address toAddr) onlyDao {
+    function withdraw(uint amountInWeis, address to) onlyDao {
         require(this.balance >= amountInWeis); //Make sure there's enough Ether in the vault
-        require(toAddr.balance + amountInWeis > toAddr.balance); //Prevent overflow
-        toAddr.transfer(amountInWeis);
+        require(to.balance + amountInWeis > to.balance); //Prevent overflow
+        to.transfer(amountInWeis);
     }
 
     //Pay behavior manipulators.
@@ -66,8 +59,8 @@ contract Vault {
     }
 
     function removePaybehavior(PayBehavior behavior) onlyDao {
-        for(uint i = 0; i < payBehaviors.length; i++) {
-            if(behavior == payBehaviors[i]) {
+        for (uint i = 0; i < payBehaviors.length; i++) {
+            if (behavior == payBehaviors[i]) {
                 delete payBehaviors[i];
                 break;
             }
@@ -94,14 +87,14 @@ contract Vault {
         Vault newVault = Vault(newVaultAddr);
         newVault.importFromVault(payBehaviors);
         newVault.transfer(this.balance);
-        if(burn) {
+        if (burn) {
             this.selfdestruct();
         }
     }
 
     //Handles incoming donation.
-    function () payable {
-        for(uint i = 0; i < payBehaviors.length; i++) {
+    function() payable {
+        for (uint i = 0; i < payBehaviors.length; i++) {
             PayBehavior behavior = payBehaviors[i];
             if (block.number < behavior.untilBlockNumber) {
                 //Todo: implement specific interface for oracle and token

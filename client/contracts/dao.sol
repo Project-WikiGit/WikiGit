@@ -1,8 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './erc20.sol';
+import './vault.sol';
 
-contract Dao {
+contract Dao is Module{
     struct Member {
         string userName;
         address userAddress;
@@ -51,7 +52,16 @@ contract Dao {
         _;
     }
 
-    address public mainAddress;
+    modifier needsSanction(function(var[], bytes32) func,
+        var[] args,
+        bytes32 sanction
+    ) {
+        require(sanctions[sanction]);
+        require(sanction == keccak256(func, args, msg.sender, block.number));
+        sanctions[sanction] = false;
+        _;
+    }
+
     Member[] public members;
     mapping(address => uint) public memberId;
     mapping(string => mapping(string => bool)) public groupRights;
@@ -61,6 +71,7 @@ contract Dao {
     VoteToken[] public acceptedTokens;
     uint public votingMemberCount;
     mapping(bytes32 => bool) private sanctions;
+
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -92,9 +103,20 @@ contract Dao {
 
     function setMainAddress(address mainAddr) needsRight('set_main_address') {
         groupRights[memberAtAddress(msg.sender).groupName]['set_main_address'] = false;
-        mainAddress = mainAddr;
+        moduleAddresses['MAIN'] = mainAddr;
         members[memberId[msg.sender]].groupName = 'full_time';
         votingMemberCount = 1;
+    }
+
+    function changeModuleAddress(var[] args, bytes32 sanction)
+        private
+        needsSanction(changeModuleAddress, args, sanction)
+    {
+        Main main = Main(moduleAddresses['MAIN']);
+        string modName = args[0];
+        address newAddr = args[1];
+        bool isNew = args[2];
+        main.changeModuleAddress(modName, newAddr, isNew);
     }
 
     //Voting
@@ -107,7 +129,10 @@ contract Dao {
         uint endBlockNumber,
         function (var[], bytes32) execFunc,
         var[] execArgs
-    ) needsRight('create_voting') {
+    )
+        needsRight('create_voting')
+    {
+        //Todo: implement multiple execution support
         Voting voting = Voting({
             name: name,
             description: description,
@@ -129,15 +154,14 @@ contract Dao {
         require(type.votableGroups[memberAtAddress(msg.sender).group]);
         voting.hasVoted[msg.sender] = true;
         int memberVotes = type.goodRepWeight * member.goodRep + type.badRepWeight * member.badRep;
-        for(uint i = 0; i < acceptedTokens.length; i++) {
+        for (uint i = 0; i < acceptedTokens.length; i++) {
             VotingToken t = acceptedTokens[i];
             ERC20 token = ERC20(t.tokenAddress);
             memberVotes += type.tokenWeights[t.symbol] * token.balanceOf(msg.sender);
         }
-        if(support) {
+        if (support) {
             voting.forVotes += memberVotes;
-        }
-        else {
+        } else {
             voting.againstVotes += memberVotes;
         }
         voting.votedMemberCount += 1;
@@ -149,7 +173,7 @@ contract Dao {
         require(block.number >= voting.endBlockNumber);
         bool passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= type.minForPercent)
                         && (voting.votedMemberCount / votingMemberCount * 100 >= type.quorumPercent);
-        if(passed) {
+        if (passed) {
             //Execute voting
             function (var[], bytes32) execFunc = voting.execution.func;
             var[] execArgs = voting.execution.arguments;
@@ -162,14 +186,46 @@ contract Dao {
 
     //Member functions
 
-    function addMember(var[] args, bytes32 sanction) private {
-        require(sanctions[sanction]);
-        require(sanction == keccak256(addMember, args, msg.sender, block.number));
-        sanctions[sanction] = false;
+    function addMember(var[] args, bytes32 sanction)
+        private
+        needsSanction(addMember, args, sanction)
+    {
+        members.push(Member({
+            userName: args[0],
+            userAddress: args[1],
+            groupName: args[2]
+        }));
+        if (groupRights[args[2]]['vote']) {
+            votingMemberCount += 1;
+        }
     }
 
-    function changeMemberGroup(var[] args, bytes32 sanction) private {
+    function changeMemberGroup(var[] args, bytes32 sanction)
+        private
+        needsSanction(changeMemberGroup, args, sanction)
+    {
+        uint id = args[0];
+        string newGroupName = args[1];
+        bool prevVoteRight = groupRights[members[id].groupName]['vote'];
+        bool currVoteRight = groupRights[newGroupName]['vote'];
 
+        if (prevVoteRight && ! currVoteRight) {
+            votingMemberCount -= 1;
+        } else if (! prevVoteRight && currVoteRight) {
+            votingMemberCount += 1;
+        }
+
+        members[id].groupName = newGroupName;
+    }
+
+    function setRightOfGroup(var[] args, bytes32 sanction)
+        private
+        needsSanction(setRightsOfGroup, args, sanction)
+    {
+        string groupName = args[0];
+        string rightName = args[1];
+        bool hasRight = args[2];
+        groupRights[groupName][rightName] = hasRight;
     }
 
     function changeMemberName(string newName) {
@@ -180,10 +236,67 @@ contract Dao {
         memberAtAddress(msg.sender).userAddress = newAddress;
     }
 
-    function setRightOfGroup(var[] args, bytes32 sanction) private {
-        require(sanctions[sanction]);
-        require(sanction == keccak256(setRightOfGroup, args, msg.sender, block.number));
-        sanctions[sanction] = false;
+    //Vault manipulators
+
+    function withdrawFromVault(var[] args, bytes32 sanction)
+        private
+        needsSanction(withDrawFromVault, args, sanction)
+    {
+        uint amountInWeis = args[0];
+        address to = args[1];
+        Vault vault = Vault(vaultAddress());
+        vault.withdraw(amountInWeis, to);
+    }
+
+    function addPayBehavior(var[] args, bytes32 sanction)
+        private
+        needsSanction(addPayBehavior, args, sanction)
+    {
+        Vault vault = Vault(vaultAddress());
+        PayBehavior behavior = PayBehavior(args[0], args[1], args[2], args[3]);
+        vault.addPayBehavior(behavior);
+    }
+
+    function removePayBehavior(var[] args, bytes32 sanction)
+        private
+        needsSanction(removePayBehavior, args, sanction)
+    {
+        Vault vault = Vault(vaultAddress());
+        PayBehavior behavior = PayBehavior({
+            multiplier: args[0],
+            oracleAddress: args[1],
+            tokenAddress: args[2],
+            untilBlockiNumber: args[3]
+        });
+        vault.removePayBehavior(behavior);
+    }
+
+    function removePayBehaviorAtIndex(var[] args, bytes32 sanction)
+        private
+        needsSanction(removePayBehaviorAtIndex, args, sanction)
+    {
+        Vault vault = Vault(vaultAddress());
+        vault.removePayBehaviorAtIndex(args[0]);
+    }
+
+    function removeAllPayBehaviors(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeAllPayBehaviors, args, sanction)
+    {
+        Vault vault = Vault(vaultAddress());
+        vault.removeAllPayBehaviors();
+    }
+
+    function exportToVault(var[] args, bytes32 sanction)
+        private
+        needsSanction(exportToVault, args, sanction)
+    {
+        Vault vault = Vault(vaultAddress());
+        address newAddr = args[0];
+        bool burn = args[1];
+        vault.exportToVault(newAddr, burn);
+        Main main = Main(moduleAddresses['MAIN']);
+        main.changeModuleAddress('VAULT', newAddr, false);
     }
 
     //Helper functions
@@ -192,7 +305,12 @@ contract Dao {
         m = members[memberId[addr]];
     }
 
-    function () payable {
+    function vaultAddress() constant internal returns(address addr) {
+        Main main = Main(mainAddress);
+        addr = main.moduleAddresses['VAULT'];
+    }
+
+    function() {
         throw;
     }
 }
