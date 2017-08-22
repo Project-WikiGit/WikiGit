@@ -38,13 +38,13 @@ contract Dao is Module{
         uint forVotes;
         uint againstVotes;
         uint votedMemberCount;
-        Execution execution;
+        Execution[] executionList;
         mapping(address => bool) hasVoted;
     }
 
     struct Execution {
         function (var[], bytes32) func;
-        var[] arguments;
+        var[] args;
     }
 
     modifier needsRight(string right) {
@@ -127,19 +127,26 @@ contract Dao is Module{
         uint votingTypeId,
         uint startBlockNumber,
         uint endBlockNumber,
-        function (var[], bytes32) execFunc,
-        var[] execArgs
+        function (var[], bytes32)[] execFuncList,
+        var[][] execArgsList
     )
         needsRight('create_voting')
     {
         //Todo: implement multiple execution support
+        Execution[] execList;
+        for (var i = 0; i < execFuncList.length; i++) {
+            execList.push(Execution({
+                func: execFuncList[i],
+                args: execArgsList[i]
+            }));
+        }
         Voting voting = Voting({
             name: name,
             description: description,
             type: votingTypes[votingTypeId],
             startBlockNumber: startBlockNumber,
             endBlockNumber: endBlockNumber,
-            execution: Execution(execFunc, execArgs)
+            executionList: execList
         });
         votings.push(voting);
         VotingCreated(votings.length - 1);
@@ -175,11 +182,14 @@ contract Dao is Module{
                         && (voting.votedMemberCount / votingMemberCount * 100 >= type.quorumPercent);
         if (passed) {
             //Execute voting
-            function (var[], bytes32) execFunc = voting.execution.func;
-            var[] execArgs = voting.execution.arguments;
-            bytes32 sanction = keccak256(execFunc, execArgs, msg.sender, block.number);
-            sanctions[sanction] = true;
-            execFunc(execArgs, sanction);
+            Execution[] execList = voting.executionList;
+            for (var i = 0; i < execList.length; i++) {
+                function (var[], bytes32) execFunc = execList[i].func;
+                var[] execArgs = execList[i].args;
+                bytes32 sanction = keccak256(execFunc, execArgs, msg.sender, block.number);
+                sanctions[sanction] = true;
+                execFunc(execArgs, sanction);
+            }
         }
         VotingConcluded(votingId, passed);
     }
