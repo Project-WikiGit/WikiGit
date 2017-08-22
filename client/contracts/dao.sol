@@ -119,6 +119,24 @@ contract Dao is Module{
         main.changeModuleAddress(modName, newAddr, isNew);
     }
 
+    function removeModule(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeModule, args, sanction)
+    {
+        Main main = Main(moduleAddresses['MAIN']);
+        string modName = args[0];
+        main.removeModule(modName);
+    }
+
+    function changeMetadata(var[] args, bytes32 sanction)
+        private
+        needsSanction(changeMetadata, args, sanction)
+    {
+        Main main = Main(moduleAddresses['MAIN']);
+        string newMeta = args[0];
+        main.changeMetadata(newMeta);
+    }
+
     //Voting
 
     function createVoting(
@@ -132,7 +150,6 @@ contract Dao is Module{
     )
         needsRight('create_voting')
     {
-        //Todo: implement multiple execution support
         Execution[] execList;
         for (var i = 0; i < execFuncList.length; i++) {
             execList.push(Execution({
@@ -203,7 +220,9 @@ contract Dao is Module{
         members.push(Member({
             userName: args[0],
             userAddress: args[1],
-            groupName: args[2]
+            groupName: args[2],
+            goodRep: args[3],
+            badRep: args[4]
         }));
         if (groupRights[args[2]]['vote']) {
             votingMemberCount += 1;
@@ -246,7 +265,7 @@ contract Dao is Module{
         memberAtAddress(msg.sender).userAddress = newAddress;
     }
 
-    //Vault manipulators
+    //Vault manipulator functions
 
     function withdrawFromVault(var[] args, bytes32 sanction)
         private
