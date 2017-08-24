@@ -70,11 +70,13 @@ contract Dao is Module {
     VotingType[] public votingTypes;
     VoteToken[] public acceptedTokens;
     uint public votingMemberCount;
-    mapping(bytes32 => bool) private sanctions;
+    mapping(bytes32 => bool) public sanctions;
 
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
+
+
 
 
     //Initializing
@@ -82,6 +84,7 @@ contract Dao is Module {
     function Dao(string creatorUserName, address mainAddr) Module(mainAddr) {
         members.push(Member(creatorUserName, msg.sender, 'full_time', 0, 0));
         memberId[msg.sender] = 0;
+        votingMemberCount = 1;
 
         groupRights['full_time']['create_voting'] = true;
         groupRights['full_time']['submit_task'] = true;
@@ -99,6 +102,20 @@ contract Dao is Module {
 
         groupRights['free_lancer']['submit_solution'] = true;
     }
+
+    function importFromPrevDao() onlyMod('DAO') {
+        Dao prev = Dao(moduleAddress('DAO'));
+        members = prev.members;
+        memberId = prev.memberId;
+        groupRights = prev.groupRights;
+        votings = prev.votings;
+        votingTypes = prev.votingTypes;
+        acceptedTokens = prev.acceptedTokens;
+        votingMemberCount = prev.votingMemberCount;
+        sanctions = prev.sanctions;
+    }
+
+    //Module management
 
     function changeModuleAddress(var[] args, bytes32 sanction)
         private
