@@ -57,7 +57,7 @@ contract Dao is Module{
         bytes32 sanction
     ) {
         require(sanctions[sanction]);
-        require(sanction == keccak256(func, args, msg.sender, block.number));
+        require(sanction == keccak256(func, args, msg.sender));
         sanctions[sanction] = false;
         _;
     }
@@ -203,7 +203,7 @@ contract Dao is Module{
             for (var i = 0; i < execList.length; i++) {
                 function (var[], bytes32) execFunc = execList[i].func;
                 var[] execArgs = execList[i].args;
-                bytes32 sanction = keccak256(execFunc, execArgs, msg.sender, block.number);
+                bytes32 sanction = keccak256(execFunc, execArgs, msg.sender);
                 sanctions[sanction] = true;
                 execFunc(execArgs, sanction);
             }
