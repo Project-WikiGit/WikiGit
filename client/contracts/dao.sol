@@ -79,10 +79,9 @@ contract Dao is Module {
 
     //Initializing
 
-    function Dao(string creatorUserName) Module() {
-        members.push(Member(creatorUserName, msg.sender, 'creator', 0, 0));
+    function Dao(string creatorUserName, address mainAddr) Module(mainAddr) {
+        members.push(Member(creatorUserName, msg.sender, 'full_time', 0, 0));
         memberId[msg.sender] = 0;
-        groupRights['creator']['set_main_address'] = true;
 
         groupRights['full_time']['create_voting'] = true;
         groupRights['full_time']['submit_task'] = true;
@@ -99,13 +98,6 @@ contract Dao is Module {
         groupRights['part_time']['access_proj_management'] = true;
 
         groupRights['free_lancer']['submit_solution'] = true;
-    }
-
-    function setMainAddress(address mainAddr) needsRight('set_main_address') {
-        groupRights[memberAtAddress(msg.sender).groupName]['set_main_address'] = false;
-        mainAddress = mainAddr;
-        members[memberId[msg.sender]].groupName = 'full_time';
-        votingMemberCount = 1;
     }
 
     function changeModuleAddress(var[] args, bytes32 sanction)

@@ -18,13 +18,24 @@ contract Main {
     mapping(string => address) public moduleAddresses;
     string[] public moduleNames;
     string public metadata;
+    bool public initialized;
+    address private creator;
 
     modifier onlyDao{ require(msg.sender == moduleAddresses['DAO']); _; }
 
-    function Main(address daoAddr, string meta){
-        moduleAddresses['DAO'] = daoAddr;
-        moduleNames.push('DAO');
+    function Main(string meta) {
         metadata = meta;
+        creator = msg.sender;
+    }
+
+    function initializeModuleAddresses(string[] modNames, address[] addrs) {
+        require(! initialized);
+        require(msg.sender == creator);
+        initialized = true;
+        moduleNames = modNames;
+        for (var i = 0; i < modNames.length; i++) {
+            moduleAddresses[modNames[i]] = addrs[i];
+        }
     }
 
     function changeModuleAddress(string modName, address addr, bool isNew) onlyDao {
