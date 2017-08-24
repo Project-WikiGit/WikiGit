@@ -37,16 +37,9 @@ contract Vault is Module {
 
     PayBehavior[] public payBehaviors; //Array of pay behaviors.
 
-    modifier onlyPrevVault {
-        require(msg.sender == moduleAddresses['VAULT']);
-        _;
-    }
+    function Vault(address mainAddr) Module(mainAddr) {}
 
-    function Vault(address mainAddr){
-        mainAddress = mainAddr;
-    }
-
-    function withdraw(uint amountInWeis, address to) onlyDao {
+    function withdraw(uint amountInWeis, address to) onlyMod('DAO') {
         require(this.balance >= amountInWeis); //Make sure there's enough Ether in the vault
         require(to.balance + amountInWeis > to.balance); //Prevent overflow
         to.transfer(amountInWeis);
@@ -54,11 +47,11 @@ contract Vault is Module {
 
     //Pay behavior manipulators.
 
-    function addPayBehavior(PayBehavior behavior) onlyDao {
+    function addPayBehavior(PayBehavior behavior) onlyMod('DAO') {
         payBehaviors.push(behavior);
     }
 
-    function removePaybehavior(PayBehavior behavior) onlyDao {
+    function removePaybehavior(PayBehavior behavior) onlyMod('DAO') {
         for (uint i = 0; i < payBehaviors.length; i++) {
             if (behavior == payBehaviors[i]) {
                 delete payBehaviors[i];
@@ -67,23 +60,23 @@ contract Vault is Module {
         }
     }
 
-    function removePayBehaviorAtIndex(uint index) onlyDao {
+    function removePayBehaviorAtIndex(uint index) onlyMod('DAO') {
         delete payBehaviors[index];
     }
 
-    function removeAllPayBehaviors() onlyDao {
+    function removeAllPayBehaviors() onlyMod('DAO') {
         delete payBehaviors;
     }
 
     //Import and export functions for updating modules.
 
     //Called by the old vault to transfer data to the new vault.
-    function importFromVault(PayBehavior[] behaviors) onlyPrevVault {
+    function importFromVault(PayBehavior[] behaviors) onlyMod('VAULT') {
         payBehaviors = behaviors;
     }
 
     //Transfers all data and funds to the new vault.
-    function exportToVault(address newVaultAddr, bool burn) onlyDao {
+    function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
         Vault newVault = Vault(newVaultAddr);
         newVault.importFromVault(payBehaviors);
         newVault.transfer(this.balance);

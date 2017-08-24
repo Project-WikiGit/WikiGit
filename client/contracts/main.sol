@@ -1,14 +1,15 @@
 pragma solidity ^0.4.11;
 
 contract Module {
-    modifier onlyMain { require(msg.sender == moduleAddresses['MAIN']); _; }
-    modifier onlyDao{ require(msg.sender == moduleAddresses['DAO']); _; }
-    mapping(string => address) public moduleAddresses;
+    modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
 
-    function Module() {}
+    address public mainAddress;
 
-    function moduleAddressChanged(string modName, address newAddr) onlyMain {
-        moduleAddresses[modName] = newAddr;
+    function Module(address mainAddr) { mainAddress = mainAddr; }
+
+    function moduleAddress(string mod) constant internal returns(address addr){
+        Main main = Main(mainAddress);
+        addr = main.moduleAddresses(mod);
     }
 }
 
@@ -31,20 +32,11 @@ contract Main {
         if (isNew) {
             moduleNames.push(modName);
         }
-        for (var i = 0; i < moduleNames.length; i++) {
-            Module mod = Module(moduleAddresses[moduleNames[i]]);
-            mod.moduleAddressChanged(modName, addr);
-        }
     }
 
-    function removeModule(string modName) onlyDao {
-        delete moduleAddresses[modName];
-        for (var i = 0; i < moduleNames.length; i++) {
-            if (moduleNames[i] == modName) {
-                delete moduleNames[i];
-                break;
-            }
-        }
+    function removeModuleAtIndex(uint index) onlyDao {
+        delete moduleAddresses[moduleNames[index]];
+        delete moduleNames[index];
     }
 
     function changeMetadata(string meta) onlyDao {

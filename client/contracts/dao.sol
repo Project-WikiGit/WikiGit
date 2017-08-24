@@ -3,7 +3,7 @@ pragma solidity ^0.4.11;
 import './erc20.sol';
 import './vault.sol';
 
-contract Dao is Module{
+contract Dao is Module {
     struct Member {
         string userName;
         address userAddress;
@@ -79,7 +79,7 @@ contract Dao is Module{
 
     //Initializing
 
-    function Dao(string creatorUserName) {
+    function Dao(string creatorUserName) Module() {
         members.push(Member(creatorUserName, msg.sender, 'creator', 0, 0));
         memberId[msg.sender] = 0;
         groupRights['creator']['set_main_address'] = true;
@@ -103,7 +103,7 @@ contract Dao is Module{
 
     function setMainAddress(address mainAddr) needsRight('set_main_address') {
         groupRights[memberAtAddress(msg.sender).groupName]['set_main_address'] = false;
-        moduleAddresses['MAIN'] = mainAddr;
+        mainAddress = mainAddr;
         members[memberId[msg.sender]].groupName = 'full_time';
         votingMemberCount = 1;
     }
@@ -112,7 +112,7 @@ contract Dao is Module{
         private
         needsSanction(changeModuleAddress, args, sanction)
     {
-        Main main = Main(moduleAddresses['MAIN']);
+        Main main = Main(mainAddress);
         string modName = args[0];
         address newAddr = args[1];
         bool isNew = args[2];
@@ -123,16 +123,16 @@ contract Dao is Module{
         private
         needsSanction(removeModule, args, sanction)
     {
-        Main main = Main(moduleAddresses['MAIN']);
-        string modName = args[0];
-        main.removeModule(modName);
+        Main main = Main(mainAddress);
+        uint modIndex = args[0];
+        main.removeModuleAtIndex(modIndex);
     }
 
     function changeMetadata(var[] args, bytes32 sanction)
         private
         needsSanction(changeMetadata, args, sanction)
     {
-        Main main = Main(moduleAddresses['MAIN']);
+        Main main = Main(mainAddress);
         string newMeta = args[0];
         main.changeMetadata(newMeta);
     }
@@ -324,7 +324,7 @@ contract Dao is Module{
         address newAddr = args[0];
         bool burn = args[1];
         vault.exportToVault(newAddr, burn);
-        Main main = Main(moduleAddresses['MAIN']);
+        Main main = Main(mainAddress);
         main.changeModuleAddress('VAULT', newAddr, false);
     }
 
