@@ -2,6 +2,7 @@ pragma solidity ^0.4.11;
 
 import './erc20.sol';
 import './vault.sol';
+import './tasks_handler.sol';
 
 contract Dao is Module {
     struct Member {
@@ -26,7 +27,7 @@ contract Dao is Module {
         uint minForPercent;
         int goodRepWeight;
         int badRepWeight;
-        mapping(string => int) tokenWeights;
+        mapping(string => int) tokenWeights; //From token symbol to weight
     }
 
     struct Voting {
@@ -82,10 +83,13 @@ contract Dao is Module {
     //Initializing
 
     function Dao(string creatorUserName, address mainAddr) Module(mainAddr) {
-        members.push(Member(creatorUserName, msg.sender, 'full_time', 0, 0));
+        //Add msg.sender as member #1
+        members.push(Member(creatorUserName, msg.sender, 'full_time', 1, 0));
         memberId[msg.sender] = 0;
         votingMemberCount = 1;
 
+        //Initialize group rights
+        //Full time contributor rights
         groupRights['full_time']['create_voting'] = true;
         groupRights['full_time']['submit_task'] = true;
         groupRights['full_time']['submit_task_rewardless'] = true;
@@ -94,13 +98,31 @@ contract Dao is Module {
         groupRights['full_time']['accept_solution'] = true;
         groupRights['full_time']['access_proj_management'] = true;
 
+        //Part time contributor rights
         groupRights['part_time']['create_voting'] = true;
         groupRights['part_time']['submit_task_rewardless'] = true;
         groupRights['part_time']['vote'] = true;
         groupRights['part_time']['submit_solution'] = true;
         groupRights['part_time']['access_proj_management'] = true;
 
-        groupRights['free_lancer']['submit_solution'] = true;
+        //Freelancer rights
+        groupRights['freelancer']['submit_solution'] = true;
+
+        //Pure shareholder (shareholder who doesn't contribute) rights
+        groupRights['pure_shareholder']['vote'] = true;
+        groupRights['pure_shareholder']['create_voting'] = true;
+
+        //Initialize voting types
+        VotingType vType = VotingType({
+            name: 'Default Voting Type',
+            description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires all members to support it. Should be removed after bootstrapping.',
+            votableGroups: ['full_time'],
+            quorumPercent: 100,
+            minForPercent: 100,
+            goodRepWeight: 1,
+            badRepWeight: -1
+        });
+        votingTypes.push(vType);
     }
 
     function importFromPrevDao() onlyMod('DAO') {
@@ -166,6 +188,7 @@ contract Dao is Module {
                 args: execArgsList[i]
             }));
         }
+        require(votingTypes[votingTypeId].name != '');
         Voting voting = Voting({
             name: name,
             description: description,
@@ -178,8 +201,46 @@ contract Dao is Module {
         VotingCreated(votings.length - 1);
     }
 
+    function removeVotingAtIndex(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeVotingAtIndex, args, sanction)
+    {
+        delete votings[args[0]];
+    }
+
+    function createVotingType(var[] args, bytes32 sanction)
+        private
+        needsSanction(createVotingType, args, sanction)
+    {
+        VotingType vType = VotingType({
+            name: args[0],
+            description: args[1],
+            votableGroups: args[2],
+            quorumPercent: args[3],
+            minForPercent: args[4],
+            goodRepWeight: args[5],
+            badRepWeight: args[6]
+        });
+        string[] tokenSymbols = args[7];
+        uint[] tokenWeights = args[8];
+        for (var i = 0; i < tokenSymbols.length; i++) {
+            string symbol = tokenSymbols[i];
+            uint weight = tokenWeights[i];
+            vType.tokenWeights[symbol] = weight;
+        }
+        votingTypes.push(vType);
+    }
+
+    function removeVotingTypeAtIndex(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeVotingType, args, sanction)
+    {
+        delete votingTypes[args[0]];
+    }
+
     function vote(uint votingId, bool support) needsRight('vote') {
         Voting voting = votings[votingId];
+        require(voting.name != '');
         VotingType type = voting.type;
         Member member = members[memberId[msg.sender]];
         require(block.number >= voting.startBlockNumber && block.number < voting.endBlockNumber);
@@ -220,12 +281,36 @@ contract Dao is Module {
         VotingConcluded(votingId, passed);
     }
 
+    //Vote token functions
+
+    function addAcceptedToken(var[] args, bytes32 sanction)
+        private
+        needsSanction(addAcceptedToken, args, sanction)
+    {
+        VoteToken token = VoteToken({
+            name: args[0],
+            symbol: args[1],
+            tokenAddress: args[2]
+        });
+        acceptedTokens.push(token);
+    }
+
+    function removeAcceptedTokenAtIndex(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeAcceptedTokenAtIndex, args, sanction)
+    {
+        uint index = args[0];
+        require(index >= 0 && index < acceptedTokens.length);
+        delete acceptedTokens[index];
+    }
+
     //Member functions
 
     function addMember(var[] args, bytes32 sanction)
         private
         needsSanction(addMember, args, sanction)
     {
+        require(memberId[args[1]] == 0); //Prevent altering existing members. ID 0 is reserved for creator.
         members.push(Member({
             userName: args[0],
             userAddress: args[1],
@@ -233,9 +318,44 @@ contract Dao is Module {
             goodRep: args[3],
             badRep: args[4]
         }));
+        memberId[args[1]] = members.length;
         if (groupRights[args[2]]['vote']) {
             votingMemberCount += 1;
         }
+    }
+
+    function setSelfAsPureShareholder(string userName) {
+        //Check if msg.sender has any voting shares
+        bool hasShares;
+        for (var i = 0; i < acceptedTokens.length; i++) {
+            ERC20 token = ERC20(acceptedTokens[i].tokenAddress);
+            if (token.balanceOf(msg.sender) > 0) {
+                hasShares = true;
+                break;
+            }
+        }
+        require(hasShares);
+        members.push(Member({
+            userName: userName,
+            userAddress: msg.sender,
+            groupName: 'pure_shareholder'
+        }));
+        memberId[msg.sender] = members.length;
+        votingMemberCount += 1;
+    }
+
+    function removeMemberWithAddress(var[] args, bytes32 sanction)
+        private
+        needsSanction(removeMember, args, sanction)
+    {
+        uint index = memberId[args[0]];
+        Member member = members[index];
+        require(member.groupName != '');
+        if (groupRights[member.groupName]['vote']) {
+            votingMemberCount -= 1;
+        }
+        delete members[index];
+        delete memberId[args[0]];
     }
 
     function changeMemberGroup(var[] args, bytes32 sanction)
@@ -267,10 +387,12 @@ contract Dao is Module {
     }
 
     function changeMemberName(string newName) {
+        require(memberAtAddress(msg.sender).groupName != '');
         memberAtAddress(msg.sender).name = newName;
     }
 
     function changeMemberAddress(address newAddress) {
+        require(memberAtAddress(msg.sender).groupName != '');
         memberAtAddress(msg.sender).userAddress = newAddress;
     }
 
@@ -335,6 +457,46 @@ contract Dao is Module {
         vault.exportToVault(newAddr, burn);
         Main main = Main(mainAddress);
         main.changeModuleAddress('VAULT', newAddr, false);
+    }
+
+    //Tasks functions
+
+    function publishTaskListing(
+        string metadata,
+        uint rewardInWeis,
+        string[] rewardTokenSymbolList,
+        uint[] rewardInTokensList,
+        uint rewardGoodRep,
+        uint penaltyBadRep
+    )
+        needsRight('submit_task')
+    {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        TaskListing task = TaskListing({
+            metadata: metadata,
+            rewardInWeis: rewardInWeis,
+            rewardTokenSymbolList: rewardTokenSymbolList,
+            rewardInTokensList: rewardInTokensList,
+            rewardGoodRep: rewardGoodRep,
+            penaltyBadRep: penaltyBadRep
+        });
+        handler.publishTaskListing(task);
+    }
+
+    function publishRewardlessTaskListing(
+        string metadata,
+        uint rewardGoodRep,
+        uint penaltyBadRep
+    )
+        needsRight('submit_task_rewardless')
+    {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        TaskListing task = TaskListing({
+            metadata: metadata,
+            rewardGoodRep: rewardGoodRep,
+            penaltyBadRep: penaltyBadRep
+        });
+        handler.publishTaskListing(task);
     }
 
     //Helper functions
