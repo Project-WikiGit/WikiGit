@@ -98,6 +98,7 @@ contract Dao is Module {
         groupRights['full_time']['vote'] = true;
         groupRights['full_time']['submit_solution'] = true;
         groupRights['full_time']['accept_solution'] = true;
+        groupRights['full_time']['vote_solution'] = true;
         groupRights['full_time']['access_proj_management'] = true;
 
         //Part time contributor rights
@@ -105,6 +106,7 @@ contract Dao is Module {
         groupRights['part_time']['submit_task_rewardless'] = true;
         groupRights['part_time']['vote'] = true;
         groupRights['part_time']['submit_solution'] = true;
+        groupRights['full_time']['vote_solution'] = true;
         groupRights['part_time']['access_proj_management'] = true;
 
         //Freelancer rights
@@ -542,6 +544,16 @@ contract Dao is Module {
         handler.invalidateTaskListingAtIndex(args[0]);
     }
 
+    function submitSolution(string metadata, uint taskId, bytes patchData) needsRight('submit_solution') {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        handler.submitSolution(msg.sender, metadata, taskId, patchData);
+    }
+
+    function voteOnTaskSolution(uint taskId, uint solId, bool isUpvote) needsRight('vote_solution') {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        handler.voteOnSolution(msg.sender, taskId, solId, isUpvote);
+    }
+
     function setCap(var[] args, bytes32 sanction)
         private
         needsSanction(setRewardWeiCap, args, sanction)
@@ -562,7 +574,7 @@ contract Dao is Module {
         }
     }
 
-    //Helper functions
+    //Helpers
 
     function memberAtAddress(address addr) constant internal returns(Member m) {
         m = members[memberId[addr]];
