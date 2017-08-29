@@ -76,14 +76,11 @@ contract Dao is Module {
     uint public rewardRepCap;
     uint public penaltyRepCap;
     uint public rewardWeiCap;
-    mapping(string => uint) public rewardTokenCap;
+    mapping(string => uint) public rewardTokenCap; //From token symbol to cap
     uint defaultRewardTokenCap;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
-
-
-
 
     //Initializing
 
@@ -537,12 +534,32 @@ contract Dao is Module {
         handler.publishTaskListing(task);
     }
 
-    function invalidateTaskListingAtIndex(var args, bytes32 sanction)
+    function invalidateTaskListingAtIndex(var[] args, bytes32 sanction)
         private
         needsSanction(invalidateTaskListingAtIndex, args, sanction)
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         handler.invalidateTaskListingAtIndex(args[0]);
+    }
+
+    function setCap(var[] args, bytes32 sanction)
+        private
+        needsSanction(setRewardWeiCap, args, sanction)
+    {
+        string capType = args[0];
+        uint newCap = args[1];
+        if (capType == 'wei') {
+            rewardWeiCap = newCap;
+        } else if (capType == 'good_rep') {
+            rewardRepCap = newCap;
+        } else if (capType == 'bad_rep') {
+            penaltyRepCap = newCap;
+        } else if (capType == 'default_token') {
+            defaultRewardTokenCap = newCap;
+        } else if (capType == 'token') {
+            string tokenSymbol = args[2];
+            rewardTokenCap[tokenSymbol] = newCap;
+        }
     }
 
     //Helper functions
