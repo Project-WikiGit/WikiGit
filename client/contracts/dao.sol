@@ -73,6 +73,11 @@ contract Dao is Module {
     uint public votingMemberCount;
     mapping(bytes32 => bool) public sanctions;
 
+    uint public rewardRepCap;
+    uint public penaltyRepCap;
+    uint public rewardWeiCap;
+    mapping(string => uint) public rewardTokenCap;
+    uint defaultRewardTokenCap;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -123,6 +128,12 @@ contract Dao is Module {
             badRepWeight: -1
         });
         votingTypes.push(vType);
+
+        //Initialize reward caps
+        rewardRepCap = 3;
+        penaltyRepCap = 6;
+        rewardWeiCap = 1 ether;
+        defaultRewardTokenCap = 10 ** 18;
     }
 
     function importFromPrevDao() onlyMod('DAO') {
@@ -182,12 +193,14 @@ contract Dao is Module {
         needsRight('create_voting')
     {
         Execution[] execList;
+        require(execFuncList.length == execArgsList.length);
         for (var i = 0; i < execFuncList.length; i++) {
             execList.push(Execution({
                 func: execFuncList[i],
                 args: execArgsList[i]
             }));
         }
+
         require(votingTypes[votingTypeId].name != '');
         Voting voting = Voting({
             name: name,
@@ -198,6 +211,7 @@ contract Dao is Module {
             executionList: execList
         });
         votings.push(voting);
+
         VotingCreated(votings.length - 1);
     }
 
@@ -293,6 +307,7 @@ contract Dao is Module {
             tokenAddress: args[2]
         });
         acceptedTokens.push(token);
+        rewardTokenCap[args[1]] = defaultRewardTokenCap;
     }
 
     function removeAcceptedTokenAtIndex(var[] args, bytes32 sanction)
@@ -300,7 +315,8 @@ contract Dao is Module {
         needsSanction(removeAcceptedTokenAtIndex, args, sanction)
     {
         uint index = args[0];
-        require(index >= 0 && index < acceptedTokens.length);
+        require(index < acceptedTokens.length);
+        delete rewardTokenCap[acceptedTokens[index].symbol];
         delete acceptedTokens[index];
     }
 
@@ -344,13 +360,26 @@ contract Dao is Module {
         votingMemberCount += 1;
     }
 
+    function setSelfAsFreelancer(string userName) {
+        require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
+        members.push(Member({
+            userName: userName,
+            userAddress: msg.sender,
+            groupName: 'freelancer'
+        }));
+        memberId[msg.sender] = members.length;
+    }
+
     function removeMemberWithAddress(var[] args, bytes32 sanction)
         private
         needsSanction(removeMember, args, sanction)
     {
         uint index = memberId[args[0]];
+        require(index < members.length);
+
         Member member = members[index];
         require(member.groupName != '');
+
         if (groupRights[member.groupName]['vote']) {
             votingMemberCount -= 1;
         }
@@ -472,6 +501,15 @@ contract Dao is Module {
         needsRight('submit_task')
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        require(rewardInWeis <= rewardWeiCap);
+        require(rewardGoodRep <= rewardRepCap);
+        require(penaltyBadRep <= penaltyRepCap);
+        require(rewardInTokensList.length == rewardTokenSymbolList.length);
+        for (var i = 0; i < rewardTokenSymbolList.length; i++) {
+            string symbol = rewardTokenSymbolList[i];
+            uint reward = rewardInTokensList[i];
+            require(reward <= rewardTokenCap[symbol]);
+        }
         TaskListing task = TaskListing({
             metadata: metadata,
             rewardInWeis: rewardInWeis,
@@ -493,21 +531,24 @@ contract Dao is Module {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         TaskListing task = TaskListing({
             metadata: metadata,
-            rewardGoodRep: rewardGoodRep,
-            penaltyBadRep: penaltyBadRep
+            rewardGoodRep: 1,
+            penaltyBadRep: 2
         });
         handler.publishTaskListing(task);
+    }
+
+    function invalidateTaskListingAtIndex(var args, bytes32 sanction)
+        private
+        needsSanction(invalidateTaskListingAtIndex, args, sanction)
+    {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        handler.invalidateTaskListingAtIndex(args[0]);
     }
 
     //Helper functions
 
     function memberAtAddress(address addr) constant internal returns(Member m) {
         m = members[memberId[addr]];
-    }
-
-    function vaultAddress() constant internal returns(address addr) {
-        Main main = Main(mainAddress);
-        addr = main.moduleAddresses['VAULT'];
     }
 
     function() {
