@@ -1,6 +1,7 @@
 pragma solidity ^0.4.0;
 
 import './main.sol';
+import './dao.sol';
 
 contract TasksHandler is Module {
 
@@ -29,6 +30,8 @@ contract TasksHandler is Module {
 
     TaskListing[] public tasks;
 
+    event TaskSolutionAccepted(uint taskId, uint solutionId);
+
     function TasksHandler(address mainAddr) Module(mainAddr) {
 
     }
@@ -42,15 +45,18 @@ contract TasksHandler is Module {
         tasks[index].isInvalid = true;
     }
 
-    function submitSolution(address submitter, string metadata, uint taskId, bytes patchData) onlyMod('DAO') {
+    function submitSolution(address sender, string metadata, uint taskId, bytes patchData) onlyMod('DAO') {
         require(taskId < tasks.length);
         TaskListing task = tasks[taskId];
-        require(!task.hasSubmitted[submitter]);
-        task.hasSubmitted[submitter] = true;
+
+        require(!task.isInvalid);
+
+        require(!task.hasSubmitted[sender]);
+        task.hasSubmitted[sender] = true;
 
         TaskSolution solution = TaskSolution({
             metadata: metadata,
-            submitter: submitter,
+            submitter: sender,
             taskId: taskId,
             patchData: patchData
         });
@@ -58,20 +64,42 @@ contract TasksHandler is Module {
         task.solutions.push(solution);
     }
 
-    function voteOnSolution(address voter, uint taskId, uint solId, bool isUpvote) onlyMod('DAO') {
+    function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote) onlyMod('DAO') {
         require(taskId < tasks.length);
         TaskListing task = tasks[taskId];
 
         require(solId < task.solutions.length);
         TaskSolution sol = task.solutions[solId];
 
-        require(!sol.hasVoted[voter]);
-        sol.hasVoted[voter] = true;
+        require(!sol.hasVoted[sender]);
+        sol.hasVoted[sender] = true;
 
         if (isUpvote) {
             sol.upvotes += 1;
         } else {
             sol.downvotes += 1;
         }
+    }
+
+    //Todo: implement accepting task solutions
+    function acceptSolution(address sender, uint taskId, uint solId) onlyMod('DAO') {
+        require(taskId < tasks.length);
+        TaskListing task = tasks[taskId];
+
+        require(solId < task.solutions.length);
+        TaskSolution sol = task.solutions[solId];
+
+        require(task.poster == sender);
+        require(sol.submitter != sender); //Prevent self-serving tasks
+
+        task.isInvalid = true;
+
+        //Broadcast acceptance
+
+        TaskSolutionAccepted(taskId, solId);
+
+        //Pay submitter of solution
+        Dao dao = Dao(moduleAddress('DAO'));
+        dao.paySolutionReward(taskId, solId);
     }
 }

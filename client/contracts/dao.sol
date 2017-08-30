@@ -117,7 +117,7 @@ contract Dao is Module {
         groupRights['pure_shareholder']['create_voting'] = true;
 
         //Initialize voting types
-        VotingType vType = VotingType({
+        VotingType defaultType = VotingType({
             name: 'Default Voting Type',
             description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires all members to support it. Should be removed after bootstrapping.',
             votableGroups: ['full_time'],
@@ -126,7 +126,7 @@ contract Dao is Module {
             goodRepWeight: 1,
             badRepWeight: -1
         });
-        votingTypes.push(vType);
+        votingTypes.push(defaultType);
 
         //Initialize reward caps
         rewardRepCap = 3;
@@ -266,6 +266,7 @@ contract Dao is Module {
             ERC20 token = ERC20(t.tokenAddress);
             memberVotes += type.tokenWeights[t.symbol] * token.balanceOf(msg.sender);
         }
+        memberVotes = memberVotes ** 0.5; //Square root voting
         if (support) {
             voting.forVotes += memberVotes;
         } else {
@@ -527,12 +528,16 @@ contract Dao is Module {
     )
         needsRight('submit_task_rewardless')
     {
-        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        require(rewardGoodRep <= rewardRepCap);
+        require(penaltyBadRep <= penaltyRepCap);
+
         TaskListing task = TaskListing({
             metadata: metadata,
-            rewardGoodRep: 1,
-            penaltyBadRep: 2
+            rewardGoodRep: rewardGoodRep,
+            penaltyBadRep: penaltyBadRep
         });
+
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         handler.publishTaskListing(task);
     }
 
@@ -552,6 +557,22 @@ contract Dao is Module {
     function voteOnTaskSolution(uint taskId, uint solId, bool isUpvote) needsRight('vote_solution') {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         handler.voteOnSolution(msg.sender, taskId, solId, isUpvote);
+    }
+
+    function paySolutionReward(uint taskId, uint solId) onlyMod('TASKS') {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        TaskListing task = handler.tasks(taskId);
+        TaskSolution sol = task.solutions(solId);
+
+        //Reward in ether
+        Vault vault = Vault(moduleAddress('VAULT'));
+        vault.withdraw(task.rewardInWeis, sol.submitter);
+
+        //Reward in reputation
+        Member member = memberAtAddress(sol.submitter);
+        member.goodRep += task.rewardGoodRep;
+
+        //Reward in tokens
     }
 
     function setCap(var[] args, bytes32 sanction)
