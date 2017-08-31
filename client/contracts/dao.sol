@@ -48,8 +48,11 @@ contract Dao is Module {
         var[] args;
     }
 
+    modifier notBanned { require(!isBanned[msg.sender]); _; } //Should be used for functions meant to be directly called by members and don't need any rights.
+
     modifier needsRight(string right) {
         require(groupRights[memberAtAddress(msg.sender).groupName][right]);
+        require(!isBanned[msg.sender]); //Makes function declarations more concise.
         _;
     }
 
@@ -66,6 +69,8 @@ contract Dao is Module {
     Member[] public members;
     mapping(address => uint) public memberId;
     mapping(string => mapping(string => bool)) public groupRights;
+    address[] public bannedAddresses;
+    mapping(address => bool) public isBanned;
 
     Voting[] public votings;
     VotingType[] public votingTypes;
@@ -86,8 +91,9 @@ contract Dao is Module {
 
     function Dao(string creatorUserName, address mainAddr) Module(mainAddr) {
         //Add msg.sender as member #1
+        members.push(Member()); //Member at index 0 is reserved, for efficiently checking
         members.push(Member(creatorUserName, msg.sender, 'full_time', 1, 0));
-        memberId[msg.sender] = 0;
+        memberId[msg.sender] = 1;
         votingMemberCount = 1;
 
         //Initialize group rights
@@ -145,6 +151,15 @@ contract Dao is Module {
         acceptedTokens = prev.acceptedTokens;
         votingMemberCount = prev.votingMemberCount;
         sanctions = prev.sanctions;
+    }
+
+    function exportToNewDao(var[] args, bytes32 sanction)
+        private
+        needsSanction(exportToNewDao, args, sanction)
+    {
+        address newAddr = args[0];
+        Dao next = Dao(newAddr);
+        next.importFromPrevDao();
     }
 
     //Module management
@@ -375,7 +390,7 @@ contract Dao is Module {
         needsSanction(removeMember, args, sanction)
     {
         uint index = memberId[args[0]];
-        require(index < members.length);
+        require(0 < index < members.length);
 
         Member member = members[index];
         require(member.groupName != '');
@@ -385,6 +400,17 @@ contract Dao is Module {
         }
         delete members[index];
         delete memberId[args[0]];
+    }
+
+    function banMemberWithAddress(var[] args, bytes32 sanction)
+        private
+        needsSanction(banMemberWithAddress, args, sanction)
+    {
+        address addr = args[0];
+        require(memberId[addr] != 0);
+
+        bannedAddresses.push(addr);
+        isBanned[addr] = true;
     }
 
     function changeMemberGroup(var[] args, bytes32 sanction)
@@ -415,12 +441,12 @@ contract Dao is Module {
         groupRights[groupName][rightName] = hasRight;
     }
 
-    function changeMemberName(string newName) {
+    function changeSelfName(string newName) notBanned {
         require(memberAtAddress(msg.sender).groupName != '');
         memberAtAddress(msg.sender).name = newName;
     }
 
-    function changeMemberAddress(address newAddress) {
+    function changeSelfAddress(address newAddress) notBanned {
         require(memberAtAddress(msg.sender).groupName != '');
         memberAtAddress(msg.sender).userAddress = newAddress;
     }
