@@ -34,6 +34,7 @@ contract Dao is Module {
         string name;
         string description;
         VotingType type;
+        address creator;
         uint startBlockNumber;
         uint endBlockNumber;
         uint forVotes;
@@ -41,6 +42,7 @@ contract Dao is Module {
         uint votedMemberCount;
         Execution[] executionList;
         mapping(address => bool) hasVoted;
+        bool isInvalid;
     }
 
     struct Execution {
@@ -69,7 +71,6 @@ contract Dao is Module {
     Member[] public members;
     mapping(address => uint) public memberId;
     mapping(string => mapping(string => bool)) public groupRights;
-    address[] public bannedAddresses;
     mapping(address => bool) public isBanned;
 
     Voting[] public votings;
@@ -82,7 +83,9 @@ contract Dao is Module {
     uint public penaltyRepCap;
     uint public rewardWeiCap;
     mapping(string => uint) public rewardTokenCap; //From token symbol to cap
-    uint defaultRewardTokenCap;
+
+    uint public rewardFreezeTime;
+    uint public withdrawlFreezeTime;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -125,7 +128,7 @@ contract Dao is Module {
         //Initialize voting types
         VotingType defaultType = VotingType({
             name: 'Default Voting Type',
-            description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires all members to support it. Should be removed after bootstrapping.',
+            description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires unanimous support. Should be removed after bootstrapping. Adding new members before finishing bootstrapping is not advised.',
             votableGroups: ['full_time'],
             quorumPercent: 100,
             minForPercent: 100,
@@ -139,6 +142,10 @@ contract Dao is Module {
         penaltyRepCap = 6;
         rewardWeiCap = 1 ether;
         defaultRewardTokenCap = 10 ** 18;
+
+        //Initialize withdrawl freeze times
+        rewardFreezeTime = 3524; //Roughly 24 hours
+        withdrawlFreezeTime = 147; //Roughly 1 hour
     }
 
     function importFromPrevDao() onlyMod('DAO') {
@@ -220,6 +227,7 @@ contract Dao is Module {
             name: name,
             description: description,
             type: votingTypes[votingTypeId],
+            creator: msg.sender,
             startBlockNumber: startBlockNumber,
             endBlockNumber: endBlockNumber,
             executionList: execList
@@ -229,11 +237,67 @@ contract Dao is Module {
         VotingCreated(votings.length - 1);
     }
 
-    function removeVotingAtIndex(var[] args, bytes32 sanction)
+    function invalidateVotingAtIndex(var[] args, bytes32 sanction)
         private
-        needsSanction(removeVotingAtIndex, args, sanction)
+        needsSanction(invalidateVotingAtIndex, args, sanction)
     {
-        delete votings[args[0]];
+        uint index = args[0];
+        require(index < votings.length);
+
+        Voting voting = votings[index];
+        voting.isInvalid = true;
+    }
+
+    function vote(uint votingId, bool support) needsRight('vote') {
+        Voting voting = votings[votingId];
+
+        VotingType type = voting.type;
+        Member member = members[memberId[msg.sender]];
+
+        require(!voting.isInvalid);
+        require(block.number >= voting.startBlockNumber && block.number < voting.endBlockNumber);
+        require(!voting.hasVoted[msg.sender]);
+        require(type.votableGroups[memberAtAddress(msg.sender).group]);
+
+        voting.hasVoted[msg.sender] = true;
+
+        //WikiGit employs square root voting
+        int memberVotes = type.goodRepWeight * member.goodRep ** 0.5 + type.badRepWeight * member.badRep ** 0.5;
+        for (uint i = 0; i < acceptedTokens.length; i++) {
+            VotingToken t = acceptedTokens[i];
+            ERC20 token = ERC20(t.tokenAddress);
+            memberVotes += type.tokenWeights[t.symbol] * token.balanceOf(msg.sender) ** 0.5;
+        }
+        if (support) {
+            voting.forVotes += memberVotes;
+        } else {
+            voting.againstVotes += memberVotes;
+        }
+        voting.votedMemberCount += 1;
+    }
+
+    function concludeVoting(uint votingId) needsRight('vote') {
+        Voting voting = votings[votingId];
+        require(!voting.isInvalid);
+        voting.isInvalid = true;
+
+        VotingType type = voting.type;
+        require(block.number >= voting.endBlockNumber);
+
+        bool passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= type.minForPercent)
+                        && (voting.votedMemberCount / votingMemberCount * 100 >= type.quorumPercent);
+        if (passed) {
+            //Execute voting
+            Execution[] execList = voting.executionList;
+            for (var i = 0; i < execList.length; i++) {
+                function (var[], bytes32) execFunc = execList[i].func;
+                var[] execArgs = execList[i].args;
+                bytes32 sanction = keccak256(execFunc, execArgs, msg.sender);
+                sanctions[sanction] = true;
+                execFunc(execArgs, sanction);
+            }
+        }
+        VotingConcluded(votingId, passed);
     }
 
     function createVotingType(var[] args, bytes32 sanction)
@@ -266,50 +330,6 @@ contract Dao is Module {
         delete votingTypes[args[0]];
     }
 
-    function vote(uint votingId, bool support) needsRight('vote') {
-        Voting voting = votings[votingId];
-        require(voting.name != '');
-        VotingType type = voting.type;
-        Member member = members[memberId[msg.sender]];
-        require(block.number >= voting.startBlockNumber && block.number < voting.endBlockNumber);
-        require(!voting.hasVoted[msg.sender]);
-        require(type.votableGroups[memberAtAddress(msg.sender).group]);
-        voting.hasVoted[msg.sender] = true;
-        int memberVotes = type.goodRepWeight * member.goodRep + type.badRepWeight * member.badRep;
-        for (uint i = 0; i < acceptedTokens.length; i++) {
-            VotingToken t = acceptedTokens[i];
-            ERC20 token = ERC20(t.tokenAddress);
-            memberVotes += type.tokenWeights[t.symbol] * token.balanceOf(msg.sender);
-        }
-        memberVotes = memberVotes ** 0.5; //Square root voting
-        if (support) {
-            voting.forVotes += memberVotes;
-        } else {
-            voting.againstVotes += memberVotes;
-        }
-        voting.votedMemberCount += 1;
-    }
-
-    function concludeVoting(uint votingId) needsRight('vote') {
-        Voting voting = votings[votingId];
-        VotingType type = voting.type;
-        require(block.number >= voting.endBlockNumber);
-        bool passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= type.minForPercent)
-                        && (voting.votedMemberCount / votingMemberCount * 100 >= type.quorumPercent);
-        if (passed) {
-            //Execute voting
-            Execution[] execList = voting.executionList;
-            for (var i = 0; i < execList.length; i++) {
-                function (var[], bytes32) execFunc = execList[i].func;
-                var[] execArgs = execList[i].args;
-                bytes32 sanction = keccak256(execFunc, execArgs, msg.sender);
-                sanctions[sanction] = true;
-                execFunc(execArgs, sanction);
-            }
-        }
-        VotingConcluded(votingId, passed);
-    }
-
     //Vote token functions
 
     function addAcceptedToken(var[] args, bytes32 sanction)
@@ -322,7 +342,7 @@ contract Dao is Module {
             tokenAddress: args[2]
         });
         acceptedTokens.push(token);
-        rewardTokenCap[args[1]] = defaultRewardTokenCap;
+        rewardTokenCap[args[1]] = args[3];
     }
 
     function removeAcceptedTokenAtIndex(var[] args, bytes32 sanction)
@@ -402,15 +422,15 @@ contract Dao is Module {
         delete memberId[args[0]];
     }
 
-    function banMemberWithAddress(var[] args, bytes32 sanction)
+    function alterBannedStatus(var[] args, bytes32 sanction)
         private
         needsSanction(banMemberWithAddress, args, sanction)
     {
         address addr = args[0];
         require(memberId[addr] != 0);
 
-        bannedAddresses.push(addr);
-        isBanned[addr] = true;
+        bool newStatus = args[1];
+        isBanned[addr] = status;
     }
 
     function changeMemberGroup(var[] args, bytes32 sanction)
@@ -459,8 +479,31 @@ contract Dao is Module {
     {
         uint amountInWeis = args[0];
         address to = args[1];
-        Vault vault = Vault(vaultAddress());
-        vault.withdraw(amountInWeis, to);
+        Vault vault = Vault(moduleAddress('VAULT'));
+        vault.addPendingWithdrawl(amountInWeis, to, withdrawlFreezeTime);
+    }
+
+    function invalidatePendingWithdrawl(var[] args, bytes32 sanction)
+        private
+        needsSanction(invalidatePendingWithdrawl, args, sanction)
+    {
+        uint id = args[0];
+        Vault vault = Vault(moduleAddress('VAULT'));
+        vault.invalidatePendingWithdrawl(id);
+    }
+
+    function changeWithdrawlFreezeTime(var[] args, bytes32 sanction)
+        private
+        needsSanction(changeWithdrawlFreezeTime, args, sanction)
+    {
+        withdrawlFreezeTime = args[0];
+    }
+
+    function changeRewardFreezeTime(var[] args, bytes32 sanction)
+        private
+        needsSanction(changeRewardFreezeTime, args, sanction)
+    {
+        rewardFreezeTime = args[0];
     }
 
     function addPayBehavior(var[] args, bytes32 sanction)
@@ -468,22 +511,14 @@ contract Dao is Module {
         needsSanction(addPayBehavior, args, sanction)
     {
         Vault vault = Vault(vaultAddress());
-        PayBehavior behavior = PayBehavior(args[0], args[1], args[2], args[3]);
-        vault.addPayBehavior(behavior);
-    }
-
-    function removePayBehavior(var[] args, bytes32 sanction)
-        private
-        needsSanction(removePayBehavior, args, sanction)
-    {
-        Vault vault = Vault(vaultAddress());
         PayBehavior behavior = PayBehavior({
             multiplier: args[0],
             oracleAddress: args[1],
             tokenAddress: args[2],
-            untilBlockiNumber: args[3]
+            startBlockNumber: args[3],
+            endBlockNumber: args[4]
         });
-        vault.removePayBehavior(behavior);
+        vault.addPayBehavior(behavior);
     }
 
     function removePayBehaviorAtIndex(var[] args, bytes32 sanction)
@@ -519,28 +554,31 @@ contract Dao is Module {
     function publishTaskListing(
         string metadata,
         uint rewardInWeis,
-        string[] rewardTokenSymbolList,
-        uint[] rewardInTokensList,
+        uint[] rewardTokenIndexList,
+        uint[] rewardTokenAmountList,
         uint rewardGoodRep,
         uint penaltyBadRep
     )
         needsRight('submit_task')
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+
         require(rewardInWeis <= rewardWeiCap);
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
-        require(rewardInTokensList.length == rewardTokenSymbolList.length);
-        for (var i = 0; i < rewardTokenSymbolList.length; i++) {
-            string symbol = rewardTokenSymbolList[i];
-            uint reward = rewardInTokensList[i];
-            require(reward <= rewardTokenCap[symbol]);
+        require(rewardTokenAmountList.length == rewardTokenIndexList.length);
+
+        for (var i = 0; i < rewardTokenIndexList.length; i++) {
+            uint id = rewardTokenIndexList[i];
+            uint reward = rewardTokenAmountList[i];
+            require(reward <= rewardTokenCap[acceptedTokens[id].symbol]);
         }
+
         TaskListing task = TaskListing({
             metadata: metadata,
             rewardInWeis: rewardInWeis,
-            rewardTokenSymbolList: rewardTokenSymbolList,
-            rewardInTokensList: rewardInTokensList,
+            rewardTokenSymbolList: rewardTokenIndexList,
+            rewardInTokensList: rewardTokenAmountList,
             rewardGoodRep: rewardGoodRep,
             penaltyBadRep: penaltyBadRep
         });
@@ -585,6 +623,11 @@ contract Dao is Module {
         handler.voteOnSolution(msg.sender, taskId, solId, isUpvote);
     }
 
+    function acceptSolution(uint taskId, uint solId) needsRight('accept_solution') {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        handler.acceptSolution(msg.sender, taskId, solId);
+    }
+
     function paySolutionReward(uint taskId, uint solId) onlyMod('TASKS') {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         TaskListing task = handler.tasks(taskId);
@@ -592,13 +635,43 @@ contract Dao is Module {
 
         //Reward in ether
         Vault vault = Vault(moduleAddress('VAULT'));
-        vault.withdraw(task.rewardInWeis, sol.submitter);
+        vault.addPendingWithdrawl(task.rewardInWeis, sol.submitter, rewardFreezeTime);
 
         //Reward in reputation
         Member member = memberAtAddress(sol.submitter);
         member.goodRep += task.rewardGoodRep;
 
         //Reward in tokens
+        for (var i = 0; i < task.rewardTokenIndexList.length; i++) {
+            uint id = task.rewardTokenIndexList[i];
+            uint reward = task.rewardTokenAmountList[i];
+            //Todo: implement token rewarding
+        }
+    }
+
+    function penalizeSolutionSubmitter(var[] args, bytes32 sanction)
+        private
+        needsSanction(penalizeSolutionSubmitter, args, sanction)
+    {
+        uint taskId = args[0];
+        uint solId = args[1];
+        bool banSubmitter = args[2];
+
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        TaskListing task = handler.tasks(taskId);
+        TaskSolution sol = task.solutions(solId);
+
+        //Check if submitter has already been penalized
+        require(!task.hasBeenPenalized[sol.submitter]);
+        task.hasBeenPenalized[sol.submitter] = true;
+
+        //Penalize reputation
+        Member member = memberAtAddress(sol.submitter);
+        member.badRep += task.penaltyBadRep;
+
+        if (banSubmitter) {
+            isBanned[sol.submitter] = true;
+        }
     }
 
     function setCap(var[] args, bytes32 sanction)
@@ -613,8 +686,6 @@ contract Dao is Module {
             rewardRepCap = newCap;
         } else if (capType == 'bad_rep') {
             penaltyRepCap = newCap;
-        } else if (capType == 'default_token') {
-            defaultRewardTokenCap = newCap;
         } else if (capType == 'token') {
             string tokenSymbol = args[2];
             rewardTokenCap[tokenSymbol] = newCap;

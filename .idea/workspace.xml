@@ -5,6 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/dao.sol" afterPath="$PROJECT_DIR$/client/contracts/dao.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/vault.sol" afterPath="$PROJECT_DIR$/client/contracts/vault.sol" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,8 +32,8 @@
       <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="90" column="20" lean-forward="true" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
+            <state relative-caret-position="420">
+              <caret line="83" column="27" lean-forward="false" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -51,8 +52,8 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="true" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="-2226">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -61,8 +62,8 @@
       <file leaf-file-name="dao.sol" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/contracts/dao.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="277" column="66" lean-forward="true" selection-start-line="277" selection-start-column="66" selection-end-line="277" selection-end-column="66" />
+            <state relative-caret-position="584">
+              <caret line="647" column="45" lean-forward="true" selection-start-line="647" selection-start-column="45" selection-end-line="647" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -98,10 +99,10 @@
         <option value="$PROJECT_DIR$/client/contracts/erc20.sol" />
         <option value="$PROJECT_DIR$/client/contracts/taskshandler.sol" />
         <option value="$PROJECT_DIR$/client/contracts/git_handler.sol" />
-        <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/client/contracts/main.sol" />
-        <option value="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
+        <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/client/contracts/dao.sol" />
+        <option value="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
       </list>
     </option>
   </component>
@@ -224,7 +225,7 @@
       <workItem from="1502715654809" duration="402000" />
       <workItem from="1502716073856" duration="118826000" />
       <workItem from="1503544169476" duration="64000" />
-      <workItem from="1503544267067" duration="81134000" />
+      <workItem from="1503544267067" duration="100439000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -359,11 +360,18 @@
       <option name="project" value="LOCAL" />
       <updated>1504111498885</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Added the banning of users.">
+      <created>1504172482571</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1504172482571</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200426000" />
+    <option name="totallyTimeSpent" value="219731000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -381,7 +389,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24804688" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916147" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32814527" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279099" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -429,6 +437,32 @@
       </list>
     </option>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -454,7 +488,8 @@
     <MESSAGE value="Added reward cap setter." />
     <MESSAGE value="Finished submitting and voting on task solutions." />
     <MESSAGE value="Started task solution acceptance mechanism." />
-    <option name="LAST_COMMIT_MESSAGE" value="Started task solution acceptance mechanism." />
+    <MESSAGE value="Added the banning of users." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the banning of users." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -592,6 +627,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/contracts/tasks_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2226">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/git_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -602,24 +645,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/vault.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="90" column="20" lean-forward="true" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/contracts/tasks_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="true" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        <state relative-caret-position="420">
+          <caret line="83" column="27" lean-forward="false" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="277" column="66" lean-forward="true" selection-start-line="277" selection-start-column="66" selection-end-line="277" selection-end-column="66" />
+        <state relative-caret-position="584">
+          <caret line="647" column="45" lean-forward="true" selection-start-line="647" selection-start-column="45" selection-end-line="647" selection-end-column="45" />
           <folding />
         </state>
       </provider>

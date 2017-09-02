@@ -30,34 +30,64 @@ contract Vault is Module {
 
         /*
             The pay behavior will only be valid if the current block number is
+            larger than or equal to startBlockNumber.
+        */
+        uint startBlockNumber;
+
+        /*
+            The pay behavior will only be valid if the current block number is
             less than untilBlockNumber.
         */
-        uint untilBlockNumber;
+        uint endBlockNumber;
+    }
+
+    struct PendingWithdrawl {
+        uint amountInWeis;
+        address to;
+        uint frozenUntilBlock;
+        bool isInvalid;
     }
 
     PayBehavior[] public payBehaviors; //Array of pay behaviors.
+    PendingWithdrawl[] public pendingWithdrawls;
+    uint public availableFunds;
 
     function Vault(address mainAddr) Module(mainAddr) {}
 
-    function withdraw(uint amountInWeis, address to) onlyMod('DAO') {
-        require(this.balance >= amountInWeis); //Make sure there's enough Ether in the vault
+    function addPendingWithdrawl(uint amountInWeis, address to, uint blocksUntilWithdrawl) onlyMod('DAO') {
+        require(availableFunds >= amountInWeis); //Make sure there's enough Ether in the vault
         require(to.balance + amountInWeis > to.balance); //Prevent overflow
-        to.transfer(amountInWeis);
+
+        PendingWithdrawl w = PendingWithdrawl({
+            amountInWeis: amountInWeis,
+            to: to,
+            frozenUntilBlock: block.number + blocksUntilWithdrawl
+        });
+        pendingWithdrawls.push(w);
+    }
+
+    function payoutPendingWithdrawl(uint id) {
+        require(id < pendingWithdrawls.length);
+        PendingWithdrawl w = pendingWithdrawls[id];
+        require(!w.isInvalid);
+        require(block.number >= w.frozenUntilBlock);
+
+        w.isInvalid = true;
+        availableFunds -= w.amountInWeis;
+
+        w.to.transfer(w.amountInWeis);
+    }
+
+    function invalidatePendingWithdrawl(uint id) onlyMod('DAO') {
+        require(id < pendingWithdrawls.length);
+        PendingWithdrawl w = pendingWithdrawls[id];
+        w.isInvalid = true;
     }
 
     //Pay behavior manipulators.
 
     function addPayBehavior(PayBehavior behavior) onlyMod('DAO') {
         payBehaviors.push(behavior);
-    }
-
-    function removePaybehavior(PayBehavior behavior) onlyMod('DAO') {
-        for (uint i = 0; i < payBehaviors.length; i++) {
-            if (behavior == payBehaviors[i]) {
-                delete payBehaviors[i];
-                break;
-            }
-        }
     }
 
     function removePayBehaviorAtIndex(uint index) onlyMod('DAO') {
@@ -87,9 +117,10 @@ contract Vault is Module {
 
     //Handles incoming donation.
     function() payable {
+        availableFunds += msg.value;
         for (uint i = 0; i < payBehaviors.length; i++) {
             PayBehavior behavior = payBehaviors[i];
-            if (block.number < behavior.untilBlockNumber) {
+            if (behavior.startBlockNumber < block.number < behavior.endBlockNumber) {
                 //Todo: implement specific interface for oracle and token
                 /*
                 Oracle oracle = Oracle(behavior.oracleAddress);

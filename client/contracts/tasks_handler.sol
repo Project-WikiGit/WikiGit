@@ -9,13 +9,14 @@ contract TasksHandler is Module {
         string metadata;
         address poster;
         uint rewardInWeis;
-        string[] rewardTokenSymbolList;
-        uint[] rewardInTokensList;
+        string[] rewardTokenIndexList;
+        uint[] rewardTokenAmountList;
         uint rewardGoodRep;
         uint penaltyBadRep;
         bool isInvalid;
         TaskSolution[] solutions;
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
+        mapping(address => bool) hasBeenPenalized;
     }
 
     struct TaskSolution {
@@ -50,6 +51,7 @@ contract TasksHandler is Module {
         TaskListing task = tasks[taskId];
 
         require(!task.isInvalid);
+        require(sender != task.poster); //Prevent self-serving tasks
 
         require(!task.hasSubmitted[sender]);
         task.hasSubmitted[sender] = true;
@@ -81,7 +83,6 @@ contract TasksHandler is Module {
         }
     }
 
-    //Todo: implement accepting task solutions
     function acceptSolution(address sender, uint taskId, uint solId) onlyMod('DAO') {
         require(taskId < tasks.length);
         TaskListing task = tasks[taskId];
@@ -90,7 +91,6 @@ contract TasksHandler is Module {
         TaskSolution sol = task.solutions[solId];
 
         require(task.poster == sender);
-        require(sol.submitter != sender); //Prevent self-serving tasks
 
         task.isInvalid = true;
 
