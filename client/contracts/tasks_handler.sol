@@ -9,7 +9,7 @@ contract TasksHandler is Module {
         string metadata;
         address poster;
         uint rewardInWeis;
-        string[] rewardTokenIndexList;
+        uint[] rewardTokenIndexList;
         uint[] rewardTokenAmountList;
         uint rewardGoodRep;
         uint penaltyBadRep;

@@ -473,14 +473,26 @@ contract Dao is Module {
 
     //Vault manipulator functions
 
-    function withdrawFromVault(var[] args, bytes32 sanction)
+    function addPendingWithdrawl(var[] args, bytes32 sanction)
         private
-        needsSanction(withDrawFromVault, args, sanction)
+        needsSanction(addPendingWithdrawl, args, sanction)
     {
         uint amountInWeis = args[0];
         address to = args[1];
         Vault vault = Vault(moduleAddress('VAULT'));
         vault.addPendingWithdrawl(amountInWeis, to, withdrawlFreezeTime);
+    }
+
+    function addPendingTokenWithdrawl(var[] args, bytes32 sanction)
+        private
+        needsSanction(addPendingTokenWithdrawl, args, sanction)
+    {
+        uint amount = args[0];
+        address to = args[1];
+        string symbol = args[2];
+        address tokenAddr = args[3];
+        Vault vault = Vault(moduleAddress('VAULT'));
+        vault.addPendingTokenWithdrawl(amountInWeis, to, symbol, tokenAddr, withdrawlFreezeTime);
     }
 
     function invalidatePendingWithdrawl(var[] args, bytes32 sanction)
@@ -490,6 +502,15 @@ contract Dao is Module {
         uint id = args[0];
         Vault vault = Vault(moduleAddress('VAULT'));
         vault.invalidatePendingWithdrawl(id);
+    }
+
+    function invalidatePendingTokenWithdrawl(var[] args, bytes32 sanction)
+        private
+        needsSanction(invalidatePendingTokenWithdrawl, args, sanction)
+    {
+        uint id = args[0];
+        Vault vault = Vault(moduleAddress('VAULT'));
+        vault.invalidatePendingTokenWithdrawl(id);
     }
 
     function changeWithdrawlFreezeTime(var[] args, bytes32 sanction)
@@ -645,7 +666,10 @@ contract Dao is Module {
         for (var i = 0; i < task.rewardTokenIndexList.length; i++) {
             uint id = task.rewardTokenIndexList[i];
             uint reward = task.rewardTokenAmountList[i];
-            //Todo: implement token rewarding
+
+            VoteToken token = acceptedTokens[id];
+
+            vault.addPendingTokenWithdrawl(reward, sol.submitter, token.symbol, token.tokenAddress, rewardFreezeTime);
         }
     }
 
