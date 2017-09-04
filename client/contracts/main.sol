@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.17;
 
 contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }

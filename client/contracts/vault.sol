@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.17;
 
 import './main.sol';
 
@@ -68,7 +68,7 @@ contract Vault is Module {
 
     function addPendingWithdrawl(uint amountInWeis, address to, uint blocksUntilWithdrawl) onlyMod('DAO') {
         uint availableFunds = this.balance - frozenFunds;
-        require(availableFunds >= amountInWeis); //Make sure there's enough Ether in the vault
+        require(availableFunds >= amountInWeis); //Make sure there's enough unfrozen Ether in the vault
         require(to.balance + amountInWeis > to.balance); //Prevent overflow
 
         frozenFunds += amountInWeis;
@@ -84,7 +84,7 @@ contract Vault is Module {
     function addPendingTokenWithdrawl(uint amount, address to, string symbol, address tokenAddr, uint blocksUntilWithdrawl) onlyMod('DAO') {
         ERC20 token = ERC20(tokenAddr);
         uint availableTokens = token.balanceOf(this) - frozenTokens[tokenAddr];
-        require(availableTokens >= amount); //Make sure there's enough Ether in the vault
+        require(availableTokens >= amount); //Make sure there's enough unfrozen tokens in the vault
         require(token.balanceOf(to) + amount > token.balanceOf(to)); //Prevent overflow
 
         frozenTokens[tokenAddr] += amount;
