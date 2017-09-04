@@ -102,4 +102,8 @@ contract TasksHandler is Module {
         Dao dao = Dao(moduleAddress('DAO'));
         dao.paySolutionReward(taskId, solId);
     }
+
+    function() {
+        revert();
+    }
 }

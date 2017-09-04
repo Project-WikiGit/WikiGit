@@ -6,4 +6,8 @@ contract GitHandler is Module {
     function GitHandler(address mainAddr) Module(mainAddr) {
 
     }
+
+    function() {
+        revert();
+    }
 }

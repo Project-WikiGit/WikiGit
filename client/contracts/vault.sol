@@ -73,12 +73,12 @@ contract Vault is Module {
 
         frozenFunds += amountInWeis;
 
-        PendingWithdrawl w = PendingWithdrawl({
+        pendingWithdrawls.push(PendingWithdrawl({
             amountInWeis: amountInWeis,
             to: to,
-            frozenUntilBlock: block.number + blocksUntilWithdrawl
-        });
-        pendingWithdrawls.push(w);
+            frozenUntilBlock: block.number + blocksUntilWithdrawl,
+            isInvalid: false
+        }));
     }
 
     function addPendingTokenWithdrawl(uint amount, address to, string symbol, address tokenAddr, uint blocksUntilWithdrawl) onlyMod('DAO') {
@@ -89,19 +89,19 @@ contract Vault is Module {
 
         frozenTokens[tokenAddr] += amount;
 
-        PendingTokenWithdrawl w = PendingTokenWithdrawl({
+        pendingTokenWithdrawls.push(PendingTokenWithdrawl({
             amount: amount,
             to: to,
             frozenUntilBlock: block.number + blocksUntilWithdrawl,
             tokenSymbol: symbol,
-            tokenAddress: tokenAddr
-        });
-        pendingTokenWithdrawls.push(w);
+            tokenAddress: tokenAddr,
+            isInvalid: false
+        }));
     }
 
     function payoutPendingWithdrawl(uint id) {
         require(id < pendingWithdrawls.length);
-        PendingWithdrawl w = pendingWithdrawls[id];
+        PendingWithdrawl storage w = pendingWithdrawls[id];
         require(!w.isInvalid);
         require(block.number >= w.frozenUntilBlock);
 
@@ -113,7 +113,7 @@ contract Vault is Module {
 
     function payoutPendingTokenWithdrawl(uint id) {
         require(id < pendingTokenWithdrawls.length);
-        PendingTokenWithdrawl w = pendingTokenWithdrawls[id];
+        PendingTokenWithdrawl storage w = pendingTokenWithdrawls[id];
         require(!w.isInvalid);
         require(block.number >= w.frozenUntilBlock);
 
@@ -126,22 +126,36 @@ contract Vault is Module {
 
     function invalidatePendingWithdrawl(uint id) onlyMod('DAO') {
         require(id < pendingWithdrawls.length);
-        PendingWithdrawl w = pendingWithdrawls[id];
+        PendingWithdrawl storage w = pendingWithdrawls[id];
         w.isInvalid = true;
         frozenFunds -= w.amountInWeis;
     }
 
-    function invalidatePendingWithdrawl(uint id) onlyMod('DAO') {
+    function invalidatePendingTokenWithdrawl(uint id) onlyMod('DAO') {
         require(id < pendingTokenWithdrawls.length);
-        PendingTokenWithdrawl w = pendingTokenWithdrawls[id];
+        PendingTokenWithdrawl storage w = pendingTokenWithdrawls[id];
         w.isInvalid = true;
         frozenTokens[w.tokenAddress] -= w.amount;
     }
 
     //Pay behavior manipulators.
 
-    function addPayBehavior(PayBehavior behavior) onlyMod('DAO') {
-        payBehaviors.push(behavior);
+    function addPayBehavior(
+        uint multiplier,
+        address oracleAddress,
+        address tokenAddress,
+        uint startBlockNumber,
+        uint endBlockNumber
+    )
+    onlyMod('DAO')
+    {
+        payBehaviors.push(PayBehavior({
+            multiplier: multiplier,
+            oracleAddress: oracleAddress,
+            tokenAddress: tokenAddress,
+            startBlockNumber: startBlockNumber,
+            endBlockNumber: endBlockNumber
+        }));
     }
 
     function removePayBehaviorAtIndex(uint index) onlyMod('DAO') {
@@ -155,28 +169,39 @@ contract Vault is Module {
     //Import and export functions for updating modules.
 
     //Called by the old vault to transfer data to the new vault.
-    function importFromVault(PayBehavior[] behaviors) onlyMod('VAULT') {
-        payBehaviors = behaviors;
+    function importFromVault(uint length) onlyMod('VAULT') {
+        Vault oldVault = Vault(moduleAddress('VAULT'));
+        for (uint i = 0; i < length; i++) {
+            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber) = oldVault.payBehaviors(i);
+            payBehaviors[i] = PayBehavior({
+                multiplier: multiplier,
+                oracleAddress: oracleAddress,
+                tokenAddress: tokenAddress,
+                startBlockNumber: startBlockNumber,
+                endBlockNumber: endBlockNumber
+            });
+        }
     }
 
     //Transfers all data and funds to the new vault.
     function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
         Vault newVault = Vault(newVaultAddr);
-        newVault.importFromVault(payBehaviors);
-        newVault.transfer(this.balance);
+        newVault.importFromVault();
         if (burn) {
-            selfdestruct();
+            selfdestruct(newVaultAddr);
+        } else {
+            newVault.transfer(this.balance);
         }
     }
 
     //Handles incoming donation.
     function() payable {
         for (uint i = 0; i < payBehaviors.length; i++) {
-            PayBehavior behavior = payBehaviors[i];
-            if (behavior.startBlockNumber < block.number < behavior.endBlockNumber) {
+            PayBehavior storage behavior = payBehaviors[i];
+            if (behavior.startBlockNumber < block.number && block.number < behavior.endBlockNumber) {
                 //Todo: implement specific interface for oracle and token
                 if (behavior.oracleAddress == 0) {
-                    ERC20 token = ERC20(behavior.tokenAddress());
+                    ERC20 token = ERC20(behavior.tokenAddress);
                     token.transfer(msg.sender, behavior.multiplier * msg.value);
                 } else {
                     /*

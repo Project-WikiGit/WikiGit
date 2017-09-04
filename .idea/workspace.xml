@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="Changed solidity version to 0.4.17.">
+    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/dao.sol" afterPath="$PROJECT_DIR$/client/contracts/dao.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/erc20.sol" afterPath="$PROJECT_DIR$/client/contracts/erc20.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/git_handler.sol" afterPath="$PROJECT_DIR$/client/contracts/git_handler.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/main.sol" afterPath="$PROJECT_DIR$/client/contracts/main.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
@@ -22,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="main.sol" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/main.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="30" column="38" lean-forward="false" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="38" />
+            <state relative-caret-position="56">
+              <caret line="2" column="17" lean-forward="true" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -45,18 +44,18 @@
       <file leaf-file-name="git_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/git_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="280">
+              <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
+      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="-3074">
+              <caret line="79" column="12" lean-forward="false" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -65,8 +64,8 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="2442">
+              <caret line="106" column="17" lean-forward="false" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -75,8 +74,8 @@
       <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/contracts/dao.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="700">
+              <caret line="540" column="10" lean-forward="true" selection-start-line="534" selection-start-column="31" selection-end-line="540" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -112,11 +111,11 @@
         <option value="$PROJECT_DIR$/client/main.js" />
         <option value="$PROJECT_DIR$/client/contracts/taskshandler.sol" />
         <option value="$PROJECT_DIR$/client/contracts/erc20.sol" />
-        <option value="$PROJECT_DIR$/client/contracts/git_handler.sol" />
-        <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
-        <option value="$PROJECT_DIR$/client/contracts/dao.sol" />
+        <option value="$PROJECT_DIR$/client/contracts/git_handler.sol" />
         <option value="$PROJECT_DIR$/client/contracts/main.sol" />
+        <option value="$PROJECT_DIR$/client/contracts/dao.sol" />
+        <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
       </list>
     </option>
   </component>
@@ -196,7 +195,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="enabled" />
     <property name="last_opened_file_path" value="D:/Program Files/Git/bin/git.exe" />
     <property name="full.screen.before.presentation.mode" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="soft&#9;ACTION&#9;EditorToggleUseSoftWraps&#10;soft wrap&#9;ACTION&#9;EditorToggleUseSoftWraps&#10;soft &#9;ACTION&#9;EditorGutterToggleGlobalSoftWraps&#10;color scheme&#9;ACTION&#9;ChangeColorScheme&#10;colorsche&#9;ACTION&#9;ChangeColorScheme&#10;color sche&#9;ACTION&#9;ChangeColorScheme" />
+    <property name="SearchEverywhereHistoryKey" value="indent&#9;ACTION&#9;AutoIndentLines&#10;soft&#9;ACTION&#9;EditorToggleUseSoftWraps&#10;soft wrap&#9;ACTION&#9;EditorToggleUseSoftWraps&#10;soft &#9;ACTION&#9;EditorGutterToggleGlobalSoftWraps&#10;color scheme&#9;ACTION&#9;ChangeColorScheme&#10;colorsche&#9;ACTION&#9;ChangeColorScheme&#10;color sche&#9;ACTION&#9;ChangeColorScheme" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -241,7 +240,7 @@
       <workItem from="1503544169476" duration="64000" />
       <workItem from="1503544267067" duration="103226000" />
       <workItem from="1504364722041" duration="17000" />
-      <workItem from="1504364772798" duration="15294000" />
+      <workItem from="1504364772798" duration="20108000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -404,11 +403,18 @@
       <option name="project" value="LOCAL" />
       <updated>1504508915703</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Changed solidity version to 0.4.11.">
+      <created>1504533547381</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1504533547381</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237829000" />
+    <option name="totallyTimeSpent" value="242643000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -510,7 +516,8 @@
     <MESSAGE value="Implemented delayed withdrawls for security, changed removals to invalidations." />
     <MESSAGE value="Added delayed withdrawl for tokens. Changed how the vault records current unfrozen funds. Implemented token task rewards." />
     <MESSAGE value="Changed solidity version to 0.4.17." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed solidity version to 0.4.17." />
+    <MESSAGE value="Changed solidity version to 0.4.11." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed solidity version to 0.4.11." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -738,40 +745,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/git_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/contracts/vault.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        <state relative-caret-position="280">
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/tasks_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/contracts/dao.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        <state relative-caret-position="2442">
+          <caret line="106" column="17" lean-forward="false" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/contracts/main.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="30" column="38" lean-forward="false" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="38" />
+        <state relative-caret-position="56">
+          <caret line="2" column="17" lean-forward="true" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/contracts/dao.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="540" column="10" lean-forward="true" selection-start-line="534" selection-start-column="31" selection-end-line="540" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/contracts/vault.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3074">
+          <caret line="79" column="12" lean-forward="false" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
           <folding />
         </state>
       </provider>

@@ -9,13 +9,13 @@ contract Module {
 
     function moduleAddress(string mod) constant internal returns(address addr){
         Main main = Main(mainAddress);
-        addr = main.moduleAddresses(mod);
+        addr = main.moduleAddresses(keccak256(mod));
     }
 }
 
 contract Main {
 
-    mapping(string => address) public moduleAddresses;
+    mapping(bytes32 => address) public moduleAddresses;
     string[] public moduleNames;
     string public metadata;
     bool public initialized;
@@ -28,25 +28,32 @@ contract Main {
         creator = msg.sender;
     }
 
-    function initializeModuleAddresses(string[] modNames, address[] addrs) {
+    /*
+        Used for initializing the module address index. As string[] variables can't be passed as function parameters, the addrs array
+        must be ordered in the following way:
+        DAO, VAULT, TASKS, GIT
+        @param addrs The array that stores the addresses of all initial modules. Must follow the specified format.
+    */
+
+    function initializeModuleAddresses(address[] addrs) {
         require(! initialized);
         require(msg.sender == creator);
         initialized = true;
-        moduleNames = modNames;
-        for (uint i = 0; i < modNames.length; i++) {
-            moduleAddresses[modNames[i]] = addrs[i];
+        moduleNames = ['DAO', 'VAULT', 'TASKS', 'GIT'];
+        for (uint i = 0; i < moduleNames.length; i++) {
+            moduleAddresses[keccak256(moduleNames[i])] = addrs[i];
         }
     }
 
     function changeModuleAddress(string modName, address addr, bool isNew) onlyDao {
-        moduleAddresses[modName] = addr;
+        moduleAddresses[keccak256(modName)] = addr;
         if (isNew) {
             moduleNames.push(modName);
         }
     }
 
     function removeModuleAtIndex(uint index) onlyDao {
-        delete moduleAddresses[moduleNames[index]];
+        delete moduleAddresses[keccak256(moduleNames[index])];
         delete moduleNames[index];
     }
 
@@ -55,6 +62,6 @@ contract Main {
     }
 
     function() {
-        throw;
+        revert();
     }
 }

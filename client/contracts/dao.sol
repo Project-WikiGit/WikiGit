@@ -33,7 +33,7 @@ contract Dao is Module {
     struct Voting {
         string name;
         string description;
-        VotingType type;
+        VotingType vType;
         address creator;
         uint startBlockNumber;
         uint endBlockNumber;
@@ -226,7 +226,7 @@ contract Dao is Module {
         Voting voting = Voting({
             name: name,
             description: description,
-            type: votingTypes[votingTypeId],
+            vType: votingTypes[votingTypeId],
             creator: msg.sender,
             startBlockNumber: startBlockNumber,
             endBlockNumber: endBlockNumber,
@@ -251,7 +251,7 @@ contract Dao is Module {
     function vote(uint votingId, bool support) needsRight('vote') {
         Voting voting = votings[votingId];
 
-        VotingType type = voting.type;
+        VotingType type = voting.vType;
         Member member = members[memberId[msg.sender]];
 
         require(!voting.isInvalid);
@@ -281,7 +281,7 @@ contract Dao is Module {
         require(!voting.isInvalid);
         voting.isInvalid = true;
 
-        VotingType type = voting.type;
+        VotingType type = voting.vType;
         require(block.number >= voting.endBlockNumber);
 
         bool passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= type.minForPercent)
@@ -723,6 +723,6 @@ contract Dao is Module {
     }
 
     function() {
-        throw;
+        revert();
     }
 }
