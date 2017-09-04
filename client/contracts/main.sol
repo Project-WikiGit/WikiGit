@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.11;
 
 contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
@@ -33,7 +33,7 @@ contract Main {
         require(msg.sender == creator);
         initialized = true;
         moduleNames = modNames;
-        for (var i = 0; i < modNames.length; i++) {
+        for (uint i = 0; i < modNames.length; i++) {
             moduleAddresses[modNames[i]] = addrs[i];
         }
     }

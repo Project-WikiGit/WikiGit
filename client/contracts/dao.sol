@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.11;
 
 import './erc20.sol';
 import './vault.sol';
@@ -215,7 +215,7 @@ contract Dao is Module {
     {
         Execution[] execList;
         require(execFuncList.length == execArgsList.length);
-        for (var i = 0; i < execFuncList.length; i++) {
+        for (uint i = 0; i < execFuncList.length; i++) {
             execList.push(Execution({
                 func: execFuncList[i],
                 args: execArgsList[i]
@@ -289,7 +289,7 @@ contract Dao is Module {
         if (passed) {
             //Execute voting
             Execution[] execList = voting.executionList;
-            for (var i = 0; i < execList.length; i++) {
+            for (uint i = 0; i < execList.length; i++) {
                 function (var[], bytes32) execFunc = execList[i].func;
                 var[] execArgs = execList[i].args;
                 bytes32 sanction = keccak256(execFunc, execArgs, msg.sender);
@@ -315,7 +315,7 @@ contract Dao is Module {
         });
         string[] tokenSymbols = args[7];
         uint[] tokenWeights = args[8];
-        for (var i = 0; i < tokenSymbols.length; i++) {
+        for (uint i = 0; i < tokenSymbols.length; i++) {
             string symbol = tokenSymbols[i];
             uint weight = tokenWeights[i];
             vType.tokenWeights[symbol] = weight;
@@ -378,7 +378,7 @@ contract Dao is Module {
     function setSelfAsPureShareholder(string userName) {
         //Check if msg.sender has any voting shares
         bool hasShares;
-        for (var i = 0; i < acceptedTokens.length; i++) {
+        for (uint i = 0; i < acceptedTokens.length; i++) {
             ERC20 token = ERC20(acceptedTokens[i].tokenAddress);
             if (token.balanceOf(msg.sender) > 0) {
                 hasShares = true;
@@ -589,7 +589,7 @@ contract Dao is Module {
         require(penaltyBadRep <= penaltyRepCap);
         require(rewardTokenAmountList.length == rewardTokenIndexList.length);
 
-        for (var i = 0; i < rewardTokenIndexList.length; i++) {
+        for (uint i = 0; i < rewardTokenIndexList.length; i++) {
             uint id = rewardTokenIndexList[i];
             uint reward = rewardTokenAmountList[i];
             require(reward <= rewardTokenCap[acceptedTokens[id].symbol]);
@@ -663,7 +663,7 @@ contract Dao is Module {
         member.goodRep += task.rewardGoodRep;
 
         //Reward in tokens
-        for (var i = 0; i < task.rewardTokenIndexList.length; i++) {
+        for (uint i = 0; i < task.rewardTokenIndexList.length; i++) {
             uint id = task.rewardTokenIndexList[i];
             uint reward = task.rewardTokenAmountList[i];
 
