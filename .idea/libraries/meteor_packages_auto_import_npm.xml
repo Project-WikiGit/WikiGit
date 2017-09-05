@@ -620,6 +620,7 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/escape.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/to-string.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/flags.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/npm/node_modules/xmlhttprequest/lib/XMLHttpRequest.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/trim.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/fontsize.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/big.js" />
@@ -5682,6 +5683,7 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/escape.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/to-string.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/regexp/flags.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/npm/node_modules/xmlhttprequest/lib/XMLHttpRequest.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/trim.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/fontsize.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ecmascript-runtime-server/0.4.1/npm/node_modules/core-js/library/fn/string/big.js" />

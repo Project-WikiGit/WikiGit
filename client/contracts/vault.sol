@@ -186,7 +186,7 @@ contract Vault is Module {
     //Transfers all data and funds to the new vault.
     function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
         Vault newVault = Vault(newVaultAddr);
-        newVault.importFromVault();
+        newVault.importFromVault(payBehaviors.length);
         if (burn) {
             selfdestruct(newVaultAddr);
         } else {

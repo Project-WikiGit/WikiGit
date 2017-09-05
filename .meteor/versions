@@ -26,6 +26,7 @@ ecmascript-runtime-client@0.4.3
 ecmascript-runtime-server@0.4.1
 ejson@1.0.13
 es5-shim@4.6.15
+ethereum:web3@0.20.1
 fastclick@1.0.13
 geojson-utils@1.0.10
 hot-code-push@1.0.4

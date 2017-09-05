@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
 import './main.sol';
-import './dao.sol';
+//import './dao.sol';
 
 contract TasksHandler is Module {
 
@@ -14,7 +14,6 @@ contract TasksHandler is Module {
         uint rewardGoodRep;
         uint penaltyBadRep;
         bool isInvalid;
-        TaskSolution[] solutions;
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
         mapping(address => bool) hasBeenPenalized;
     }
@@ -30,6 +29,7 @@ contract TasksHandler is Module {
     }
 
     TaskListing[] public tasks;
+    TaskSolution[][] public taskSolutions;
 
     event TaskSolutionAccepted(uint taskId, uint solutionId);
 
@@ -37,8 +37,28 @@ contract TasksHandler is Module {
 
     }
 
-    function publishTaskListing(TaskListing task) onlyMod('DAO') {
-        tasks.push(task);
+    function publishTaskListing(
+        string metadata,
+        address poster,
+        uint rewardInWeis,
+        uint[] rewardTokenIndexList,
+        uint[] rewardTokenAmountList,
+        uint rewardGoodRep,
+        uint penaltyBadRep
+    )
+        onlyMod('DAO')
+    {
+        tasks.push(TaskListing({
+            metadata: metadata,
+            poster: poster,
+            rewardInWeis: rewardInWeis,
+            rewardTokenIndexList: rewardTokenIndexList,
+            rewardTokenAmountList: rewardTokenAmountList,
+            rewardGoodRep: rewardGoodRep,
+            penaltyBadRep: penaltyBadRep,
+            isInvalid: false
+        }));
+        taskSolutions.length += 1;
     }
 
     function invalidateTaskListingAtIndex(uint index) onlyMod('DAO') {
@@ -48,7 +68,8 @@ contract TasksHandler is Module {
 
     function submitSolution(address sender, string metadata, uint taskId, bytes patchData) onlyMod('DAO') {
         require(taskId < tasks.length);
-        TaskListing task = tasks[taskId];
+
+        TaskListing storage task = tasks[taskId];
 
         require(!task.isInvalid);
         require(sender != task.poster); //Prevent self-serving tasks
@@ -56,22 +77,21 @@ contract TasksHandler is Module {
         require(!task.hasSubmitted[sender]);
         task.hasSubmitted[sender] = true;
 
-        TaskSolution solution = TaskSolution({
+        taskSolutions[taskId].push(TaskSolution({
             metadata: metadata,
             submitter: sender,
             taskId: taskId,
-            patchData: patchData
-        });
-
-        task.solutions.push(solution);
+            patchData: patchData,
+            upvotes: 0,
+            downvotes: 0
+        }));
     }
 
     function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote) onlyMod('DAO') {
         require(taskId < tasks.length);
-        TaskListing task = tasks[taskId];
+        require(solId < taskSolutions[taskId].length);
 
-        require(solId < task.solutions.length);
-        TaskSolution sol = task.solutions[solId];
+        TaskSolution storage sol = taskSolutions[taskId][solId];
 
         require(!sol.hasVoted[sender]);
         sol.hasVoted[sender] = true;
@@ -85,10 +105,9 @@ contract TasksHandler is Module {
 
     function acceptSolution(address sender, uint taskId, uint solId) onlyMod('DAO') {
         require(taskId < tasks.length);
-        TaskListing task = tasks[taskId];
+        TaskListing storage task = tasks[taskId];
 
-        require(solId < task.solutions.length);
-        TaskSolution sol = task.solutions[solId];
+        require(solId < taskSolutions[taskId].length);
 
         require(task.poster == sender);
 
@@ -99,8 +118,8 @@ contract TasksHandler is Module {
         TaskSolutionAccepted(taskId, solId);
 
         //Pay submitter of solution
-        Dao dao = Dao(moduleAddress('DAO'));
-        dao.paySolutionReward(taskId, solId);
+        //Dao dao = Dao(moduleAddress('DAO'));
+        //dao.paySolutionReward(taskId, solId);
     }
 
     function() {

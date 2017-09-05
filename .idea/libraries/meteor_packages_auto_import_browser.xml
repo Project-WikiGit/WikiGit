@@ -69,7 +69,9 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-max-heap.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/html-tools/1.0.11/web.browser/tokenize.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-heap.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/web.browser/dist/web3.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/max-heap.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/web.browser/package-init.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules/0.9.2/web.browser/install-packages.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ddp-common/1.2.9/web.browser/random_stream.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/html-tools/1.0.11/web.browser/utils.js" />
@@ -217,7 +219,9 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-max-heap.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/html-tools/1.0.11/web.browser/tokenize.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-heap.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/web.browser/dist/web3.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/max-heap.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ethereum_web3/0.20.1/web.browser/package-init.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules/0.9.2/web.browser/install-packages.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ddp-common/1.2.9/web.browser/random_stream.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/html-tools/1.0.11/web.browser/utils.js" />
