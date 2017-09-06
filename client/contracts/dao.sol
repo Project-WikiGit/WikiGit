@@ -595,15 +595,14 @@ contract Dao is Module {
             require(reward <= rewardTokenCap[acceptedTokens[id].symbol]);
         }
 
-        TaskListing task = TaskListing({
-            metadata: metadata,
-            rewardInWeis: rewardInWeis,
-            rewardTokenSymbolList: rewardTokenIndexList,
-            rewardInTokensList: rewardTokenAmountList,
-            rewardGoodRep: rewardGoodRep,
-            penaltyBadRep: penaltyBadRep
-        });
-        handler.publishTaskListing(task);
+        handler.publishTaskListing(
+            metadata,
+            rewardInWeis,
+            rewardTokenIndexList,
+            rewardTokenAmountList,
+            rewardGoodRep,
+            penaltyBadRep
+        );
     }
 
     function publishRewardlessTaskListing(
@@ -616,14 +615,15 @@ contract Dao is Module {
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
 
-        TaskListing task = TaskListing({
-            metadata: metadata,
-            rewardGoodRep: rewardGoodRep,
-            penaltyBadRep: penaltyBadRep
-        });
-
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        handler.publishTaskListing(task);
+        handler.publishTaskListing(
+            metadata,
+            0,
+            new uint[](0),
+            new uint[](0),
+            rewardGoodRep,
+            penaltyBadRep
+        );
     }
 
     function invalidateTaskListingAtIndex(var[] args, bytes32 sanction)
