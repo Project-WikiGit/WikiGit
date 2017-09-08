@@ -53,7 +53,7 @@ contract Dao is Module {
     modifier notBanned { require(!isBanned[msg.sender]); _; } //Should be used for functions meant to be directly called by members and don't need any rights.
 
     modifier needsRight(string right) {
-        require(groupRights[memberAtAddress(msg.sender).groupName][right]);
+        require(groupRights[keccak256(memberAtAddress(msg.sender).groupName)][keccak256(right)]);
         require(!isBanned[msg.sender]); //Makes function declarations more concise.
         _;
     }
@@ -70,7 +70,7 @@ contract Dao is Module {
 
     Member[] public members;
     mapping(address => uint) public memberId;
-    mapping(string => mapping(string => bool)) public groupRights;
+    mapping(bytes32 => mapping(bytes32 => bool)) public groupRights;
     mapping(address => bool) public isBanned;
 
     Voting[] public votings;
@@ -83,9 +83,6 @@ contract Dao is Module {
     uint public penaltyRepCap;
     uint public rewardWeiCap;
     mapping(string => uint) public rewardTokenCap; //From token symbol to cap
-
-    uint public rewardFreezeTime;
-    uint public withdrawlFreezeTime;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -101,32 +98,32 @@ contract Dao is Module {
 
         //Initialize group rights
         //Full time contributor rights
-        groupRights['full_time']['create_voting'] = true;
-        groupRights['full_time']['submit_task'] = true;
-        groupRights['full_time']['submit_task_rewardless'] = true;
-        groupRights['full_time']['vote'] = true;
-        groupRights['full_time']['submit_solution'] = true;
-        groupRights['full_time']['accept_solution'] = true;
-        groupRights['full_time']['vote_solution'] = true;
-        groupRights['full_time']['access_proj_management'] = true;
+        setGroupRight('full_time', 'create_voting', true);
+        setGroupRight('full_time', 'submit_task', true);
+        setGroupRight('full_time', 'submit_task_rewardless', true);
+        setGroupRight('full_time', 'vote', true);
+        setGroupRight('full_time', 'submit_solution', true);
+        setGroupRight('full_time', 'accept_Solution', true);
+        setGroupRight('full_time', 'vote_solution', true);
+        setGroupRight('full_time', 'access_proj_management', true);
 
         //Part time contributor rights
-        groupRights['part_time']['create_voting'] = true;
-        groupRights['part_time']['submit_task_rewardless'] = true;
-        groupRights['part_time']['vote'] = true;
-        groupRights['part_time']['submit_solution'] = true;
-        groupRights['full_time']['vote_solution'] = true;
-        groupRights['part_time']['access_proj_management'] = true;
+        setGroupRight('part_time', 'create_voting', true);
+        setGroupRight('part_time', 'submit_task_rewardless', true);
+        setGroupRight('part_time', 'vote', true);
+        setGroupRight('part_time', 'submit_solution', true);
+        setGroupRight('part_time', 'vote_solution', true);
+        setGroupRight('part_time', 'access_proj_management', true);
 
         //Freelancer rights
-        groupRights['freelancer']['submit_solution'] = true;
+        setGroupRight('freelancer', 'submit_solution', true);
 
         //Pure shareholder (shareholder who doesn't contribute) rights
-        groupRights['pure_shareholder']['vote'] = true;
-        groupRights['pure_shareholder']['create_voting'] = true;
+        setGroupRight('pure_shareholder', 'vote', true);
+        setGroupRight('pure_shareholder', 'create_voting', true);
 
         //Initialize voting types
-        VotingType defaultType = VotingType({
+        votingTypes.push(VotingType({
             name: 'Default Voting Type',
             description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires unanimous support. Should be removed after bootstrapping. Adding new members before finishing bootstrapping is not advised.',
             votableGroups: ['full_time'],
@@ -134,18 +131,13 @@ contract Dao is Module {
             minForPercent: 100,
             goodRepWeight: 1,
             badRepWeight: -1
-        });
-        votingTypes.push(defaultType);
+        }));
 
         //Initialize reward caps
         rewardRepCap = 3;
         penaltyRepCap = 6;
         rewardWeiCap = 1 ether;
         defaultRewardTokenCap = 10 ** 18;
-
-        //Initialize withdrawl freeze times
-        rewardFreezeTime = 3524; //Roughly 24 hours
-        withdrawlFreezeTime = 147; //Roughly 1 hour
     }
 
     function importFromPrevDao() onlyMod('DAO') {
@@ -458,7 +450,15 @@ contract Dao is Module {
         string groupName = args[0];
         string rightName = args[1];
         bool hasRight = args[2];
-        groupRights[groupName][rightName] = hasRight;
+        setGroupRight(groupName, rightName, hasRight);
+    }
+
+    function groupRight(string groupName, string right) returns(bool) {
+        return groupRights[keccak256(groupName)][keccak256(right)];
+    }
+
+    function setGroupRight(string groupName, string right, bool hasRight) private {
+        groupRights[keccak256(groupName)][keccak256(right)] = hasRight;
     }
 
     function changeSelfName(string newName) notBanned {
@@ -469,105 +469,6 @@ contract Dao is Module {
     function changeSelfAddress(address newAddress) notBanned {
         require(memberAtAddress(msg.sender).groupName != '');
         memberAtAddress(msg.sender).userAddress = newAddress;
-    }
-
-    //Vault manipulator functions
-
-    function addPendingWithdrawl(var[] args, bytes32 sanction)
-        private
-        needsSanction(addPendingWithdrawl, args, sanction)
-    {
-        uint amountInWeis = args[0];
-        address to = args[1];
-        Vault vault = Vault(moduleAddress('VAULT'));
-        vault.addPendingWithdrawl(amountInWeis, to, withdrawlFreezeTime);
-    }
-
-    function addPendingTokenWithdrawl(var[] args, bytes32 sanction)
-        private
-        needsSanction(addPendingTokenWithdrawl, args, sanction)
-    {
-        uint amount = args[0];
-        address to = args[1];
-        string symbol = args[2];
-        address tokenAddr = args[3];
-        Vault vault = Vault(moduleAddress('VAULT'));
-        vault.addPendingTokenWithdrawl(amountInWeis, to, symbol, tokenAddr, withdrawlFreezeTime);
-    }
-
-    function invalidatePendingWithdrawl(var[] args, bytes32 sanction)
-        private
-        needsSanction(invalidatePendingWithdrawl, args, sanction)
-    {
-        uint id = args[0];
-        Vault vault = Vault(moduleAddress('VAULT'));
-        vault.invalidatePendingWithdrawl(id);
-    }
-
-    function invalidatePendingTokenWithdrawl(var[] args, bytes32 sanction)
-        private
-        needsSanction(invalidatePendingTokenWithdrawl, args, sanction)
-    {
-        uint id = args[0];
-        Vault vault = Vault(moduleAddress('VAULT'));
-        vault.invalidatePendingTokenWithdrawl(id);
-    }
-
-    function changeWithdrawlFreezeTime(var[] args, bytes32 sanction)
-        private
-        needsSanction(changeWithdrawlFreezeTime, args, sanction)
-    {
-        withdrawlFreezeTime = args[0];
-    }
-
-    function changeRewardFreezeTime(var[] args, bytes32 sanction)
-        private
-        needsSanction(changeRewardFreezeTime, args, sanction)
-    {
-        rewardFreezeTime = args[0];
-    }
-
-    function addPayBehavior(var[] args, bytes32 sanction)
-        private
-        needsSanction(addPayBehavior, args, sanction)
-    {
-        Vault vault = Vault(vaultAddress());
-        PayBehavior behavior = PayBehavior({
-            multiplier: args[0],
-            oracleAddress: args[1],
-            tokenAddress: args[2],
-            startBlockNumber: args[3],
-            endBlockNumber: args[4]
-        });
-        vault.addPayBehavior(behavior);
-    }
-
-    function removePayBehaviorAtIndex(var[] args, bytes32 sanction)
-        private
-        needsSanction(removePayBehaviorAtIndex, args, sanction)
-    {
-        Vault vault = Vault(vaultAddress());
-        vault.removePayBehaviorAtIndex(args[0]);
-    }
-
-    function removeAllPayBehaviors(var[] args, bytes32 sanction)
-        private
-        needsSanction(removeAllPayBehaviors, args, sanction)
-    {
-        Vault vault = Vault(vaultAddress());
-        vault.removeAllPayBehaviors();
-    }
-
-    function exportToVault(var[] args, bytes32 sanction)
-        private
-        needsSanction(exportToVault, args, sanction)
-    {
-        Vault vault = Vault(vaultAddress());
-        address newAddr = args[0];
-        bool burn = args[1];
-        vault.exportToVault(newAddr, burn);
-        Main main = Main(mainAddress);
-        main.changeModuleAddress('VAULT', newAddr, false);
     }
 
     //Tasks functions

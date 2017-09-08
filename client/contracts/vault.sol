@@ -61,17 +61,61 @@ contract Vault is Module {
     PendingWithdrawl[] public pendingWithdrawls;
     PendingTokenWithdrawl[] public pendingTokenWithdrawls;
 
+    uint public withdrawlFreezeTime;
+    uint public rewardFreezeTime;
+
     uint public frozenFunds;
     mapping(address => uint) public frozenTokens;
 
-    function Vault(address mainAddr) Module(mainAddr) {}
+    function Vault(address mainAddr) Module(mainAddr) {
+        //Initialize withdrawl freeze times
+        rewardFreezeTime = 3524; //Roughly 24 hours
+        withdrawlFreezeTime = 147; //Roughly 1 hour
+    }
 
-    function addPendingWithdrawl(uint amountInWeis, address to, uint blocksUntilWithdrawl) onlyMod('DAO') {
+    //Import and export functions for updating modules.
+
+    //Called by the old vault to transfer data to the new vault.
+    function importFromVault(uint length) onlyMod('VAULT') {
+        Vault oldVault = Vault(moduleAddress('VAULT'));
+        for (uint i = 0; i < length; i++) {
+            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber) = oldVault.payBehaviors(i);
+            payBehaviors[i] = PayBehavior({
+                multiplier: multiplier,
+                oracleAddress: oracleAddress,
+                tokenAddress: tokenAddress,
+                startBlockNumber: startBlockNumber,
+                endBlockNumber: endBlockNumber
+            });
+        }
+    }
+
+    //Transfers all data and funds to the new vault.
+    function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
+        Vault newVault = Vault(newVaultAddr);
+        newVault.importFromVault(payBehaviors.length);
+        if (burn) {
+            selfdestruct(newVaultAddr);
+        } else {
+            newVault.transfer(this.balance);
+        }
+    }
+
+    //Withdrawl handlers
+
+    function addPendingWithdrawl(uint amountInWeis, address to, bool isReward) onlyMod('DAO') {
         uint availableFunds = this.balance - frozenFunds;
         require(availableFunds >= amountInWeis); //Make sure there's enough unfrozen Ether in the vault
         require(to.balance + amountInWeis > to.balance); //Prevent overflow
 
         frozenFunds += amountInWeis;
+
+        uint blocksUntilWithdrawl；
+        if (isReward) {
+            blocksUntilWithdrawl = rewardFreezeTime;
+        } else {
+            blocksUntilWithdrawl = withdrawlFreezeTime;
+        }
 
         pendingWithdrawls.push(PendingWithdrawl({
             amountInWeis: amountInWeis,
@@ -81,13 +125,20 @@ contract Vault is Module {
         }));
     }
 
-    function addPendingTokenWithdrawl(uint amount, address to, string symbol, address tokenAddr, uint blocksUntilWithdrawl) onlyMod('DAO') {
+    function addPendingTokenWithdrawl(uint amount, address to, string symbol, address tokenAddr, bool isReward) onlyMod('DAO') {
         ERC20 token = ERC20(tokenAddr);
         uint availableTokens = token.balanceOf(this) - frozenTokens[tokenAddr];
         require(availableTokens >= amount); //Make sure there's enough unfrozen tokens in the vault
         require(token.balanceOf(to) + amount > token.balanceOf(to)); //Prevent overflow
 
         frozenTokens[tokenAddr] += amount;
+
+        uint blocksUntilWithdrawl；
+        if (isReward) {
+            blocksUntilWithdrawl = rewardFreezeTime;
+        } else {
+            blocksUntilWithdrawl = withdrawlFreezeTime;
+        }
 
         pendingTokenWithdrawls.push(PendingTokenWithdrawl({
             amount: amount,
@@ -138,6 +189,14 @@ contract Vault is Module {
         frozenTokens[w.tokenAddress] -= w.amount;
     }
 
+    function changeFreezeTime(uint newTime, bool isReward) onlyMod('DAO') {
+        if (isReward) {
+            rewardFreezeTime = newTime;
+        } else {
+            withdrawlFreezeTime = newTime;
+        }
+    }
+
     //Pay behavior manipulators.
 
     function addPayBehavior(
@@ -147,7 +206,7 @@ contract Vault is Module {
         uint startBlockNumber,
         uint endBlockNumber
     )
-    onlyMod('DAO')
+        onlyMod('DAO')
     {
         payBehaviors.push(PayBehavior({
             multiplier: multiplier,
@@ -164,34 +223,6 @@ contract Vault is Module {
 
     function removeAllPayBehaviors() onlyMod('DAO') {
         delete payBehaviors;
-    }
-
-    //Import and export functions for updating modules.
-
-    //Called by the old vault to transfer data to the new vault.
-    function importFromVault(uint length) onlyMod('VAULT') {
-        Vault oldVault = Vault(moduleAddress('VAULT'));
-        for (uint i = 0; i < length; i++) {
-            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber) = oldVault.payBehaviors(i);
-            payBehaviors[i] = PayBehavior({
-                multiplier: multiplier,
-                oracleAddress: oracleAddress,
-                tokenAddress: tokenAddress,
-                startBlockNumber: startBlockNumber,
-                endBlockNumber: endBlockNumber
-            });
-        }
-    }
-
-    //Transfers all data and funds to the new vault.
-    function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
-        Vault newVault = Vault(newVaultAddr);
-        newVault.importFromVault(payBehaviors.length);
-        if (burn) {
-            selfdestruct(newVaultAddr);
-        } else {
-            newVault.transfer(this.balance);
-        }
     }
 
     //Handles incoming donation.
