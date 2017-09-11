@@ -110,7 +110,7 @@ contract Vault is Module {
 
         frozenFunds += amountInWeis;
 
-        uint blocksUntilWithdrawl；
+        uint blocksUntilWithdrawl;
         if (isReward) {
             blocksUntilWithdrawl = rewardFreezeTime;
         } else {
@@ -133,7 +133,7 @@ contract Vault is Module {
 
         frozenTokens[tokenAddr] += amount;
 
-        uint blocksUntilWithdrawl；
+        uint blocksUntilWithdrawl;
         if (isReward) {
             blocksUntilWithdrawl = rewardFreezeTime;
         } else {

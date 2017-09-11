@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
 import './main.sol';
-//import './dao.sol';
+import './dao.sol';
 
 contract TasksHandler is Module {
 
@@ -21,11 +21,17 @@ contract TasksHandler is Module {
     struct TaskSolution {
         string metadata;
         address submitter;
-        uint taskId;
         bytes patchData;
         uint upvotes;
         uint downvotes;
         mapping(address => bool) hasVoted;
+    }
+
+    modifier needsRight(string right) {
+        Dao dao = Dao(moduleAddress('DAO'));
+        require(dao.memberHasRight(msg.sender, right));
+        require(!dao.isBanned(msg.sender));
+        _;
     }
 
     TaskListing[] public tasks;
@@ -34,7 +40,7 @@ contract TasksHandler is Module {
     uint public rewardRepCap;
     uint public penaltyRepCap;
     uint public rewardWeiCap;
-    mapping(bytes32 => uint) public rewardTokenCap; //From token symbol to cap
+    mapping(address => uint) public rewardTokenCap; //From token's address to cap
 
     event TaskSolutionAccepted(uint taskId, uint solutionId);
 
@@ -56,16 +62,12 @@ contract TasksHandler is Module {
     )
         needsRight('submit_task')
     {
+        require(rewardTokenAmountList.length == rewardTokenIndexList.length);
+
         require(rewardInWeis <= rewardWeiCap);
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
-        require(rewardTokenAmountList.length == rewardTokenIndexList.length);
-
-        for (uint i = 0; i < rewardTokenIndexList.length; i++) {
-            uint id = rewardTokenIndexList[i];
-            uint reward = rewardTokenAmountList[i];
-            require(reward <= rewardTokenCap[acceptedTokens[id].symbol]);
-        }
+        checkTokenCap(rewardTokenIndexList, rewardTokenAmountList);
 
         tasks.push(TaskListing({
             metadata: metadata,
@@ -85,7 +87,9 @@ contract TasksHandler is Module {
         tasks[index].isInvalid = true;
     }
 
-    function submitSolution(address sender, string metadata, uint taskId, bytes patchData) onlyMod('DAO') {
+    function submitSolution(address sender, string metadata, uint taskId, bytes patchData)
+        needsRight('submit_solution')
+    {
         require(taskId < tasks.length);
 
         TaskListing storage task = tasks[taskId];
@@ -99,7 +103,6 @@ contract TasksHandler is Module {
         taskSolutions[taskId].push(TaskSolution({
             metadata: metadata,
             submitter: sender,
-            taskId: taskId,
             patchData: patchData,
             upvotes: 0,
             downvotes: 0
@@ -130,6 +133,8 @@ contract TasksHandler is Module {
 
         require(task.poster == sender);
 
+        require(!task.hasBeenPenalized[taskSolutions[taskId][solId].submitter]);
+
         task.isInvalid = true;
 
         //Broadcast acceptance
@@ -137,69 +142,57 @@ contract TasksHandler is Module {
         TaskSolutionAccepted(taskId, solId);
 
         //Pay submitter of solution
-        //Dao dao = Dao(moduleAddress('DAO'));
-        //dao.paySolutionReward(taskId, solId);
+        Dao dao = Dao(moduleAddress('DAO'));
+        dao.paySolutionReward(taskId, solId);
     }
 
-    function paySolutionReward(uint taskId, uint solId) private {
-        TaskListing task = tasks[taskId];
-        TaskSolution sol = taskSolutions[taskId][solId];
-
-        //Reward in ether
-        Vault vault = Vault(moduleAddress('VAULT'));
-        vault.addPendingWithdrawl(task.rewardInWeis, sol.submitter, rewardFreezeTime);
-
-        //Reward in reputation
-        Member member = memberAtAddress(sol.submitter);
-        member.goodRep += task.rewardGoodRep;
-
-        //Reward in tokens
-        for (uint i = 0; i < task.rewardTokenIndexList.length; i++) {
-            uint id = task.rewardTokenIndexList[i];
-            uint reward = task.rewardTokenAmountList[i];
-
-            VoteToken token = acceptedTokens[id];
-
-            vault.addPendingTokenWithdrawl(reward, sol.submitter, token.symbol, token.tokenAddress, rewardFreezeTime);
-        }
-    }
-
-    function penalizeSolutionSubmitter(var[] args, bytes32 sanction)
-        private
-        needsSanction(penalizeSolutionSubmitter, args, sanction)
-    {
-        uint taskId = args[0];
-        uint solId = args[1];
-        bool banSubmitter = args[2];
-
-        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        TaskListing task = handler.tasks(taskId);
-        TaskSolution sol = task.solutions(solId);
-
-        //Check if submitter has already been penalized
-        require(!task.hasBeenPenalized[sol.submitter]);
-        task.hasBeenPenalized[sol.submitter] = true;
-
-        //Penalize reputation
-        Member member = memberAtAddress(sol.submitter);
-        member.badRep += task.penaltyBadRep;
-
-        if (banSubmitter) {
-            isBanned[sol.submitter] = true;
-        }
-    }
-
-    function setCap(string capType, uint newCap, string tokenSymbol)
+    function setCap(string capType, uint newCap, address tokenAddress)
         onlyMod('DAO')
     {
-        if (capType == 'wei') {
+        if (keccak256(capType) == keccak256('wei')) {
             rewardWeiCap = newCap;
-        } else if (capType == 'good_rep') {
+        } else if (keccak256(capType) == keccak256('good_rep')) {
             rewardRepCap = newCap;
-        } else if (capType == 'bad_rep') {
+        } else if (keccak256(capType) == keccak256('bad_rep')) {
             penaltyRepCap = newCap;
-        } else if (capType == 'token') {
-            rewardTokenCap[keccak256(tokenSymbol)] = newCap;
+        } else if (keccak256(capType) == keccak256('token')) {
+            rewardTokenCap[tokenAddress] = newCap;
+        }
+    }
+
+    function deleteRewardTokenCap(address tokenAddress) onlyMod('DAO') {
+        delete rewardTokenCap[tokenAddress];
+    }
+
+    //Helpers
+
+    function rewardTokenIndex(uint taskId, uint tokenId) returns(uint) {
+        return tasks[taskId].rewardTokenIndexList[tokenId];
+    }
+
+    function rewardTokenAmount(uint taskId, uint tokenId) returns(uint) {
+        return tasks[taskId].rewardTokenAmountList[tokenId];
+    }
+
+    function rewardTokenCount(uint taskId) returns(uint) {
+        return tasks[taskId].rewardTokenAmountList.length;
+    }
+
+    function hasBeenPenalizedForTask(uint taskId, address memberAddr) returns(bool) {
+        return tasks[taskId].hasBeenPenalized[memberAddr];
+    }
+
+    function setPenalizedStatus(uint taskId, address memberAddr, bool status) onlyMod('DAO') {
+        tasks[taskId].hasBeenPenalized[memberAddr] = status;
+    }
+    
+    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant internal {
+        Dao dao = Dao(moduleAddress('DAO'));
+        for (uint i = 0; i < rewardTokenIndexList.length; i++) {
+            uint id = rewardTokenIndexList[i];
+            uint reward = rewardTokenAmountList[i];
+            var (,tokenAddress) = dao.acceptedTokens(id);
+            require(reward <= rewardTokenCap[tokenAddress]);
         }
     }
 
