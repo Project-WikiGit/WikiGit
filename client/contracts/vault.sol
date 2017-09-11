@@ -125,7 +125,15 @@ contract Vault is Module {
         }));
     }
 
-    function addPendingTokenWithdrawl(uint amount, address to, string symbol, address tokenAddr, bool isReward) onlyMod('DAO') {
+    function addPendingTokenWithdrawl(
+        uint amount,
+        address to,
+        string symbol,
+        address tokenAddr,
+        bool isReward
+    )
+        onlyMod('DAO')
+    {
         ERC20 token = ERC20(tokenAddr);
         uint availableTokens = token.balanceOf(this) - frozenTokens[tokenAddr];
         require(availableTokens >= amount); //Make sure there's enough unfrozen tokens in the vault

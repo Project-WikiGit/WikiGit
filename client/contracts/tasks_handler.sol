@@ -109,7 +109,9 @@ contract TasksHandler is Module {
         }));
     }
 
-    function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote) onlyMod('DAO') {
+    function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote)
+        needsRight('vote_solution')
+    {
         require(taskId < tasks.length);
         require(solId < taskSolutions[taskId].length);
 
@@ -125,7 +127,7 @@ contract TasksHandler is Module {
         }
     }
 
-    function acceptSolution(address sender, uint taskId, uint solId) onlyMod('DAO') {
+    function acceptSolution(address sender, uint taskId, uint solId) {
         require(taskId < tasks.length);
         TaskListing storage task = tasks[taskId];
 
@@ -160,7 +162,9 @@ contract TasksHandler is Module {
         }
     }
 
-    function deleteRewardTokenCap(address tokenAddress) onlyMod('DAO') {
+    function deleteRewardTokenCap(address tokenAddress)
+        onlyMod('DAO')
+    {
         delete rewardTokenCap[tokenAddress];
     }
 
@@ -185,7 +189,7 @@ contract TasksHandler is Module {
     function setPenalizedStatus(uint taskId, address memberAddr, bool status) onlyMod('DAO') {
         tasks[taskId].hasBeenPenalized[memberAddr] = status;
     }
-    
+
     function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant internal {
         Dao dao = Dao(moduleAddress('DAO'));
         for (uint i = 0; i < rewardTokenIndexList.length; i++) {

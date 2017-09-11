@@ -85,7 +85,7 @@ contract Dao is Module {
         setGroupRight('full_time', 'submit_task_rewardless', true);
         setGroupRight('full_time', 'vote', true);
         setGroupRight('full_time', 'submit_solution', true);
-        setGroupRight('full_time', 'accept_Solution', true);
+        //setGroupRight('full_time', 'accept_Solution', true);
         setGroupRight('full_time', 'vote_solution', true);
         setGroupRight('full_time', 'access_proj_management', true);
 
@@ -115,23 +115,6 @@ contract Dao is Module {
         }));
         votingTypes[votingTypes.length - 1].isEligible[keccak256('full_time')] = true;
     }
-
-    /*function importFromPrevDao() onlyMod('DAO') {
-        Dao prev = Dao(moduleAddress('DAO'));
-        members = prev.members;
-        memberId = prev.memberId;
-        groupRights = prev.groupRights;
-        votings = prev.votings;
-        votingTypes = prev.votingTypes;
-        acceptedTokens = prev.acceptedTokens;
-        votingMemberCount = prev.votingMemberCount;
-    }
-
-    function exportToNewDao(address newAddr) onlyMod('DAO')
-    {
-        Dao next = Dao(newAddr);
-        next.importFromPrevDao();
-    }*/
 
     //Voting
 
