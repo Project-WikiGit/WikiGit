@@ -4,24 +4,32 @@ import './main.sol';
 import './dao.sol';
 
 contract TasksHandler is Module {
-
     struct TaskListing {
-        string metadata;
+        string metadata; //Metadata of the task. Format dependent on the higher level UI.
         address poster;
         uint rewardInWeis;
-        uint[] rewardTokenIndexList;
-        uint[] rewardTokenAmountList;
-        uint rewardGoodRep;
-        uint penaltyBadRep;
+        uint[] rewardTokenIdList; //IDs of the rewarded tokens in the recognizedTokenList of the DAO.
+        uint[] rewardTokenAmountList; //Amount of rewarded tokens with respect to rewardTokenIdList.
+        uint rewardGoodRep; //Reward in good reputation.
+        uint penaltyBadRep; //Penalty in bad reputation if a solution is deemed malicious.
         bool isInvalid;
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
-        mapping(address => bool) hasBeenPenalized;
+        mapping(address => bool) hasBeenPenalized; //Recordes whether a user has been penalized for a malicious solution.
     }
 
+    /*
+        Defines a task solution. Solutions take the form of Git patches, and are currently stored onchain.
+        Future versions will move the patch data to decentralized storage platforms like Swarm and IPFS.
+    */
     struct TaskSolution {
-        string metadata;
+        string metadata; //Metadata of the task. Format dependent on the higher level UI.
         address submitter;
-        bytes patchData;
+        bytes patchData; //Data of the Git patch.
+
+        /*
+            Solution voting allow members to express their evaluations of a solution.
+            Does not have any actual effect on the solution acceptance process.
+        */
         uint upvotes;
         uint downvotes;
         mapping(address => bool) hasVoted;
@@ -34,9 +42,12 @@ contract TasksHandler is Module {
         _;
     }
 
-    TaskListing[] public tasks;
-    TaskSolution[][] public taskSolutions;
+    TaskListing[] public taskList;
+    TaskSolution[][] public taskSolutionList;
 
+    /*
+        Upper bounds for reward amounts.
+    */
     uint public rewardRepCap;
     uint public penaltyRepCap;
     uint public rewardWeiCap;
@@ -55,44 +66,74 @@ contract TasksHandler is Module {
         string metadata,
         address poster,
         uint rewardInWeis,
-        uint[] rewardTokenIndexList,
+        uint[] rewardTokenIdList,
         uint[] rewardTokenAmountList,
         uint rewardGoodRep,
         uint penaltyBadRep
     )
         needsRight('submit_task')
     {
-        require(rewardTokenAmountList.length == rewardTokenIndexList.length);
+        require(rewardTokenAmountList.length == rewardTokenIdList.length);
 
         require(rewardInWeis <= rewardWeiCap);
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
-        checkTokenCap(rewardTokenIndexList, rewardTokenAmountList);
+        checkTokenCap(rewardTokenIdList, rewardTokenAmountList);
 
-        tasks.push(TaskListing({
+        taskList.push(TaskListing({
             metadata: metadata,
             poster: poster,
             rewardInWeis: rewardInWeis,
-            rewardTokenIndexList: rewardTokenIndexList,
+            rewardTokenIdList: rewardTokenIdList,
             rewardTokenAmountList: rewardTokenAmountList,
             rewardGoodRep: rewardGoodRep,
             penaltyBadRep: penaltyBadRep,
             isInvalid: false
         }));
-        taskSolutions.length += 1;
+        taskSolutionList.length += 1;
+    }
+
+    /*
+        For part time contributors who don't have the right to post task listings with rewards.
+    */
+    function publishRewardlessTaskListing(
+        string metadata,
+        address poster,
+        uint rewardGoodRep,
+        uint penaltyBadRep
+    )
+        needsRight('submit_task_rewardless')
+    {
+        require(rewardGoodRep <= rewardRepCap);
+        require(penaltyBadRep <= penaltyRepCap);
+        checkTokenCap(rewardTokenIdList, rewardTokenAmountList);
+
+        uint[] storage rewardTokenIdList;
+        uint[] storage rewardTokenAmountList;
+        taskList.push(TaskListing({
+            metadata: metadata,
+            poster: poster,
+            rewardInWeis: 0,
+            rewardTokenIdList: rewardTokenIdList,
+            rewardTokenAmountList: rewardTokenAmountList,
+            rewardGoodRep: rewardGoodRep,
+            penaltyBadRep: penaltyBadRep,
+            isInvalid: false
+        }));
+        taskSolutionList.length += 1;
     }
 
     function invalidateTaskListingAtIndex(uint index) onlyMod('DAO') {
-        require(index < tasks.length);
-        tasks[index].isInvalid = true;
+        require(index < taskList.length);
+        taskList[index].isInvalid = true;
     }
 
     function submitSolution(address sender, string metadata, uint taskId, bytes patchData)
         needsRight('submit_solution')
     {
-        require(taskId < tasks.length);
+        require(taskId < taskList.length);
 
-        TaskListing storage task = tasks[taskId];
+        TaskListing storage task = taskList[taskId];
 
         require(!task.isInvalid);
         require(sender != task.poster); //Prevent self-serving tasks
@@ -100,7 +141,7 @@ contract TasksHandler is Module {
         require(!task.hasSubmitted[sender]);
         task.hasSubmitted[sender] = true;
 
-        taskSolutions[taskId].push(TaskSolution({
+        taskSolutionList[taskId].push(TaskSolution({
             metadata: metadata,
             submitter: sender,
             patchData: patchData,
@@ -112,10 +153,10 @@ contract TasksHandler is Module {
     function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote)
         needsRight('vote_solution')
     {
-        require(taskId < tasks.length);
-        require(solId < taskSolutions[taskId].length);
+        require(taskId < taskList.length);
+        require(solId < taskSolutionList[taskId].length);
 
-        TaskSolution storage sol = taskSolutions[taskId][solId];
+        TaskSolution storage sol = taskSolutionList[taskId][solId];
 
         require(!sol.hasVoted[sender]);
         sol.hasVoted[sender] = true;
@@ -127,20 +168,23 @@ contract TasksHandler is Module {
         }
     }
 
-    function acceptSolution(address sender, uint taskId, uint solId) {
-        require(taskId < tasks.length);
-        TaskListing storage task = tasks[taskId];
+    /*
+        Accepts a solution and pays the rewards to the solution submitter.
+        Can only be called by the poster of the task listing.
+    */
+    function acceptSolution(uint taskId, uint solId) {
+        require(taskId < taskList.length); //Ensure that taskId is valid.
+        TaskListing storage task = taskList[taskId];
 
-        require(solId < taskSolutions[taskId].length);
+        require(solId < taskSolutionList[taskId].length); //Ensure that taskId is valid.
 
-        require(task.poster == sender);
+        require(task.poster == msg.sender); //Ensure that the caller is the poster of the task listing.
 
-        require(!task.hasBeenPenalized[taskSolutions[taskId][solId].submitter]);
+        require(!task.hasBeenPenalized[taskSolutionList[taskId][solId].submitter]);
 
         task.isInvalid = true;
 
         //Broadcast acceptance
-
         TaskSolutionAccepted(taskId, solId);
 
         //Pay submitter of solution
@@ -168,34 +212,35 @@ contract TasksHandler is Module {
         delete rewardTokenCap[tokenAddress];
     }
 
+    function setPenalizedStatus(uint taskId, address memberAddr, bool status) onlyMod('DAO') {
+        taskList[taskId].hasBeenPenalized[memberAddr] = status;
+    }
+
     //Helpers
 
     function rewardTokenIndex(uint taskId, uint tokenId) returns(uint) {
-        return tasks[taskId].rewardTokenIndexList[tokenId];
+        return taskList[taskId].rewardTokenIdList[tokenId];
     }
 
     function rewardTokenAmount(uint taskId, uint tokenId) returns(uint) {
-        return tasks[taskId].rewardTokenAmountList[tokenId];
+        return taskList[taskId].rewardTokenAmountList[tokenId];
     }
 
     function rewardTokenCount(uint taskId) returns(uint) {
-        return tasks[taskId].rewardTokenAmountList.length;
+        return taskList[taskId].rewardTokenAmountList.length;
     }
 
     function hasBeenPenalizedForTask(uint taskId, address memberAddr) returns(bool) {
-        return tasks[taskId].hasBeenPenalized[memberAddr];
+        return taskList[taskId].hasBeenPenalized[memberAddr];
     }
 
-    function setPenalizedStatus(uint taskId, address memberAddr, bool status) onlyMod('DAO') {
-        tasks[taskId].hasBeenPenalized[memberAddr] = status;
-    }
-
+    //For avoiding the StackTooDeep exeption.
     function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant internal {
         Dao dao = Dao(moduleAddress('DAO'));
         for (uint i = 0; i < rewardTokenIndexList.length; i++) {
             uint id = rewardTokenIndexList[i];
             uint reward = rewardTokenAmountList[i];
-            var (,tokenAddress) = dao.acceptedTokens(id);
+            var (,tokenAddress) = dao.recognizedTokenList(id);
             require(reward <= rewardTokenCap[tokenAddress]);
         }
     }
