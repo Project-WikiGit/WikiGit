@@ -2,6 +2,8 @@
 
 A PoC implementation of Decentralized Autonomous Projects.
 
+The smart contracts are in /client/contracts/
+
 
 
 ## Intro
