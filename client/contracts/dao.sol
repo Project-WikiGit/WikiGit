@@ -45,6 +45,7 @@ contract Dao is Module {
         string description;
         uint quorumPercent;
         uint minForPercent; //Minimum proportion of for votes needed to pass the voting.
+        uint activeTimeInBlocks; //The number of blocks for which the voting is active.
         uint goodRepWeight;
         uint badRepWeight;
         mapping(address => uint) tokenWeights; //From token's address to weight
@@ -58,7 +59,6 @@ contract Dao is Module {
         uint typeId; //The index of the voting type in the votingTypeList array.
         address creator;
         uint startBlockNumber;
-        uint endBlockNumber;
         uint forVotes;
         uint againstVotes;
         uint votedMemberCount;
@@ -140,6 +140,7 @@ contract Dao is Module {
             description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires unanimous support. Should be removed after bootstrapping. Adding new members before finishing bootstrapping is not advised.',
             quorumPercent: 100,
             minForPercent: 100,
+            activeTimeInBlocks: 25,
             goodRepWeight: 1,
             badRepWeight: 1,
             votableGroups: votableGroups
@@ -154,7 +155,6 @@ contract Dao is Module {
         string description,
         uint votingTypeId,
         uint startBlockNumber,
-        uint endBlockNumber,
         bytes32[] executionHashList,
         address executionActor
     )
@@ -168,7 +168,6 @@ contract Dao is Module {
             typeId: votingTypeId,
             creator: msg.sender,
             startBlockNumber: startBlockNumber,
-            endBlockNumber: endBlockNumber,
             executionHashList: executionHashList,
             executionActor: executionActor,
             forVotes: 0,
@@ -191,10 +190,10 @@ contract Dao is Module {
         Voting storage voting = votingList[votingId];
 
         VotingType storage vType = votingTypeList[voting.typeId];
-        Member storage member = memberList[memberId[msg.sender]];
+        Member storage member = memberAtAddress(msg.sender);
 
         require(!voting.isInvalid);
-        require(block.number >= voting.startBlockNumber && block.number < voting.endBlockNumber);
+        require(block.number >= voting.startBlockNumber && block.number < voting.startBlockNumber + vType.activeTimeInBlocks);
         require(!voting.hasVoted[msg.sender]);
         require(vType.isEligible[keccak256(memberAtAddress(msg.sender).groupName)]);
 
@@ -223,7 +222,7 @@ contract Dao is Module {
         voting.isInvalid = true;
 
         VotingType storage vType = votingTypeList[voting.typeId];
-        require(block.number >= voting.endBlockNumber);
+        require(block.number >= voting.startBlockNumber + vType.activeTimeInBlocks);
 
         uint votingMemberCount;
         for (uint i = 0; i < vType.votableGroups.length; i++) {
@@ -249,6 +248,7 @@ contract Dao is Module {
         string description,
         uint quorumPercent,
         uint minForPercent,
+        uint activeTimeInBlocks,
         uint goodRepWeight,
         uint badRepWeight,
         address[] tokenAddresses,
@@ -264,6 +264,7 @@ contract Dao is Module {
             description,
             quorumPercent,
             minForPercent,
+            activeTimeInBlocks,
             goodRepWeight,
             badRepWeight,
             votableGroups
@@ -281,6 +282,7 @@ contract Dao is Module {
         string description,
         uint quorumPercent,
         uint minForPercent,
+        uint activeTimeInBlocks,
         uint goodRepWeight,
         uint badRepWeight,
         bytes32[] votableGroups
@@ -292,6 +294,7 @@ contract Dao is Module {
             description: description,
             quorumPercent: quorumPercent,
             minForPercent: minForPercent,
+            activeTimeInBlocks: activeTimeInBlocks,
             goodRepWeight: goodRepWeight,
             badRepWeight: badRepWeight,
             votableGroups: votableGroups
@@ -507,7 +510,7 @@ contract Dao is Module {
 
     //Helpers
 
-    function memberAtAddress(address addr) constant internal returns(Member m) {
+    function memberAtAddress(address addr) constant internal returns(Member storage m) {
         m = memberList[memberId[addr]];
     }
 
