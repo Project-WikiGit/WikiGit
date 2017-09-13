@@ -1,6 +1,6 @@
 /*
     tasks_handler.sol
-    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+    Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
     This file implements the mechanisms for posting task listings, submitting
     task solutions, and accepting task solutions as the final answers. It should

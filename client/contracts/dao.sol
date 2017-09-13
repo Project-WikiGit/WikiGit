@@ -1,6 +1,6 @@
 /*
     dao.sol
-    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+    Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
     This file implements the mechanics of the DAO, including managing members,
     holding votings, modifying the bylaws and structure of the DAO, calling and

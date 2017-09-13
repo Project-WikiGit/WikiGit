@@ -1,6 +1,6 @@
 /*
     vault.sol
-    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+    Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
     This file implements the DAP's vault, or in other words the manager
     of the DAP's funds. It allows for the delayed withdrawl of ethers

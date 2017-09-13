@@ -1,6 +1,6 @@
 /*
     main.sol
-    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+    Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
     This file implements the main contract of the DAP, or in other words
     the module manager. The main contract records the metadata of the DAP,

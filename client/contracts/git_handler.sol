@@ -1,6 +1,6 @@
 /*
     git_handler.sol
-    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+    Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
     Barebone version of a contract that communicates with the Git implementation
     in the user interface component (e.g. a Javascript UI).
