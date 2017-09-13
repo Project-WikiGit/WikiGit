@@ -1,3 +1,15 @@
+/*
+    vault.sol
+    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+
+    This file implements the DAP's vault, or in other words the manager
+    of the DAP's funds. It allows for the delayed withdrawl of ethers
+    and/or ERC20 tokens (the delay prevents malicious withdrawls), and
+    giving people who donate ethers to the vault custom tokens in return.
+    The latter function can be used to implement things like ICOs and
+    honorary tokens (such as the unicorn token), and more.
+*/
+
 pragma solidity ^0.4.11;
 
 import './main.sol';

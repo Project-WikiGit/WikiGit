@@ -1,3 +1,13 @@
+/*
+    tasks_handler.sol
+    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+
+    This file implements the mechanisms for posting task listings, submitting
+    task solutions, and accepting task solutions as the final answers. It should
+    be possible to modify this file to allow compatability with third-party freelancing
+    platforms.
+*/
+
 pragma solidity ^0.4.11;
 
 import './main.sol';

@@ -1,3 +1,14 @@
+/*
+    dao.sol
+    Created by Zefram Lou (Zebang Liu) as a part of the WikiGit project.
+
+    This file implements the mechanics of the DAO, including managing members,
+    holding votings, modifying the bylaws and structure of the DAO, calling and
+    managing other modules, allowing modules to access other modules, and so on.
+
+    The DAO is the absolute source of power of the entire DAP.
+*/
+
 pragma solidity ^0.4.11;
 
 import './erc20.sol';
