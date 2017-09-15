@@ -18,9 +18,17 @@ The smart contracts are in /client/contracts/
 
 
 
-## The Three Components
+## The Logic Component (AKA Smart Contracts)
 
-To be written.
+​	The logic component includes a DAO with a fully fledged voting mechanism; a vault that allows for the safe withdrawl of funds, as well as reactive token minting that can be used for stuff like ICOs and honorary tokens (such as the unicorn token issued to people who donated to the Ethereum project); a tasks handler for publishing tasks and accepting solutions on the freelancing platform; and a Git handler for communicating with the Git repository hosted by the storage component.
+
+​	All of the core smart contracts mentioned above were designed as individual modules. This design allows for both updating the code down the road via contract swapping, and introducing new functionalities via adding lightweight modules in order to prevent frequent updates of the heavyweight core contracts. Even though the frequent intercontract communication of a modularized design entails costing more gas during normal usage than a single-contract infrastructure, the benefits of this design means that it's a lot more easier to maintain, update, and debug such systems, which makes large-scale, complex DAPs possible.
+
+​	Also, the modularized design means that it is possible to swap out a core module for something compatible with any third-party app of your choosing. For instance, you can replace the task handler module for a contract that publishes task listings onto a third-party platform.
+
+​	Due to the fact that it's infeasible to have an on-chain Git implementation, Git would have to be hosted by the off-chain UI that interacts with the on-chain logic.
+
+​	For more information, just check out the code! All of the contracts were written with readability in mind and have been well commented, so it'd be a treat for those who prefer code to English.
 
 
 
