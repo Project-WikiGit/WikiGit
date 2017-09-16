@@ -2,13 +2,13 @@
 
 A PoC implementation of Decentralized Autonomous Projects.
 
-The smart contracts are in /client/contracts/
+The smart contracts are at /client/contracts/
 
 
 
 ## Intro
 
-​	WikiGit implements, in the simplest terms, an organic combination of DAOs (Decentralized Autonomous Organizations), freelancing platforms (like Topcoder), and Git. We call this combination DAPs (Decentralized Autonomous Projects). The hope is that WikiGit will allow ingenious ideas to incarnate into projects that are self-sustaining in both finances and talent, with minimal cost and hindrances, similar to how Wikipedia allowed an entire encyclopedia to spontaneously come into being. In fact, it is possible that in the near future, WikiGit itself will be a project powered by WikiGit!
+​	WikiGit implements, in the simplest terms, an organic combination of DAOs (Decentralized Autonomous Organizations), freelancing platforms (like Topcoder), and Git. We call this combination DAPs (Decentralized Autonomous Projects). The hope is that WikiGit will allow ingenious ideas to incarnate into projects that are self-sustaining in both finances and talent, with minimal cost and hindrances, similar to how Wikipedia allowed an entire encyclopedia to spontaneously come into being. In fact, it is possible that in the near future, WikiGit itself will be a DAP powered by WikiGit!
 
 ​	WikiGit consists of three components: The logic component, which is a group of Ethereum smart contracts that handles most of the DAP's logic; the storage component, which stores the DAP's Git repository and some other data, and is based on decentralized storage solutions like Swarm and IPFS; and the UI component, which allows users to easily interact with the project, hosts the Git implementation, handles the communication between the other two layers, and implements some additional features, such as project management and forums.
 
