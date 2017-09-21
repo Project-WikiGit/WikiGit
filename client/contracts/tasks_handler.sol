@@ -23,6 +23,8 @@ contract TasksHandler is Module {
         uint rewardGoodRep; //Reward in good reputation.
         uint penaltyBadRep; //Penalty in bad reputation if a solution is deemed malicious.
         bool isInvalid;
+        uint acceptedSolutionID; //Index of the accepted solution.
+        bool hasAcceptedSolution;
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
         mapping(address => bool) hasBeenPenalized; //Recordes whether a user has been penalized for a malicious solution.
     }
@@ -98,7 +100,9 @@ contract TasksHandler is Module {
             rewardTokenAmountList: rewardTokenAmountList,
             rewardGoodRep: rewardGoodRep,
             penaltyBadRep: penaltyBadRep,
-            isInvalid: false
+            isInvalid: false,
+            acceptedSolutionID: 0,
+            hasAcceptedSolution: false
         }));
         taskSolutionList.length += 1;
     }
@@ -128,7 +132,9 @@ contract TasksHandler is Module {
             rewardTokenAmountList: rewardTokenAmountList,
             rewardGoodRep: rewardGoodRep,
             penaltyBadRep: penaltyBadRep,
-            isInvalid: false
+            isInvalid: false,
+            acceptedSolutionID: 0,
+            hasAcceptedSolution: false
         }));
         taskSolutionList.length += 1;
     }
@@ -193,6 +199,8 @@ contract TasksHandler is Module {
         require(!task.hasBeenPenalized[taskSolutionList[taskId][solId].submitter]);
 
         task.isInvalid = true;
+        task.hasAcceptedSolution = true;
+        task.acceptedSolutionID = solId;
 
         //Broadcast acceptance
         TaskSolutionAccepted(taskId, solId);

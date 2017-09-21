@@ -9,14 +9,50 @@
 pragma solidity ^0.4.11;
 
 import './main.sol';
+import './tasks_handler.sol';
 
 contract GitHandler is Module {
-    event ExecuteConsoleCommand(string command);
+    /*
+        The Git handler stores the entire history of the Git repository's IPFS hash as a tree
+        identical to the type of tree structure used in Git itself.
 
-    function GitHandler(address mainAddr) Module(mainAddr) {}
+        A new IPFS hash that encorporates the most recent commit would point to
+        the hash at currentHashID, pushed to ipfsHashes by the original poster of the task.
+        If currentHashID had been changed to the ID of a hash that's lower in the tree,
+        a new branch would automatically be formed upon pushing a new hash.
 
-    function executeConsoleCommand(string command) onlyMod('DAO') {
-        ExecuteConsoleCommand(command);
+        This design ensures that any attack on the storage component (e.g. setting a new
+        IPFS hash that points to a completely different repo) can be easily reverted by
+        changing currentHashID to the index of the IPFS hash of the last working repo,
+        since no info is ever deleted.
+    */
+    bytes32[] ipfsHashes; //Stores the tree of the IPFS hashes of the different states of the Git repository.
+    mapping(uint => uint) prevHashIDPointer; //Stores the pointers pointing from an IPFS hash's index to the index of the previous hash with respect to the tree structure.
+    uint currentHashID; //Stores the index of the IPFS hash of the Git repository at the current state.
+
+    function GitHandler(address mainAddr, bytes32 repoHash) Module(mainAddr) {
+        ipfsHashes.push(repoHash);
+        prevHashIDPointer[0] = 0; //For clarity
+        currentHashID = 0; //For clarity
+    }
+
+    function setCurrentIPFSHashID(uint id) onlyMod('DAO') {
+        currentHashID = id;
+    }
+
+    function commitTaskSolutionToRepo(uint taskId, uint solId, bytes32 newHash) {
+        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
+        var (,poster,,,,isInvalid, acceptedSolutionID, hasAcceptedSolution) = handler.taskList(taskId);
+        var (_,submitter,) = handler.taskSolutionList(taskId, solId);
+
+        require(poster == msg.sender); //Only the task's poster can commit.
+        require(hasAcceptedSolution); //Can only commit after a solution has been accepted.
+        require(acceptedSolutionID == solId); //Has to be the accepted solution.
+        require(!handler.hasBeenPenalizedForTask(taskId, submitter)); //Solution can't have been penalized.
+
+        ipfsHashes.push(newHash);
+        prevHashIDPointer[ipfsHashes.length - 1] = currentHashID;
+        currentHashID = ipfsHashes.length - 1;
     }
 
     function() {
