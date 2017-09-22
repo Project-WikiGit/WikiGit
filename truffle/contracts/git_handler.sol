@@ -55,6 +55,12 @@ contract GitHandler is Module {
         currentHashID = ipfsHashes.length - 1;
     }
 
+    //Helpers
+
+    function getCurrentIPFSHash() returns(bytes32) {
+        return ipfsHashes[currentHashID];
+    }
+
     function() {
         revert();
     }
