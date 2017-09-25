@@ -64,7 +64,7 @@ contract TasksHandler is Module {
     uint public rewardWeiCap;
     mapping(address => uint) public rewardTokenCap; //From token's address to cap
 
-    event TaskSolutionAccepted(uint taskId, uint solutionId);
+    event TaskSolutionAccepted(uint taskId, uint solutionId, bytes32 patchIPFSHash);
 
     function TasksHandler(address mainAddr) Module(mainAddr) {
         //Initialize reward caps
@@ -191,7 +191,9 @@ contract TasksHandler is Module {
         require(taskId < taskList.length); //Ensure that taskId is valid.
         TaskListing storage task = taskList[taskId];
 
-        require(solId < taskSolutionList[taskId].length); //Ensure that taskId is valid.
+        require(solId < taskSolutionList[taskId].length); //Ensure that solId is valid.
+
+        TaskSolution storage sol = taskSolutionList[taskId][solId];
 
         require(task.poster == msg.sender); //Ensure that the caller is the poster of the task listing.
 
@@ -202,7 +204,7 @@ contract TasksHandler is Module {
         task.acceptedSolutionID = solId;
 
         //Broadcast acceptance
-        TaskSolutionAccepted(taskId, solId);
+        TaskSolutionAccepted(taskId, solId, sol.patchIPFSHash);
 
         //Pay submitter of solution
         Dao dao = Dao(moduleAddress('DAO'));

@@ -1,91 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="Moved contracts to /truffle/contracts/. Added js-git.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/BACKERS-2.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/BACKERS.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/SPONSORS.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/art/architecture.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/art/jsgit-sticker-sheet.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/config-codec.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/deflate.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate-stream.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/object-codec.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/pack-codec.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/lib/readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/mixins/fs-db.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/mixins/mem-db.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/mixins/pack-ops.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/mixins/readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/doc/readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/apply-delta.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/config-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/defer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/deflate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/find-common.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/git-fs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/inflate-stream.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/inflate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/modes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/object-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/pack-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/pkt-line.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/lib/wrap-handler.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/add-cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/create-tree.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/delay.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/fall-through.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/formats.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/fs-db.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/indexed-db.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/mem-cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/mem-db.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/pack-ops.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/path-to-entry.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/read-combiner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/sync.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/walkers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/mixins/websql-db.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/git-fetch-pack.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/request-xhr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/tcp-chrome-sockets.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/tcp-node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/tcp-ws-proxy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/transport-http.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/net/transport-tcp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/run.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/sample-pack.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-config-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-mem-db.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-object-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-pack-codec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-pack-ops.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/js-git/test/test-zlib.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/dao.sol" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/erc20.sol" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/git_handler.sol" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/main.sol" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/vault.sol" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/dao.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/erc20.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/git_handler.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/main.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/tasks_handler.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/contracts/vault.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/contracts/ConvertLib.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/contracts/MetaCoin.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/contracts/Migrations.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/migrations/1_initial_migration.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/migrations/2_deploy_contracts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/test/TestMetacoin.sol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/truffle/test/metacoin.js" afterPath="" />
+    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/api/git-ipfs.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/main.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_npm.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_npm.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/packages" afterPath="$PROJECT_DIR$/.meteor/packages" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/release" afterPath="$PROJECT_DIR$/.meteor/release" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/versions" afterPath="$PROJECT_DIR$/.meteor/versions" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/BACKERS-2.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/BACKERS-2.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/BACKERS.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/BACKERS.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/LICENSE" afterPath="$PROJECT_DIR$/imports/libs/js-git/LICENSE" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/README.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/SPONSORS.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/SPONSORS.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/art/architecture.svg" afterPath="$PROJECT_DIR$/imports/libs/js-git/art/architecture.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/art/jsgit-sticker-sheet.svg" afterPath="$PROJECT_DIR$/imports/libs/js-git/art/jsgit-sticker-sheet.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/config-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/config-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/deflate.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/deflate.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate-stream.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate-stream.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/object-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/object-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/pack-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/pack-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/fs-db.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/fs-db.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/mem-db.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/mem-db.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/pack-ops.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/pack-ops.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/apply-delta.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/apply-delta.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/config-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/config-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/defer.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/defer.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/deflate.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/deflate.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/find-common.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/find-common.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/git-fs.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/git-fs.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/inflate-stream.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate-stream.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/inflate.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/modes.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/modes.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/object-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/object-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/pack-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/pack-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/pkt-line.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/pkt-line.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/wrap-handler.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/wrap-handler.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/add-cache.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/add-cache.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/create-tree.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/create-tree.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/delay.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/delay.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/fall-through.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/fall-through.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/formats.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/formats.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/fs-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/fs-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/indexed-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/indexed-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/mem-cache.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-cache.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/mem-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/pack-ops.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/pack-ops.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/path-to-entry.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/path-to-entry.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/read-combiner.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/read-combiner.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/sync.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/sync.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/walkers.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/walkers.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/websql-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/websql-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/git-fetch-pack.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/git-fetch-pack.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/request-xhr.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/request-xhr.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-chrome-sockets.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-chrome-sockets.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-node.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-node.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-ws-proxy.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-ws-proxy.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/transport-http.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/transport-http.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/transport-tcp.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/transport-tcp.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/package.json" afterPath="$PROJECT_DIR$/imports/libs/js-git/package.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/run.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/run.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/sample-pack.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/sample-pack.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-config-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-config-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-mem-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-mem-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-object-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-object-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-pack-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-pack-ops.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-ops.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-zlib.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-zlib.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -99,22 +89,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="main.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
+            <state relative-caret-position="0">
               <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-              <folding>
-                <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-                <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-                <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -132,40 +122,18 @@
       <file leaf-file-name="git_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="647">
+            <state relative-caret-position="525">
               <caret line="64" column="17" lean-forward="false" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="true">
+      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1952">
+            <state relative-caret-position="1120">
               <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tasks.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../simple-todos/imports/api/tasks.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -174,18 +142,8 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="250" column="61" lean-forward="true" selection-start-line="250" selection-start-column="61" selection-end-line="250" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+            <state relative-caret-position="5712">
+              <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -194,13 +152,19 @@
       <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
+            <state relative-caret-position="469">
               <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
-              <folding>
-                <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-                <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-                <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-              </folding>
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="git-ipfs.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="358">
+              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -211,6 +175,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Solidity Contract" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -243,6 +208,8 @@
         <option value="$PROJECT_DIR$/client/contracts/tasks_handler.sol" />
         <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
+        <option value="$PROJECT_DIR$/imports/api/git-ipfs.js" />
       </list>
     </option>
   </component>
@@ -264,7 +231,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="y" value="139" />
     <option name="width" value="1932" />
     <option name="height" value="1048" />
@@ -302,14 +269,14 @@
             <path>
               <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
               <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
-              <item name="truffle" type="462c0819:PsiDirectoryNode" />
+              <item name="imports" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -325,6 +292,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WebstormProjects\WikiGit\imports\libs" />
       <recent name="D:\WebstormProjects\WikiGit\truffle\contracts" />
     </key>
   </component>
@@ -372,7 +340,9 @@
       <workItem from="1503544267067" duration="103226000" />
       <workItem from="1504364722041" duration="17000" />
       <workItem from="1504364772798" duration="23614000" />
-      <workItem from="1504690152837" duration="49014000" />
+      <workItem from="1504690152837" duration="51543000" />
+      <workItem from="1506279273955" duration="28000" />
+      <workItem from="1506279336087" duration="11850000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -549,11 +519,18 @@
       <option name="project" value="LOCAL" />
       <updated>1504543268483</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Moved contracts to /truffle/contracts/. Added js-git.">
+      <created>1506110349980</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1506110349980</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="295163000" />
+    <option name="totallyTimeSpent" value="309570000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -565,25 +542,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24418604" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15063424" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916147" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279099" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36068895" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24012157" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39924905" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -669,17 +647,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -719,11 +687,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15120">
           <caret line="540" column="10" lean-forward="false" selection-start-line="534" selection-start-column="31" selection-end-line="540" selection-end-column="10" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -739,17 +703,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="868">
           <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -781,11 +735,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18116">
           <caret line="647" column="45" lean-forward="true" selection-start-line="647" selection-start-column="45" selection-end-line="647" selection-end-column="45" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -801,17 +751,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="868">
           <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -843,11 +783,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18116">
           <caret line="647" column="45" lean-forward="true" selection-start-line="647" selection-start-column="45" selection-end-line="647" selection-end-column="45" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -863,17 +799,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1232">
           <caret line="44" column="22" lean-forward="false" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
-          <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -881,11 +807,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3556">
           <caret line="127" column="35" lean-forward="false" selection-start-line="127" selection-start-column="35" selection-end-line="127" selection-end-column="35" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -917,17 +839,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1232">
           <caret line="44" column="22" lean-forward="false" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
-          <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -935,11 +847,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3556">
           <caret line="127" column="35" lean-forward="false" selection-start-line="127" selection-start-column="35" selection-end-line="127" selection-end-column="35" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1003,21 +911,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
+    <entry file="file://$PROJECT_DIR$/truffle/truffle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/test/TestMetacoin.sol" />
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/ConvertLib.sol" />
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/MetaCoin.sol" />
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/Migrations.sol" />
+    <entry file="file://$PROJECT_DIR$/truffle/migrations/2_deploy_contracts.js" />
+    <entry file="file://$PROJECT_DIR$/truffle/migrations/1_initial_migration.js" />
+    <entry file="file://$PROJECT_DIR$/truffle/test/metacoin.js" />
+    <entry file="file://$PROJECT_DIR$/../simple-todos/imports/api/tasks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1505303434720" expanded="true" signature="1405:1467" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="1473:1808" ph="/*...*/" />
-            <marker date="1505303434720" expanded="true" signature="1866:2162" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2078:2156" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2247:2376" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2320:2370" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2431:2536" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2587:2619" ph="{...}" />
-            <marker date="1505303434720" expanded="true" signature="2636:2661" ph="{...}" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1120">
+          <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1029,120 +951,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/truffle.js">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="4" column="46" lean-forward="false" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/test/TestMetacoin.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-84">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/ConvertLib.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/MetaCoin.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-350">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/Migrations.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/migrations/2_deploy_contracts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/migrations/1_initial_migration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/test/metacoin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
+        <state relative-caret-position="469">
           <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
-          <folding>
-            <marker date="1505303428763" expanded="true" signature="18304:18383" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18455:18529" ph="{...}" />
-            <marker date="1505303428763" expanded="true" signature="18546:18571" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../simple-todos/imports/api/tasks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="647">
-          <caret line="64" column="17" lean-forward="false" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="250" column="61" lean-forward="true" selection-start-line="250" selection-start-column="61" selection-end-line="250" selection-end-column="61" />
+        <state relative-caret-position="5712">
+          <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+        <state relative-caret-position="525">
+          <caret line="64" column="17" lean-forward="false" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
+    <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1952">
-          <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+        <state relative-caret-position="358">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
