@@ -2,80 +2,74 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/api/git-ipfs.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/main.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_npm.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_npm.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/api/abi/gitHandlerABI.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/api/abi/mainABI.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/api/abi/tasksHandlerABI.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/packages" afterPath="$PROJECT_DIR$/.meteor/packages" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/release" afterPath="$PROJECT_DIR$/.meteor/release" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/versions" afterPath="$PROJECT_DIR$/.meteor/versions" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/BACKERS-2.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/BACKERS-2.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/BACKERS.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/BACKERS.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/LICENSE" afterPath="$PROJECT_DIR$/imports/libs/js-git/LICENSE" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/README.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/SPONSORS.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/SPONSORS.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/art/architecture.svg" afterPath="$PROJECT_DIR$/imports/libs/js-git/art/architecture.svg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/art/jsgit-sticker-sheet.svg" afterPath="$PROJECT_DIR$/imports/libs/js-git/art/jsgit-sticker-sheet.svg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/config-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/config-codec.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/deflate.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/deflate.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate-stream.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate-stream.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/inflate.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/object-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/object-codec.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/pack-codec.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/pack-codec.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/lib/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/readme.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/fs-db.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/fs-db.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/mem-db.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/mem-db.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/pack-ops.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/pack-ops.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/mixins/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/readme.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/doc/readme.md" afterPath="$PROJECT_DIR$/imports/libs/js-git/doc/readme.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/apply-delta.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/apply-delta.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/config-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/config-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/defer.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/defer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/deflate.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/deflate.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/find-common.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/find-common.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/git-fs.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/git-fs.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/inflate-stream.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate-stream.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/inflate.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/modes.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/modes.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/object-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/object-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/pack-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/pack-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/pkt-line.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/pkt-line.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/lib/wrap-handler.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/lib/wrap-handler.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/add-cache.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/add-cache.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/create-tree.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/create-tree.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/delay.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/delay.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/fall-through.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/fall-through.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/formats.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/formats.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/fs-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/fs-db.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/indexed-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/indexed-db.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/mem-cache.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-cache.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/mem-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-db.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/pack-ops.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/pack-ops.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/path-to-entry.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/path-to-entry.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/read-combiner.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/read-combiner.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/sync.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/sync.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/walkers.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/walkers.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/mixins/websql-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/mixins/websql-db.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/git-fetch-pack.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/git-fetch-pack.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/request-xhr.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/request-xhr.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-chrome-sockets.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-chrome-sockets.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-node.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-node.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/tcp-ws-proxy.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-ws-proxy.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/transport-http.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/transport-http.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/net/transport-tcp.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/net/transport-tcp.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/package.json" afterPath="$PROJECT_DIR$/imports/libs/js-git/package.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/run.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/run.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/sample-pack.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/sample-pack.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-config-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-config-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-mem-db.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-mem-db.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-object-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-object-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-pack-codec.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-codec.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-pack-ops.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-ops.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/js-git/test/test-zlib.js" afterPath="$PROJECT_DIR$/imports/libs/js-git/test/test-zlib.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/git-ipfs.js" afterPath="$PROJECT_DIR$/imports/api/git-ipfs.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/BACKERS-2.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/BACKERS-2.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/BACKERS.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/BACKERS.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/LICENSE" afterPath="$PROJECT_DIR$/imports/lib/js-git/LICENSE" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/README.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/SPONSORS.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/SPONSORS.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/art/architecture.svg" afterPath="$PROJECT_DIR$/imports/lib/js-git/art/architecture.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/art/jsgit-sticker-sheet.svg" afterPath="$PROJECT_DIR$/imports/lib/js-git/art/jsgit-sticker-sheet.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/config-codec.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/config-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/deflate.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/deflate.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate-stream.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/inflate-stream.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/inflate.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/inflate.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/object-codec.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/object-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/pack-codec.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/pack-codec.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/lib/readme.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/lib/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/fs-db.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/mixins/fs-db.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/mem-db.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/mixins/mem-db.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/pack-ops.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/mixins/pack-ops.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/mixins/readme.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/mixins/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/doc/readme.md" afterPath="$PROJECT_DIR$/imports/lib/js-git/doc/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/apply-delta.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/apply-delta.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/config-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/config-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/defer.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/defer.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/deflate.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/deflate.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/find-common.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/find-common.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/git-fs.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/git-fs.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate-stream.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/inflate-stream.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/inflate.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/inflate.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/modes.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/modes.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/object-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/object-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/pack-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/pack-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/pkt-line.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/pkt-line.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/lib/wrap-handler.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/lib/wrap-handler.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/add-cache.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/add-cache.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/create-tree.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/create-tree.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/delay.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/delay.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/fall-through.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/fall-through.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/formats.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/formats.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/fs-db.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/fs-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/indexed-db.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/indexed-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-cache.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/mem-cache.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/mem-db.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/mem-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/pack-ops.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/pack-ops.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/path-to-entry.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/path-to-entry.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/read-combiner.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/read-combiner.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/sync.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/sync.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/walkers.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/walkers.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/mixins/websql-db.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/mixins/websql-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/git-fetch-pack.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/git-fetch-pack.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/request-xhr.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/request-xhr.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-chrome-sockets.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/tcp-chrome-sockets.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-node.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/tcp-node.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/tcp-ws-proxy.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/tcp-ws-proxy.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/transport-http.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/transport-http.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/net/transport-tcp.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/net/transport-tcp.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/package.json" afterPath="$PROJECT_DIR$/imports/lib/js-git/package.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/run.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/run.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/sample-pack.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/sample-pack.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-config-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-config-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-mem-db.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-mem-db.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-object-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-object-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-codec.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-pack-codec.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-pack-ops.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-pack-ops.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/libs/js-git/test/test-zlib.js" afterPath="$PROJECT_DIR$/imports/lib/js-git/test/test-zlib.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -102,18 +96,8 @@
       <file leaf-file-name="main.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="448">
               <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="erc20.sol" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/truffle/contracts/erc20.sol">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -122,7 +106,7 @@
       <file leaf-file-name="git_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
+            <state relative-caret-position="1792">
               <caret line="64" column="17" lean-forward="false" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
               <folding />
             </state>
@@ -142,8 +126,8 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5712">
-              <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+            <state relative-caret-position="280">
+              <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -152,7 +136,7 @@
       <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
+            <state relative-caret-position="14896">
               <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
               <folding />
             </state>
@@ -162,8 +146,8 @@
       <file leaf-file-name="git-ipfs.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="252">
+              <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -209,6 +193,9 @@
         <option value="$PROJECT_DIR$/client/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
+        <option value="$PROJECT_DIR$/imports/api/gitHandlerABI.json" />
+        <option value="$PROJECT_DIR$/imports/api/tasksHandlerABI.json" />
+        <option value="$PROJECT_DIR$/imports/api/mainABI.json" />
         <option value="$PROJECT_DIR$/imports/api/git-ipfs.js" />
       </list>
     </option>
@@ -254,6 +241,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -271,12 +260,23 @@
               <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
               <item name="imports" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
+              <item name="imports" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
+              <item name="imports" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="abi" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -292,6 +292,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WebstormProjects\WikiGit\imports\api\abi" />
       <recent name="D:\WebstormProjects\WikiGit\imports\libs" />
       <recent name="D:\WebstormProjects\WikiGit\truffle\contracts" />
     </key>
@@ -342,7 +343,8 @@
       <workItem from="1504364772798" duration="23614000" />
       <workItem from="1504690152837" duration="51543000" />
       <workItem from="1506279273955" duration="28000" />
-      <workItem from="1506279336087" duration="11850000" />
+      <workItem from="1506279336087" duration="26607000" />
+      <workItem from="1506745084438" duration="1783000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -526,11 +528,18 @@
       <option name="project" value="LOCAL" />
       <updated>1506110349980</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Started git-ipfs.js, installed js-ipfs-api.">
+      <created>1506323435684</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1506323435684</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309570000" />
+    <option name="totallyTimeSpent" value="326110000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -611,7 +620,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Initial commit" />
     <MESSAGE value="Commit" />
     <MESSAGE value="Started DAO structure" />
     <MESSAGE value="Added basic voting structs." />
@@ -636,37 +644,14 @@
     <MESSAGE value="Changed solidity version to 0.4.11." />
     <MESSAGE value="Debugged Main and Vault contracts so that they compile." />
     <MESSAGE value="Moved contracts to /truffle/contracts/. Added js-git." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved contracts to /truffle/contracts/. Added js-git." />
+    <MESSAGE value="Started git-ipfs.js, installed js-ipfs-api." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started git-ipfs.js, installed js-ipfs-api." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/erc20.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5712">
-          <caret line="204" column="80" lean-forward="true" selection-start-line="204" selection-start-column="80" selection-end-line="204" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -743,7 +728,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -791,7 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,7 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -929,9 +911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -955,13 +934,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="4" column="46" lean-forward="false" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/main.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="448">
           <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding />
         </state>
@@ -969,7 +947,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
+        <state relative-caret-position="14896">
           <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
           <folding />
         </state>
@@ -977,15 +955,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5712">
-          <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+        <state relative-caret-position="280">
+          <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/api/abi/tasksHandlerABI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="0" column="5226" lean-forward="false" selection-start-line="0" selection-start-column="5226" selection-end-line="0" selection-end-column="5226" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/api/abi/gitHandlerABI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/api/abi/mainABI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="0" column="1587" lean-forward="false" selection-start-line="0" selection-start-column="1587" selection-end-line="0" selection-end-column="1587" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
+        <state relative-caret-position="1792">
           <caret line="64" column="17" lean-forward="false" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
           <folding />
         </state>
@@ -993,8 +993,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="252">
+          <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
           <folding />
         </state>
       </provider>

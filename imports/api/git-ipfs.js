@@ -1,16 +1,25 @@
 var web3 = new Web3(Web3.givenProvider || "ws://localhost:8546");
+
 var ipfsAPI = require('ipfs-api')
 var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
 
+var modes = require('/../lib/js-git/lib/modes');
+var repo = {};
+require('/../lib/js-git/mixins/mem-db')(repo);
+
 var mainAddr = "";
-var mainAbi = [{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"moduleAddresses","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"initialized","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"metadata","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"moduleNames","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"removeModuleAtIndex","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"modName","type":"string"},{"name":"addr","type":"address"},{"name":"isNew","type":"bool"}],"name":"changeModuleAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addrs","type":"address[]"}],"name":"initializeModuleAddresses","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"meta","type":"string"}],"name":"changeMetadata","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"meta","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"}];
+var mainAbi = require('./abi/mainABI.json');
 var mainContract = new web3.eth.contract(mainAbi, mainAddr);
 
-var taskHandlerAddr = mainContract.methods.moduleAddresses(sha3('TASKS'));
-var taskHandlerAbi = []; //TBD
-var taskHandlerContract = new web3.eth.contract(taskHandlerAbi, taskHandlerAddr);
+var tasksHandlerAddr = mainContract.methods.moduleAddresses(sha3('TASKS'));
+var tasksHandlerAbi = require('./abi/tasksHandlerABI.json');
+var tasksHandlerContract = new web3.eth.contract(tasksHandlerAbi, tasksHandlerAddr);
 
-var solutionAcceptedEvent = taskHandlerContract.TaskSolutionAccepted();
+var gitHandlerAddr = mainContract.methods.moduleAddresses(sha3('GIT'));
+var gitHandlerAbi = require('./abi/gitHandlerABI.json');
+var gitHandlerContract = new web3.eth.contract(gitHandlerAbi, gitHandlerAddr);
+
+var solutionAcceptedEvent = tasksHandlerContract.TaskSolutionAccepted();
 solutionAcceptedEvent.watch((error, event) => {
     var patchIPFSHash = event.returnValues.patchIPFSHash;
     //Retrieve patch data
@@ -21,11 +30,27 @@ solutionAcceptedEvent.watch((error, event) => {
                 patchData += chunk;
             })
             .on('end', () => {
-                //Apply patch to repo
-
-                //Post repo to IPFS
-
-                //Update repo hash
+                var repoIPFSHash = gitHandlerContract.methods.getCurrentIPFSHash();
+                var repoData;
+                ipfs.get(repoIPFSHash, (e, s) => {
+                    s.resume()
+                        .on('data', (c) => {
+                            repoData += c;
+                        })
+                        .on('end', () => {
+                            //Apply patch to repo
+                            
+                            //Post repo to IPFS
+                            var rStream = new stream.Readable({
+                                objectMode: true,
+                                read: (size) => {
+                                    this.push();
+                                }
+                            });
+                            ipfs.add();
+                            //Update repo hash
+                        })
+                })
             });
     });
 });
