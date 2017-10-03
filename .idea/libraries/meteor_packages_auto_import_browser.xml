@@ -116,9 +116,6 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/template-web.browser.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/template-web.cordova.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/generator.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/pre.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/post.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/fastclick.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/diff-sequence/1.0.7/web.browser/diff.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules-runtime/0.8.0/web.browser/options.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules-runtime/0.8.0/web.browser/client.js" />
@@ -274,9 +271,6 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/template-web.browser.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/template-web.cordova.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/boilerplate-generator/1.2.0/web.browser/generator.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/pre.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/post.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/fastclick.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/diff-sequence/1.0.7/web.browser/diff.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules-runtime/0.8.0/web.browser/options.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/modules-runtime/0.8.0/web.browser/client.js" />

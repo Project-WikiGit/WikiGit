@@ -5,8 +5,11 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "babel-runtime": "^6.20.0",
+    "babel-runtime": "^6.26.0",
+    "gift": "^0.10.0",
     "ipfs-api": "^14.3.5",
-    "meteor-node-stubs": "~0.2.4"
+    "meteor-node-stubs": "~0.2.4",
+    "coffee-script": "~1.12.7",
+    "web3": "~1.0.0-beta.22"
   }
 }
