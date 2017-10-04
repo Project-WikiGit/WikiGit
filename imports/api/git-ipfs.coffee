@@ -1,7 +1,10 @@
 Web3 = require 'web3'
-if typeof web3 is undefined
-  web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
-console.log(Web3)
+keccak256 = require('js-sha3').keccak256
+
+if web3 is undefined
+  web3 = new Web3(Web3.providers.HttpProvider("http://localhost:8545"))
+else
+  web3 = new Web3(web3.currentProvider)
 
 ipfsAPI = require 'ipfs-api'
 ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
@@ -10,17 +13,17 @@ git = require 'gift'
 
 mainAddr = ""
 mainAbi = require './abi/mainABI.json'
-mainContract = new web3.eth.contract(mainAbi, mainAddr)
+mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
-tasksHandlerAddr = mainContract.methods.moduleAddresses(sha3('TASKS'))
+tasksHandlerAddr = mainContract.methods.moduleAddresses(keccak256('TASKS'))
 tasksHandlerAbi = require './abi/tasksHandlerABI.json'
-tasksHandlerContract = new web3.eth.contract(tasksHandlerAbi, tasksHandlerAddr)
+tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
 
-gitHandlerAddr = mainContract.methods.moduleAddresses(sha3('GIT'))
+gitHandlerAddr = mainContract.methods.moduleAddresses(keccak256('GIT'))
 gitHandlerAbi = require './abi/gitHandlerABI.json'
-gitHandlerContract = new web3.eth.contract(gitHandlerAbi, gitHandlerAddr)
+gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
 
-solutionAcceptedEvent = tasksHandlerContract.TaskSolutionAccepted()
+solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
 solutionAcceptedEvent.watch((error, event) =>
   patchIPFSHash = event.returnValues.patchIPFSHash
   masterIPFSHash = gitHandlerContract.methods.getCurrentIPFSHash

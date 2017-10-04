@@ -131,7 +131,7 @@ contract Vault is Module {
     function Vault(address mainAddr) Module(mainAddr) {
         //Initialize withdrawl freeze times
         rewardFreezeTime = 3524; //Roughly 24 hours
-        withdrawlFreezeTime = 147; //Roughly 1 hour
+        withdrawlFreezeTime = 3524; //Roughly 24 hours
     }
 
     //Import and export functions for updating modules.

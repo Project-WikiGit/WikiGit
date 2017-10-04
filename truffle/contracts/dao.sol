@@ -493,8 +493,8 @@ contract Dao is Module {
         onlyMod('DAO')
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        var (,,,, penaltyBadRep,) = handler.taskList(taskId);
-        var (_,submitter,) = handler.taskSolutionList(taskId, solId);
+        var (_,,,, penaltyBadRep,) = handler.taskList(taskId);
+        var (__,submitter,) = handler.taskSolutionList(taskId, solId);
 
         //Check if submitter has already been penalized
         require(!handler.hasBeenPenalizedForTask(taskId, submitter));
