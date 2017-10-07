@@ -2,20 +2,20 @@
 (function() {
   var dao, git_handler, main, tasks_handler, vault;
 
-  main = require('Main');
+  main = artifacts.require('Main');
 
-  dao = require('Dao');
+  dao = artifacts.require('Dao');
 
-  vault = require('Vault');
+  vault = artifacts.require('Vault');
 
-  tasks_handler = require('TasksHandler');
+  tasks_handler = artifacts.require('TasksHandler');
 
-  git_handler = require('GitHandler');
+  git_handler = artifacts.require('GitHandler');
 
   module.exports = (function(_this) {
     return function(deployer) {
       return deployer.deploy(main, 'Test Metadata').then(function() {
-        return deployer.deploy([dao, 'Zefram Lou', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address]);
+        return deployer.deploy([[dao, 'Zefram Lou', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address]]);
       });
     };
   })(this);
