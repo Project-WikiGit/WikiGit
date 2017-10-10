@@ -370,6 +370,7 @@ contract Dao is Module {
     //Used by shareholders who do not contribute to the project to add themselves into the member list,
     //so that they can vote.
     function setSelfAsPureShareholder(string userName) notBanned {
+        require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
         //Check if msg.sender has any voting shares
         bool hasShares;
         for (uint i = 0; i < recognizedTokenList.length; i++) {
