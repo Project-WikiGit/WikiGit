@@ -3,5 +3,6 @@
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{meteor-packages-auto-import-browser, meteor-packages-auto-import-npm}" />
     <includedPredefinedLibrary name="Meteor project library" />
+    <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

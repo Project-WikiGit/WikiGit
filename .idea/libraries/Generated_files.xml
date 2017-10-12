@@ -2,13 +2,13 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
         <item url="file://$PROJECT_DIR$/truffle/migrations/2_core_contracts.js" />
+        <item url="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
       <root url="file://$PROJECT_DIR$/truffle/migrations/2_core_contracts.js" />
+      <root url="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
     </CLASSES>
     <SOURCES />
   </library>
