@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/member_handler.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/vault.sol" afterPath="$PROJECT_DIR$/truffle/contracts/vault.sol" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,11 +27,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="true">
+      <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6260">
+            <state relative-caret-position="819">
               <caret line="313" column="60" lean-forward="true" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="member_handler.sol" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/truffle/contracts/member_handler.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6631">
+              <caret line="407" column="12" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="407" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -42,16 +62,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="760">
               <caret line="38" column="16" lean-forward="false" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8000">
-              <caret line="400" column="22" lean-forward="false" selection-start-line="400" selection-start-column="22" selection-end-line="400" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -72,9 +82,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Solidity Contract" />
         <option value="JavaScript File" />
         <option value="CoffeeScript File" />
+        <option value="Solidity Contract" />
       </list>
     </option>
   </component>
@@ -95,6 +105,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -126,6 +141,7 @@
         <option value="$PROJECT_DIR$/imports/api/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/truffle/contracts/vault.sol" />
+        <option value="$PROJECT_DIR$/truffle/contracts/member_handler.sol" />
       </list>
     </option>
   </component>
@@ -309,7 +325,7 @@
       <workItem from="1507650539366" duration="121000" />
       <workItem from="1507689274455" duration="969000" />
       <workItem from="1507705463109" duration="756000" />
-      <workItem from="1507710621757" duration="4348000" />
+      <workItem from="1507710621757" duration="4786000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -535,11 +551,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507781761472</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Fixed Issue #4">
+      <created>1507932654953</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1507932654953</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="371368000" />
+    <option name="totallyTimeSpent" value="371806000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -620,7 +643,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Changed module indexing mechanics, added two modules, added vault manipulator functions in the dao." />
     <MESSAGE value="Added multiple voting execution support." />
     <MESSAGE value="Added module manipulator functions in the DAO." />
     <MESSAGE value="Removed block number in DAO sanctions." />
@@ -645,21 +667,14 @@
     <MESSAGE value="Started truffle migrations" />
     <MESSAGE value="Updated README, debugged truffle migrations" />
     <MESSAGE value="Updated package.json" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated package.json" />
+    <MESSAGE value="Fixed Issue #4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Issue #4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2744">
-          <caret line="98" column="35" lean-forward="false" selection-start-line="98" selection-start-column="29" selection-end-line="98" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18116">
@@ -926,14 +941,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8000">
-          <caret line="400" column="22" lean-forward="false" selection-start-line="400" selection-start-column="22" selection-end-line="400" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -960,8 +967,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6260">
+        <state relative-caret-position="819">
           <caret line="313" column="60" lean-forward="true" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6631">
+          <caret line="407" column="12" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="407" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/member_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
         </state>
       </provider>
