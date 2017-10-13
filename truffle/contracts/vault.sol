@@ -53,6 +53,12 @@ contract Vault is Module {
             less than untilBlockNumber.
         */
         uint endBlockNumber;
+
+        /*
+            Implements a cap for the total amount of donation.
+        */
+        uint totalDonationInWeis;
+        uint donationCapInWeis;
     }
 
     /*
@@ -140,13 +146,16 @@ contract Vault is Module {
     function importFromVault(uint length) onlyMod('VAULT') {
         Vault oldVault = Vault(moduleAddress('VAULT'));
         for (uint i = 0; i < length; i++) {
-            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber) = oldVault.payBehaviorList(i);
+            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber, _, donationCapInWeis)
+                = oldVault.payBehaviorList(i);
             payBehaviorList[i] = PayBehavior({
                 multiplier: multiplier,
                 oracleAddress: oracleAddress,
                 tokenAddress: tokenAddress,
                 startBlockNumber: startBlockNumber,
-                endBlockNumber: endBlockNumber
+                endBlockNumber: endBlockNumber,
+                totalDonationInWeis: 0,
+                donationCapInWeis: donationCapInWeis
             });
         }
     }
@@ -273,7 +282,8 @@ contract Vault is Module {
         address oracleAddress,
         address tokenAddress,
         uint startBlockNumber,
-        uint endBlockNumber
+        uint endBlockNumber,
+        uint donationCapInWeis
     )
         onlyMod('DAO')
     {
@@ -282,7 +292,9 @@ contract Vault is Module {
             oracleAddress: oracleAddress,
             tokenAddress: tokenAddress,
             startBlockNumber: startBlockNumber,
-            endBlockNumber: endBlockNumber
+            endBlockNumber: endBlockNumber,
+            totalDonationInWeis: 0,
+            donationCapInWeis: donationCapInWeis
         }));
     }
 
@@ -301,6 +313,13 @@ contract Vault is Module {
             if (behavior.startBlockNumber < block.number && block.number < behavior.endBlockNumber) {
                 //Todo: implement specific interface for oracle and token
                 if (behavior.oracleAddress == 0) {
+                    //Ensure cap won't be exceeded
+                    require(behavior.totalDonationInWeis + msg.value <= behavior.donationCapInWeis);
+                    //Prevent overflow
+                    require(behavior.totalDonationInWeis + msg.value >= behavior.totalDonationInWeis);
+
+                    behavior.totalDonationInWeis += msg.value;
+
                     ERC20 token = ERC20(behavior.tokenAddress);
                     token.transfer(msg.sender, behavior.multiplier * msg.value);
                 } else {
