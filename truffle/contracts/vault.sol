@@ -321,6 +321,8 @@ contract Vault is Module {
                     behavior.totalDonationInWeis += msg.value;
 
                     ERC20 token = ERC20(behavior.tokenAddress);
+                    //Using transfer() here to conform with ERC20. Effectively mint().
+                    //The token contract should have infinite tokens for the vault contract's account.
                     token.transfer(msg.sender, behavior.multiplier * msg.value);
                 } else {
                     /*

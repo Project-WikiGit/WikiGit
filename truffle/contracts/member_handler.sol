@@ -8,7 +8,8 @@
 pragma solidity ^0.4.11;
 
 import './main.sol';
-import './erc20.sol'
+import './erc20.sol';
+import './dao.sol';
 
 contract MemberHandler is Module {
     /*
@@ -36,11 +37,11 @@ contract MemberHandler is Module {
     */
     mapping(bytes32 => mapping(bytes32 => bool)) public groupRights;
 
-    mapping(bytes32 => uint) groupMemberCount; //Group name's keccak256 hash to member count.
+    mapping(bytes32 => uint) public groupMemberCount; //Group name's keccak256 hash to member count.
 
     mapping(address => bool) public isBanned;
 
-    function MemberHandler(address mainAddr) Module(mainAddr) {
+    function MemberHandler(string creatorUserName, address mainAddr) Module(mainAddr) {
         //Add msg.sender as member #1
         memberList.push(Member('',0,'',0,0)); //Member at index 0 is reserved, for efficiently checking whether an address has already been registered.
         memberList.push(Member(creatorUserName, msg.sender, 'full_time', 1, 0));
@@ -101,9 +102,11 @@ contract MemberHandler is Module {
     function setSelfAsPureShareholder(string userName) notBanned {
         require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
         //Check if msg.sender has any voting shares
+        Dao dao = Dao(moduleAddress('DAO'));
         bool hasShares;
-        for (uint i = 0; i < recognizedTokenList.length; i++) {
-            ERC20 token = ERC20(recognizedTokenList[i].tokenAddress);
+        for (uint i = 0; i < dao.recognizedTokensCount(); i++) {
+            var(,tokenAddress) = dao.recognizedTokenList(i);
+            ERC20 token = ERC20(tokenAddress);
             if (token.balanceOf(msg.sender) > 0) {
                 hasShares = true;
                 break;
@@ -223,6 +226,10 @@ contract MemberHandler is Module {
 
     function memberHasRight(address addr, string right) returns(bool) {
         return groupRight(memberAtAddress(addr).groupName, right);
+    }
+
+    function memberGroupNameHash(address addr) constant returns(bytes32) {
+        return keccak256(memberAtAddress(addr).groupName);
     }
 
     function() {

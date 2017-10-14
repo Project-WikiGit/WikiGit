@@ -144,16 +144,16 @@ contract Dao is Module {
         VotingType storage vType = votingTypeList[voting.typeId];
 
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
-        Member storage member = h.memberAtAddress(msg.sender);
+        var (,goodRep, badRep) = h.memberList(h.memberId(msg.sender));
 
         require(!voting.isInvalid);
         require(block.number >= voting.startBlockNumber && block.number < voting.startBlockNumber + vType.activeTimeInBlocks);
         require(!voting.hasVoted[msg.sender]);
-        require(vType.isEligible[keccak256(memberAtAddress(msg.sender).groupName)]);
+        require(vType.isEligible[h.memberGroupNameHash(msg.sender)]);
 
         voting.hasVoted[msg.sender] = true;
 
-        int memberVotes = int(vType.goodRepWeight * member.goodRep) - int(vType.badRepWeight * member.badRep);
+        int memberVotes = int(vType.goodRepWeight * goodRep) - int(vType.badRepWeight * badRep);
         for (uint i = 0; i < recognizedTokenList.length; i++) {
             RecognizedToken storage t = recognizedTokenList[i];
             ERC20 token = ERC20(t.tokenAddress);
@@ -178,9 +178,11 @@ contract Dao is Module {
         VotingType storage vType = votingTypeList[voting.typeId];
         require(block.number >= voting.startBlockNumber + vType.activeTimeInBlocks);
 
+        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
+
         uint votingMemberCount;
         for (uint i = 0; i < vType.votableGroups.length; i++) {
-            votingMemberCount += groupMemberCount[vType.votableGroups[i]];
+            votingMemberCount += h.groupMemberCount(vType.votableGroups[i]);
         }
 
         voting.passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= vType.minForPercent)
@@ -255,7 +257,8 @@ contract Dao is Module {
         }));
     }
 
-    function setVotingTypeTokenWeights(address[] tokenAddresses, uint[] tokenWeights) internal {
+    //Split out as an independent function to prevent StackTooDeep error
+    function setVotingTypeTokenWeights(address[] tokenAddresses, uint[] tokenWeights) private {
         for (uint i = 0; i < tokenAddresses.length; i++) {
             address addr = tokenAddresses[i];
             uint weight = tokenWeights[i];
@@ -308,8 +311,7 @@ contract Dao is Module {
         vault.addPendingWithdrawl(rewardInWeis, submitter, true);
 
         //Reward in reputation
-        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
-        h.incMemberGoodRep(rewardGoodRep);
+        paySolutionRewardGoodRep(submitter, rewardGoodRep);
 
         //Reward in tokens
         for (uint i = 0; i < handler.rewardTokenCount(taskId); i++) {
@@ -320,6 +322,11 @@ contract Dao is Module {
 
             vault.addPendingTokenWithdrawl(reward, submitter, token.symbol, token.tokenAddress, true);
         }
+    }
+
+    function paySolutionRewardGoodRep(address submitter, uint rewardGoodRep) private {
+        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
+        h.incMemberGoodRep(submitter, rewardGoodRep);
     }
 
     /*
@@ -338,10 +345,16 @@ contract Dao is Module {
 
         //Penalize reputation
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
-        h.incMemberBadRep(penaltyBadRep);
+        h.incMemberBadRep(submitter, penaltyBadRep);
 
         if (banSubmitter) {
             h.alterBannedStatus(submitter, true);
         }
     }
+
+    //Helpers
+    function recognizedTokensCount() constant returns(uint) {
+        return recognizedTokenList.length;
+    }
+
 }

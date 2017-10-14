@@ -110,6 +110,17 @@ contract TasksHandler is Module {
         taskSolutionList.length += 1;
     }
 
+    //Split out as an independent function to prevent StackTooDeep error
+    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant private {
+        Dao dao = Dao(moduleAddress('DAO'));
+        for (uint i = 0; i < rewardTokenIndexList.length; i++) {
+            uint id = rewardTokenIndexList[i];
+            uint reward = rewardTokenAmountList[i];
+            var (,tokenAddress) = dao.recognizedTokenList(id);
+            require(reward <= rewardTokenCap[tokenAddress]);
+        }
+    }
+
     /*
         For part time contributors who don't have the right to post task listings with rewards.
     */
@@ -165,9 +176,9 @@ contract TasksHandler is Module {
                 upvotes: 0,
                 downvotes: 0
             }));
-            taskSolutionList[taskId].memberSolId[msg.sender] = taskSolutionList.length - 1;
+            taskList[taskId].memberSolId[msg.sender] = taskSolutionList.length - 1;
         } else {
-            uint solId = taskSolutionList[taskId].memberSolId[msg.sender];
+            uint solId = taskList[taskId].memberSolId[msg.sender];
             taskSolutionList[taskId][solId].metadata = metadata;
             taskSolutionList[taskId][solId].patchIPFSHash = patchIPFSHash;
         }
@@ -259,17 +270,6 @@ contract TasksHandler is Module {
 
     function hasBeenPenalizedForTask(uint taskId, address memberAddr) returns(bool) {
         return taskList[taskId].hasBeenPenalized[memberAddr];
-    }
-
-    //For avoiding the StackTooDeep exeption.
-    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant internal {
-        Dao dao = Dao(moduleAddress('DAO'));
-        for (uint i = 0; i < rewardTokenIndexList.length; i++) {
-            uint id = rewardTokenIndexList[i];
-            uint reward = rewardTokenAmountList[i];
-            var (,tokenAddress) = dao.recognizedTokenList(id);
-            require(reward <= rewardTokenCap[tokenAddress]);
-        }
     }
 
     function() {
