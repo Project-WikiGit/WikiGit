@@ -83,14 +83,14 @@ contract Dao is Module {
 
     //Initializing
 
-    function Dao(string creatorUserName, address mainAddr) Module(mainAddr) {
+    function Dao(address mainAddr) Module(mainAddr) {
         bytes32[] storage votableGroups;
         votableGroups.push(keccak256('full_time'));
 
         //Initialize voting types
         votingTypeList.push(VotingType({
-            name: 'Default Voting Type',
-            description: 'Default voting type used for bootstrapping the DAO. Only full time contributors can vote. Passing a vote requires unanimous support. Should be removed after bootstrapping. Adding new members before finishing bootstrapping is not advised.',
+            name: 'Default',
+            description: 'For bootstrapping the DAO. Should be removed after.',
             quorumPercent: 100,
             minForPercent: 100,
             activeTimeInBlocks: 25,
