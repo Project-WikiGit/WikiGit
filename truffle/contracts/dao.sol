@@ -90,7 +90,7 @@ contract Dao is Module {
         //Initialize voting types
         votingTypeList.push(VotingType({
             name: 'Default',
-            description: 'For bootstrapping the DAO. Should be removed after.',
+            description: 'For initializing',
             quorumPercent: 100,
             minForPercent: 100,
             activeTimeInBlocks: 25,
@@ -356,5 +356,4 @@ contract Dao is Module {
     function recognizedTokensCount() constant returns(uint) {
         return recognizedTokenList.length;
     }
-
 }
