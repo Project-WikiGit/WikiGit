@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle/contracts/member_handler.sol" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/member_handler.sol" afterPath="$PROJECT_DIR$/truffle/contracts/member_handler.sol" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,7 +30,7 @@
       <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="819">
+            <state relative-caret-position="6005">
               <caret line="313" column="60" lean-forward="true" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
               <folding />
             </state>
@@ -40,8 +40,8 @@
       <file leaf-file-name="member_handler.sol" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/member_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+            <state relative-caret-position="80">
+              <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -50,8 +50,8 @@
       <file leaf-file-name="dao.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6631">
-              <caret line="407" column="12" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="407" selection-end-column="12" />
+            <state relative-caret-position="290">
+              <caret line="27" column="5" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="27" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -325,7 +325,7 @@
       <workItem from="1507650539366" duration="121000" />
       <workItem from="1507689274455" duration="969000" />
       <workItem from="1507705463109" duration="756000" />
-      <workItem from="1507710621757" duration="4786000" />
+      <workItem from="1507710621757" duration="4906000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -558,11 +558,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507932654953</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Added member_handler.sol">
+      <created>1507934971513</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1507934971513</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="371806000" />
+    <option name="totallyTimeSpent" value="371926000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -643,7 +650,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Added multiple voting execution support." />
     <MESSAGE value="Added module manipulator functions in the DAO." />
     <MESSAGE value="Removed block number in DAO sanctions." />
     <MESSAGE value="Changed module indexing mechanics to a main contract centered model." />
@@ -668,7 +674,8 @@
     <MESSAGE value="Updated README, debugged truffle migrations" />
     <MESSAGE value="Updated package.json" />
     <MESSAGE value="Fixed Issue #4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Issue #4" />
+    <MESSAGE value="Added member_handler.sol" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added member_handler.sol" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -967,7 +974,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/vault.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
+        <state relative-caret-position="6005">
           <caret line="313" column="60" lean-forward="true" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
           <folding />
         </state>
@@ -975,16 +982,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6631">
-          <caret line="407" column="12" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="407" selection-end-column="12" />
+        <state relative-caret-position="290">
+          <caret line="27" column="5" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="27" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/member_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="80">
+          <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
           <folding />
         </state>
       </provider>

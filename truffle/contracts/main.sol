@@ -44,15 +44,15 @@ contract Main {
     /*
         Used for initializing the module address index. As string[] variables can't be passed as function parameters, the addrs array
         must be ordered in the following way:
-        DAO, VAULT, TASKS, GIT
-        @param addrs The array that stores the addresses of all initial modules. Must follow the specified format.
+        DAO, MEMBER, VAULT, TASKS, GIT
+        @param address[] addrs The array that stores the addresses of all initial modules. Must follow the specified format.
     */
 
     function initializeModuleAddresses(address[] addrs) {
         require(! initialized);
         require(msg.sender == creator);
         initialized = true;
-        moduleNames = ['DAO', 'VAULT', 'TASKS', 'GIT'];
+        moduleNames = ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT'];
         for (uint i = 0; i < moduleNames.length; i++) {
             moduleAddresses[keccak256(moduleNames[i])] = addrs[i];
         }

@@ -12,6 +12,7 @@ pragma solidity ^0.4.11;
 
 import './main.sol';
 import './dao.sol';
+import './member_handler.sol';
 
 contract TasksHandler is Module {
     struct TaskListing {
@@ -27,6 +28,7 @@ contract TasksHandler is Module {
         bool hasAcceptedSolution;
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
         mapping(address => bool) hasBeenPenalized; //Recordes whether a user has been penalized for a malicious solution.
+        mapping(address => uint) memberSolId; //From member address to index of member's solution submission.
     }
 
     /*
@@ -47,9 +49,9 @@ contract TasksHandler is Module {
     }
 
     modifier needsRight(string right) {
-        Dao dao = Dao(moduleAddress('DAO'));
-        require(dao.memberHasRight(msg.sender, right));
-        require(!dao.isBanned(msg.sender));
+        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
+        require(h.memberHasRight(msg.sender, right));
+        require(! h.isBanned(msg.sender)); //Makes function declarations more concise.
         _;
     }
 
@@ -84,8 +86,10 @@ contract TasksHandler is Module {
     )
         needsRight('submit_task')
     {
+        //Check format
         require(rewardTokenAmountList.length == rewardTokenIdList.length);
 
+        //Check if reward exceeds cap
         require(rewardInWeis <= rewardWeiCap);
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
@@ -119,7 +123,6 @@ contract TasksHandler is Module {
     {
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
-        checkTokenCap(rewardTokenIdList, rewardTokenAmountList);
 
         uint[] storage rewardTokenIdList;
         uint[] storage rewardTokenAmountList;
@@ -143,7 +146,7 @@ contract TasksHandler is Module {
         taskList[index].isInvalid = true;
     }
 
-    function submitSolution(address sender, string metadata, uint taskId, bytes32 patchIPFSHash)
+    function submitSolution(uint taskId, string metadata, bytes32 patchIPFSHash)
         needsRight('submit_solution')
     {
         require(taskId < taskList.length);
@@ -151,18 +154,23 @@ contract TasksHandler is Module {
         TaskListing storage task = taskList[taskId];
 
         require(!task.isInvalid);
-        require(sender != task.poster); //Prevent self-serving tasks
+        require(msg.sender != task.poster); //Prevent self-serving tasks
 
-        require(!task.hasSubmitted[sender]);
-        task.hasSubmitted[sender] = true;
-
-        taskSolutionList[taskId].push(TaskSolution({
-            metadata: metadata,
-            submitter: sender,
-            patchIPFSHash: patchIPFSHash,
-            upvotes: 0,
-            downvotes: 0
-        }));
+        if (! task.hasSubmitted[msg.sender]) {
+            task.hasSubmitted[msg.sender] = true;
+            taskSolutionList[taskId].push(TaskSolution({
+                metadata: metadata,
+                submitter: msg.sender,
+                patchIPFSHash: patchIPFSHash,
+                upvotes: 0,
+                downvotes: 0
+            }));
+            taskSolutionList[taskId].memberSolId[msg.sender] = taskSolutionList.length - 1;
+        } else {
+            uint solId = taskSolutionList[taskId].memberSolId[msg.sender];
+            taskSolutionList[taskId][solId].metadata = metadata;
+            taskSolutionList[taskId][solId].patchIPFSHash = patchIPFSHash;
+        }
     }
 
     function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote)
