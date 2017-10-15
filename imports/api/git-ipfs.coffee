@@ -36,12 +36,17 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
                 repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (err) =>
                   repo.pull("solution", "master", (er) =>
                     ipfs.util.addFromFs(masterPath, {recursive: true}, (e, result) =>
-                      newHash = entry.hash for entry in result when entry.path is masterIPFSHash
-                      gitHandlerContract.methods.commitTaskSolutionToRepo(
-                        event.returnValues.taskId,
-                        event.returnValues.solId,
-                        newHash
-                      ).send()
+                      if error == null
+                        for entry in result
+                          if entry.path is masterIPFSHash
+                            gitHandlerContract.methods.commitTaskSolutionToRepo(
+                              event.returnValues.taskId,
+                              event.returnValues.solId,
+                              entry.hash.slice(2),
+                              entry.hash.slice(0, 1),
+                              entry.hash.slice(1, 2)
+                            ).send()
+                            break
                     )
                   )
                 )

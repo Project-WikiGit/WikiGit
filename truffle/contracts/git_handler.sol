@@ -12,12 +12,17 @@ import './main.sol';
 import './tasks_handler.sol';
 
 contract GitHandler is Module {
+    struct Multihash {
+        bytes32 hash;
+        uint8 hash_function;
+        uint8 size;
+    }
     /*
         The Git handler stores the entire history of the Git repository's IPFS hash as a tree
         identical to the type of tree structure used in Git itself.
 
         A new IPFS hash that encorporates the most recent commit would point to
-        the hash at currentHashID, pushed to ipfsHashes by the original poster of the task.
+        the hash at the current currentHashID, pushed to ipfsHashes by the original poster of the task.
         If currentHashID had been changed to the ID of a hash that's lower in the tree,
         a new branch would automatically be formed upon pushing a new hash.
 
@@ -26,12 +31,12 @@ contract GitHandler is Module {
         changing currentHashID to the index of the IPFS hash of the last working repo,
         since no info is ever deleted.
     */
-    bytes32[] ipfsHashes; //Stores the tree of the IPFS hashes of the different states of the Git repository.
+    Multihash[] ipfsHashes; //Stores the tree of the IPFS hashes of the different states of the Git repository.
     mapping(uint => uint) prevHashIDPointer; //Stores the pointers pointing from an IPFS hash's index to the index of the previous hash with respect to the tree structure.
     uint currentHashID; //Stores the index of the IPFS hash of the Git repository at the current state.
 
-    function GitHandler(address mainAddr, bytes32 repoHash) Module(mainAddr) {
-        ipfsHashes.push(repoHash);
+    function GitHandler(address mainAddr, bytes32 repoHash, uint8 hash_function, uint8 size) Module(mainAddr) {
+        ipfsHashes.push(Multihash(repoHash, hash_function, size));
         prevHashIDPointer[0] = 0; //For clarity
         currentHashID = 0; //For clarity
     }
@@ -40,7 +45,7 @@ contract GitHandler is Module {
         currentHashID = id;
     }
 
-    function commitTaskSolutionToRepo(uint taskId, uint solId, bytes32 newHash) {
+    function commitTaskSolutionToRepo(uint taskId, uint solId, bytes32 newHash, uint8 hash_function, uint8 size) {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         var (,poster,,,,isInvalid, acceptedSolutionID, hasAcceptedSolution) = handler.taskList(taskId);
         var (_,submitter,) = handler.taskSolutionList(taskId, solId);
@@ -50,15 +55,16 @@ contract GitHandler is Module {
         require(acceptedSolutionID == solId); //Has to be the accepted solution.
         require(!handler.hasBeenPenalizedForTask(taskId, submitter)); //Solution can't have been penalized.
 
-        ipfsHashes.push(newHash);
+        ipfsHashes.push(Multihash(newHash, hash_function, size));
         prevHashIDPointer[ipfsHashes.length - 1] = currentHashID;
         currentHashID = ipfsHashes.length - 1;
     }
 
     //Helpers
 
-    function getCurrentIPFSHash() returns(bytes32) {
-        return ipfsHashes[currentHashID];
+    function getCurrentIPFSHash() returns(bytes32 hash, uint8 hash_function, uint8 size) {
+        Multihash storage multihash = ipfsHashes[currentHashID];
+        return (multihash.hash, multihash.hash_function, multihash.size);
     }
 
     function() {

@@ -201,7 +201,7 @@ contract Dao is Module {
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
 
         uint votingMemberCount;
-        bytes32[] votableGroups = votableGroupsForType[voting.typeId];
+        bytes32[] storage votableGroups = votableGroupsForType[voting.typeId];
         for (uint i = 0; i < votableGroups.length; i++) {
             votingMemberCount += h.groupMemberCount(votableGroups[i]);
         }

@@ -51,14 +51,20 @@
                     return ipfs.util.addFromFs(masterPath, {
                       recursive: true
                     }, function(e, result) {
-                      var entry, i, len, newHash;
-                      for (i = 0, len = result.length; i < len; i++) {
-                        entry = result[i];
-                        if (entry.path === masterIPFSHash) {
-                          newHash = entry.hash;
+                      var entry, i, len, results;
+                      if (error === null) {
+                        results = [];
+                        for (i = 0, len = result.length; i < len; i++) {
+                          entry = result[i];
+                          if (entry.path === masterIPFSHash) {
+                            gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, entry.hash.slice(2), entry.hash.slice(0, 1), entry.hash.slice(1, 2)).send();
+                            break;
+                          } else {
+                            results.push(void 0);
+                          }
                         }
+                        return results;
                       }
-                      return gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, newHash).send();
                     });
                   });
                 };
