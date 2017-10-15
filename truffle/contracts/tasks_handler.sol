@@ -66,7 +66,7 @@ contract TasksHandler is Module {
     uint public rewardWeiCap;
     mapping(address => uint) public rewardTokenCap; //From token's address to cap
 
-    event TaskSolutionAccepted(uint taskId, uint solutionId, bytes32 patchIPFSHash);
+    event TaskSolutionAccepted(uint taskId, uint solutionId, bytes patchIPFSHash);
 
     function TasksHandler(address mainAddr) Module(mainAddr) {
         //Initialize reward caps

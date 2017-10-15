@@ -10,12 +10,20 @@ ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 
 git = require 'gift'
 
+fs = require 'fs'
+
 module.exports = (deployer) =>
   deployer.deploy(main, 'Test Metadata').then(
     () =>
-      repoPath = './tmp/repo' #Todo: create local directory
+      repoPath = './tmp/init_repo'
+
+      if !fs.existsSync(repoPath)
+        if !fs.existsSync('./tmp')
+          fs.mkdirSync('./tmp')
+        fs.mkdirSync(repoPath)
+
       newHash = ''
-      git.init repoPath, true, (err, _repo) ->
+      git.init repoPath, (err, _repo) ->
         repo = _repo
         ipfs.util.addFromFs(repoPath, {recursive: true}, (error, result) =>
           if error == null

@@ -9,7 +9,9 @@ ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 
 git = require 'gift'
 
-mainAddr = "0x90d82b1cf27933c7c9d046210f6d78691419c62d"
+fs = require 'fs'
+
+mainAddr = "0x90d82b1cf27933c7c9d046210f6d78691419c62d" #Todo: link this to client-side web app
 mainAbi = require './abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
@@ -39,6 +41,12 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
             (result) =>
               masterIPFSHash = hexToStr result
               masterPath = "./tmp/#{masterIPFSHash}/"
+
+              if !fs.existsSync(masterPath)
+                if !fs.existsSync('./tmp')
+                  fs.mkdirSync('./tmp')
+                fs.mkdirSync(masterPath)
+
               git.clone "git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (erro, _repo) ->
                 repo = _repo
                 repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (err) =>
