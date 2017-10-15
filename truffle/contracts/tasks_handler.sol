@@ -38,7 +38,7 @@ contract TasksHandler is Module {
     struct TaskSolution {
         string metadata; //Metadata of the task. Format dependent on the higher level UI.
         address submitter;
-        bytes32 patchIPFSHash; //IPFS hash of the Git patch.
+        bytes patchIPFSHash; //IPFS hash of the Git patch.
         /*
             Solution voting allow members to express their evaluations of a solution.
             Does not have any actual effect on the solution acceptance process.
@@ -157,7 +157,7 @@ contract TasksHandler is Module {
         taskList[index].isInvalid = true;
     }
 
-    function submitSolution(uint taskId, string metadata, bytes32 patchIPFSHash)
+    function submitSolution(uint taskId, string metadata, bytes patchIPFSHash)
         needsRight('submit_solution')
     {
         require(taskId < taskList.length);

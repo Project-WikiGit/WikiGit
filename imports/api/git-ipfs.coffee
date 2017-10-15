@@ -9,9 +9,16 @@ ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 
 git = require 'gift'
 
-mainAddr = "0xe5418a9403b676f3b3623a16f0d6b2ed26ce7411"
+mainAddr = "0x90d82b1cf27933c7c9d046210f6d78691419c62d"
 mainAbi = require './abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
+
+hexToStr = (hex) =>
+  hex = hex.substr(2)
+  str = ''
+  for i in [0..hex.length-1] by 2
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16))
+  return str
 
 mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
   (result) =>
@@ -20,16 +27,17 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
     tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
 
     mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
-      (r) =>
-        gitHandlerAddr = r
+      (result) =>
+        gitHandlerAddr = result
         gitHandlerAbi = require './abi/gitHandlerABI.json'
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
 
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
         solutionAcceptedEvent.on('data', (event) =>
-          patchIPFSHash = event.returnValues.patchIPFSHash
+          patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
           gitHandlerContract.methods.getCurrentIPFSHash().call().then(
-            (masterIPFSHash) =>
+            (result) =>
+              masterIPFSHash = hexToStr result
               masterPath = "./tmp/#{masterIPFSHash}/"
               git.clone "git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (erro, _repo) ->
                 repo = _repo

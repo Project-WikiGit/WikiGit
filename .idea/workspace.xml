@@ -5,9 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/git-ipfs.coffee" afterPath="$PROJECT_DIR$/imports/api/git-ipfs.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/git-ipfs.js" afterPath="$PROJECT_DIR$/imports/api/git-ipfs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/git_handler.sol" afterPath="$PROJECT_DIR$/truffle/contracts/git_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee" afterPath="$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/migrations/2_core_contracts.js" afterPath="$PROJECT_DIR$/truffle/migrations/2_core_contracts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,7 +22,7 @@
       <file leaf-file-name="git_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
+            <state relative-caret-position="95">
               <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
@@ -54,10 +52,10 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="112" column="4" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="72" />
+            <state relative-caret-position="-795">
+              <caret line="159" column="63" lean-forward="false" selection-start-line="159" selection-start-column="63" selection-end-line="159" selection-end-column="63" />
               <folding>
-                <marker date="1508015089230" expanded="true" signature="9761:9767" ph="{...}" />
+                <marker date="1508089983154" expanded="true" signature="9757:9763" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -66,8 +64,8 @@
       <file leaf-file-name="git-ipfs.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="44" column="40" lean-forward="false" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+            <state relative-caret-position="434">
+              <caret line="37" column="70" lean-forward="true" selection-start-line="37" selection-start-column="70" selection-end-line="37" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -76,7 +74,7 @@
       <file leaf-file-name="2_core_contracts.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
+            <state relative-caret-position="780">
               <caret line="39" column="36" lean-forward="true" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
               <folding />
             </state>
@@ -87,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/client/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -180,18 +178,18 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/truffle/contracts/member_handler.sol" />
         <option value="$PROJECT_DIR$/truffle/contracts/vault.sol" />
-        <option value="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
         <option value="$PROJECT_DIR$/truffle/migrations/2_core_contracts.js" />
         <option value="$PROJECT_DIR$/truffle/truffle.js" />
         <option value="$PROJECT_DIR$/imports/api/abi/mainABI.json" />
         <option value="$PROJECT_DIR$/imports/api/abi/gitHandlerABI.json" />
         <option value="$PROJECT_DIR$/imports/api/abi/tasksHandlerABI.json" />
         <option value="$PROJECT_DIR$/truffle/test/voting.coffee" />
-        <option value="$PROJECT_DIR$/client/main.js" />
         <option value="$PROJECT_DIR$/truffle/contracts/dao.sol" />
         <option value="$PROJECT_DIR$/truffle/contracts/git_handler.sol" />
-        <option value="$PROJECT_DIR$/imports/api/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee" />
+        <option value="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
+        <option value="$PROJECT_DIR$/imports/api/git-ipfs.coffee" />
+        <option value="$PROJECT_DIR$/client/main.js" />
       </list>
     </option>
   </component>
@@ -419,7 +417,7 @@
       <workItem from="1507710621757" duration="4906000" />
       <workItem from="1507954101748" duration="5432000" />
       <workItem from="1508016551380" duration="176000" />
-      <workItem from="1508017246292" duration="32908000" />
+      <workItem from="1508017246292" duration="35952000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -715,11 +713,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508057317308</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Used bytes to store IPFS hashes in GitHandler">
+      <created>1508087191566</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1508087191566</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="411042000" />
+    <option name="totallyTimeSpent" value="414086000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -743,7 +748,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37605804" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31076178" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39924905" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -800,7 +805,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Added submitting task solutions, voting on solutions, task reward caps, adding oneself as freelancer." />
     <MESSAGE value="Added reward cap setter." />
     <MESSAGE value="Finished submitting and voting on task solutions." />
     <MESSAGE value="Started task solution acceptance mechanism." />
@@ -825,7 +829,8 @@
     <MESSAGE value="Debugged git-ipfs.coffee &amp; migrations" />
     <MESSAGE value="Fixed Dao.init() by changing how votableGroups is stored for VotingTypes." />
     <MESSAGE value="Added IPFS Git repo initialization in migration script. Fixed git-ipfs.coffee. Began fixing IPFS hash handling." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added IPFS Git repo initialization in migration script. Fixed git-ipfs.coffee. Began fixing IPFS hash handling." />
+    <MESSAGE value="Used bytes to store IPFS hashes in GitHandler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Used bytes to store IPFS hashes in GitHandler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -837,7 +842,7 @@
         <state relative-caret-position="168">
           <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
-            <marker date="1508015089230" expanded="true" signature="9761:9767" ph="{...}" />
+            <marker date="1508089983154" expanded="true" signature="9757:9763" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -878,7 +883,7 @@
         <state relative-caret-position="168">
           <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
-            <marker date="1508015089230" expanded="true" signature="9761:9767" ph="{...}" />
+            <marker date="1508089983154" expanded="true" signature="9757:9763" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1104,16 +1109,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="112" column="4" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="72" />
-          <folding>
-            <marker date="1508015089230" expanded="true" signature="9761:9767" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/test/voting.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -1130,14 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
@@ -1146,26 +1133,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
+        <state relative-caret-position="780">
           <caret line="39" column="36" lean-forward="true" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/git_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle/contracts/tasks_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-795">
+          <caret line="159" column="63" lean-forward="false" selection-start-line="159" selection-start-column="63" selection-end-line="159" selection-end-column="63" />
+          <folding>
+            <marker date="1508089983154" expanded="true" signature="9757:9763" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="44" column="40" lean-forward="false" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+        <state relative-caret-position="434">
+          <caret line="37" column="70" lean-forward="true" selection-start-line="37" selection-start-column="70" selection-end-line="37" selection-end-column="70" />
           <folding />
         </state>
       </provider>
