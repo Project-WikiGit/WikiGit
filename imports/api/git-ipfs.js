@@ -57,7 +57,7 @@
                         for (i = 0, len = result.length; i < len; i++) {
                           entry = result[i];
                           if (entry.path === masterIPFSHash) {
-                            gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, entry.hash.slice(2), entry.hash.slice(0, 1), entry.hash.slice(1, 2)).send();
+                            gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, entry.hash).send();
                             break;
                           } else {
                             results.push(void 0);

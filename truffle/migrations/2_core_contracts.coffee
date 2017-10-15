@@ -23,23 +23,13 @@ module.exports = (deployer) =>
               if entry.path is 'repo'
                 newHash = entry.hash
                 break
-            decode = (dec) =>
-              alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ'
-              base = alphabet.length
-              decoded = 0;
-              while(dec)
-                alphabetPosition = alphabet.indexOf(dec[0])
-                powerOf = dec.length - 1
-                decoded += alphabetPosition * (Math.pow(base, powerOf))
-                dec = dec.substring(1)
-              return decoded
 
             return deployer.deploy([
               [dao, main.address],
               [member_handler, 'Test Username', main.address],
               [vault, main.address],
               [tasks_handler, main.address],
-              [git_handler, main.address, newHash.slice(2), decode newHash.slice(0, 1), decode newHash.slice(1, 2)]
+              [git_handler, main.address, newHash]
             ]).then(
               () =>
                 return main.deployed().then(

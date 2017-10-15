@@ -42,9 +42,7 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
                             gitHandlerContract.methods.commitTaskSolutionToRepo(
                               event.returnValues.taskId,
                               event.returnValues.solId,
-                              entry.hash.slice(2),
-                              entry.hash.slice(0, 1),
-                              entry.hash.slice(1, 2)
+                              entry.hash
                             ).send()
                             break
                     )

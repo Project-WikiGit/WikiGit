@@ -35,7 +35,7 @@
             recursive: true
           }, (function(_this) {
             return function(error, result) {
-              var decode, entry, i, len;
+              var entry, i, len;
               if (error === null) {
                 for (i = 0, len = result.length; i < len; i++) {
                   entry = result[i];
@@ -44,20 +44,7 @@
                     break;
                   }
                 }
-                decode = function(dec) {
-                  var alphabet, alphabetPosition, base, decoded, powerOf;
-                  alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
-                  base = alphabet.length;
-                  decoded = 0;
-                  while (dec) {
-                    alphabetPosition = alphabet.indexOf(dec[0]);
-                    powerOf = dec.length - 1;
-                    decoded += alphabetPosition * (Math.pow(base, powerOf));
-                    dec = dec.substring(1);
-                  }
-                  return decoded;
-                };
-                return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address, newHash.slice(2), decode(newHash.slice(0, 1), decode(newHash.slice(1, 2)))]]).then(function() {
+                return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address, newHash]]).then(function() {
                   return main.deployed().then(function(instance) {
                     return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address]);
                   });
