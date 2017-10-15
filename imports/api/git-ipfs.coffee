@@ -1,32 +1,32 @@
 Web3 = require 'web3'
 keccak256 = require('js-sha3').keccak256
 
-if web3 is undefined
-  web3 = new Web3(Web3.providers.HttpProvider("http://localhost:8545"))
-else
-  web3 = new Web3(web3.currentProvider)
+web3 = new Web3();
+web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"))
 
 ipfsAPI = require 'ipfs-api'
 ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 
 git = require 'gift'
 
-mainAddr = "0xba8431cdf9508447b9655ed41a286b66abfedebd"
+mainAddr = "0xe5418a9403b676f3b3623a16f0d6b2ed26ce7411"
 mainAbi = require './abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
-mainContract.methods.moduleAddresses(keccak256('TASKS')).call().then(
-  (taskHandlerAddr) =>
+mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
+  (result) =>
+    tasksHandlerAddr = result
     tasksHandlerAbi = require './abi/tasksHandlerABI.json'
     tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
 
-    mainContract.methods.moduleAddresses(keccak256('GIT')).call().then(
-      (gitHandlerAddr) =>
+    mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
+      (r) =>
+        gitHandlerAddr = r
         gitHandlerAbi = require './abi/gitHandlerABI.json'
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
 
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
-        solutionAcceptedEvent.watch((error, event) =>
+        solutionAcceptedEvent.on('data', (event) =>
           patchIPFSHash = event.returnValues.patchIPFSHash
           gitHandlerContract.methods.getCurrentIPFSHash().call().then(
             (masterIPFSHash) =>
@@ -41,7 +41,7 @@ mainContract.methods.moduleAddresses(keccak256('TASKS')).call().then(
                         event.returnValues.taskId,
                         event.returnValues.solId,
                         newHash
-                      )
+                      ).send()
                     )
                   )
                 )

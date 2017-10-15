@@ -6,11 +6,9 @@
 
   keccak256 = require('js-sha3').keccak256;
 
-  if (web3 === void 0) {
-    web3 = new Web3(Web3.providers.HttpProvider("http://localhost:8545"));
-  } else {
-    web3 = new Web3(web3.currentProvider);
-  }
+  web3 = new Web3();
+
+  web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
   ipfsAPI = require('ipfs-api');
 
@@ -20,23 +18,25 @@
 
   git = require('gift');
 
-  mainAddr = "0xba8431cdf9508447b9655ed41a286b66abfedebd";
+  mainAddr = "0xe5418a9403b676f3b3623a16f0d6b2ed26ce7411";
 
   mainAbi = require('./abi/mainABI.json');
 
   mainContract = new web3.eth.Contract(mainAbi, mainAddr);
 
-  mainContract.methods.moduleAddresses(keccak256('TASKS')).call().then((function(_this) {
-    return function(taskHandlerAddr) {
-      var tasksHandlerAbi, tasksHandlerContract;
+  mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then((function(_this) {
+    return function(result) {
+      var tasksHandlerAbi, tasksHandlerAddr, tasksHandlerContract;
+      tasksHandlerAddr = result;
       tasksHandlerAbi = require('./abi/tasksHandlerABI.json');
       tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr);
-      return mainContract.methods.moduleAddresses(keccak256('GIT')).call().then(function(gitHandlerAddr) {
-        var gitHandlerAbi, gitHandlerContract, solutionAcceptedEvent;
+      return mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(function(r) {
+        var gitHandlerAbi, gitHandlerAddr, gitHandlerContract, solutionAcceptedEvent;
+        gitHandlerAddr = r;
         gitHandlerAbi = require('./abi/gitHandlerABI.json');
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr);
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted();
-        return solutionAcceptedEvent.watch(function(error, event) {
+        return solutionAcceptedEvent.on('data', function(event) {
           var patchIPFSHash;
           patchIPFSHash = event.returnValues.patchIPFSHash;
           return gitHandlerContract.methods.getCurrentIPFSHash().call().then(function(masterIPFSHash) {
@@ -58,7 +58,7 @@
                           newHash = entry.hash;
                         }
                       }
-                      return gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, newHash);
+                      return gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, newHash).send();
                     });
                   });
                 };

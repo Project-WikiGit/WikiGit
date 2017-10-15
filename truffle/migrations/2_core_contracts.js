@@ -18,7 +18,15 @@
     return function(deployer) {
       return deployer.deploy(main, 'Test Metadata').then(function() {
         return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address]]).then(function() {
-          return dao.deployed().then(function(instance) {});
+          return main.deployed().then(function(instance) {
+            return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address]);
+          });
+
+          /*return dao.deployed().then(
+            (instance) =>
+              #return instance.init()
+          )
+           */
         });
       });
     };
