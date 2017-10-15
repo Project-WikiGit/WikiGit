@@ -21,12 +21,10 @@
           return main.deployed().then(function(instance) {
             return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address]);
           });
-
-          /*return dao.deployed().then(
-            (instance) =>
-              #return instance.init()
-          )
-           */
+        }).then(function() {
+          return dao.deployed().then(function(instance) {
+            return instance.init();
+          });
         });
       });
     };

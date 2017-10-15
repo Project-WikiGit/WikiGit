@@ -40,7 +40,6 @@ contract Dao is Module {
         uint badRepWeight;
         mapping(address => uint) tokenWeights; //From token's address to weight
         mapping(bytes32 => bool) isEligible; //From group name's keccak256 hash to bool. For checking whether a group is allowed to vote.
-        bytes32[] votableGroups; //Array of the hashes of the names of the member groups that are allowed to vote.
     }
 
     struct Voting {
@@ -78,6 +77,13 @@ contract Dao is Module {
     RecognizedToken[] public recognizedTokenList;
 
     bool public isInitialized;
+    /*
+        Format: votableGroupsForType[votingTypeId][groupId]
+        groupId is local to this array
+        Stores the hashes of the groups that can vote for a
+        particular VotingType
+    */
+    bytes32[][] public votableGroupsForType;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -93,9 +99,7 @@ contract Dao is Module {
         require(! isInitialized);
         isInitialized = true;
 
-        bytes32[] storage votableGroups;
         bytes32 fullTimeHash = keccak256('full_time');
-        votableGroups.push(fullTimeHash);
 
         //Initialize voting types
         votingTypeList.push(VotingType({
@@ -105,9 +109,12 @@ contract Dao is Module {
             minForPercent: 100,
             activeTimeInBlocks: 25,
             goodRepWeight: 1,
-            badRepWeight: 1,
-            votableGroups: votableGroups
+            badRepWeight: 1
         }));
+
+        votableGroupsForType.length += 1;
+        votableGroupsForType[votableGroupsForType.length - 1].push(fullTimeHash);
+
         votingTypeList[votingTypeList.length - 1].isEligible[fullTimeHash] = true;
     }
 
@@ -166,6 +173,9 @@ contract Dao is Module {
         int memberVotes = int(vType.goodRepWeight * goodRep) - int(vType.badRepWeight * badRep);
         for (uint i = 0; i < recognizedTokenList.length; i++) {
             RecognizedToken storage t = recognizedTokenList[i];
+
+            require(t.tokenAddress != 0);
+
             ERC20 token = ERC20(t.tokenAddress);
             memberVotes += int(vType.tokenWeights[t.tokenAddress] * token.balanceOf(msg.sender));
         }
@@ -191,8 +201,9 @@ contract Dao is Module {
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
 
         uint votingMemberCount;
-        for (uint i = 0; i < vType.votableGroups.length; i++) {
-            votingMemberCount += h.groupMemberCount(vType.votableGroups[i]);
+        bytes32[] votableGroups = votableGroupsForType[voting.typeId];
+        for (uint i = 0; i < votableGroups.length; i++) {
+            votingMemberCount += h.groupMemberCount(votableGroups[i]);
         }
 
         voting.passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= vType.minForPercent)
@@ -243,6 +254,7 @@ contract Dao is Module {
         setVotingTypeTokenWeights(tokenAddresses, tokenWeights);
     }
 
+    //Split out as an independent function to prevent StackTooDeep error
     function pushNewVotingType(
         string name,
         string description,
@@ -262,8 +274,7 @@ contract Dao is Module {
             minForPercent: minForPercent,
             activeTimeInBlocks: activeTimeInBlocks,
             goodRepWeight: goodRepWeight,
-            badRepWeight: badRepWeight,
-            votableGroups: votableGroups
+            badRepWeight: badRepWeight
         }));
     }
 

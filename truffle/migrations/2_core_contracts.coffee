@@ -26,9 +26,11 @@ module.exports = (deployer) =>
                 git_handler.address,
               ])
           )
-          ###return dao.deployed().then(
+      ).then(
+        () =>
+          return dao.deployed().then(
             (instance) =>
-              #return instance.init()
-          )###
+              return instance.init()
+          )
       )
   )
