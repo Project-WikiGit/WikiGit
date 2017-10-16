@@ -2,7 +2,7 @@
 
 A PoC implementation of Decentralized Autonomous Projects.
 
-The smart contracts are at /truffle/contracts/
+The smart contracts are at /dev/contracts/
 
 
 
