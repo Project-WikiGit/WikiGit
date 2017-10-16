@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client_ui/imports/api/git-ipfs.js.map" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client_ui/imports/api/abi/gitHandlerABI.json" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/abi/gitHandlerABI.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client_ui/imports/api/abi/mainABI.json" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/abi/mainABI.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client_ui/imports/api/abi/tasksHandlerABI.json" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/abi/tasksHandlerABI.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client_ui/imports/api/git-ipfs.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client_ui/imports/api/git-ipfs.js" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
+    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="Added comments. Changed promise structure of git-ipfs.coffee.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/client/main.js" afterPath="$PROJECT_DIR$/client_ui/client/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Dao.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Dao.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" afterPath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Main.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Main.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Module.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Module.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Vault.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Vault.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/dao.sol" afterPath="$PROJECT_DIR$/dev/contracts/dao.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/git_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/member_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" afterPath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package.json" afterPath="$PROJECT_DIR$/dev/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -45,8 +26,8 @@
       <file leaf-file-name="2_core_contracts.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            <state relative-caret-position="140">
+              <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -55,8 +36,8 @@
       <file leaf-file-name="git-ipfs.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+            <state relative-caret-position="140">
+              <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -144,15 +125,16 @@
         <option value="$PROJECT_DIR$/truffle/migrations/2_core_contracts.coffee" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/dev/package.json" />
-        <option value="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/api/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/abi/tasksHandlerABI.json" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/abi/gitHandlerABI.json" />
-        <option value="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/dao.sol" />
+        <option value="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" />
+        <option value="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
+        <option value="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
       </list>
     </option>
   </component>
@@ -255,6 +237,25 @@
               <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
               <item name="dev" type="462c0819:PsiDirectoryNode" />
               <item name="contracts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
+              <item name="dev" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
+              <item name="dev" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
+              <item name="dev" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="voting.coffee" type="620a8d5e:NestingTreeNode" />
             </path>
           </expand>
           <select />
@@ -381,7 +382,7 @@
       <workItem from="1508016551380" duration="176000" />
       <workItem from="1508017246292" duration="40934000" />
       <workItem from="1508103037146" duration="1020000" />
-      <workItem from="1508138175297" duration="5961000" />
+      <workItem from="1508138175297" duration="9694000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -705,11 +706,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508140002023</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Added comments. Changed promise structure of git-ipfs.coffee.">
+      <created>1508179188990</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1508179188992</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="426049000" />
+    <option name="totallyTimeSpent" value="429782000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -730,7 +738,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.50528544" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32648125" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37605804" sideWeight="0.49612403" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37605804" sideWeight="0.49612403" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.4947146" order="8" side_tool="false" content_ui="tabs" />
@@ -790,7 +798,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Implemented delayed withdrawls for security, changed removals to invalidations." />
     <MESSAGE value="Added delayed withdrawl for tokens. Changed how the vault records current unfrozen funds. Implemented token task rewards." />
     <MESSAGE value="Changed solidity version to 0.4.17." />
     <MESSAGE value="Changed solidity version to 0.4.11." />
@@ -815,7 +822,8 @@
     <MESSAGE value="Added auto directory creation for creating/cloning Git repos" />
     <MESSAGE value="Changed project file structure" />
     <MESSAGE value="Revamped project file structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revamped project file structure" />
+    <MESSAGE value="Added comments. Changed promise structure of git-ipfs.coffee." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added comments. Changed promise structure of git-ipfs.coffee." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -858,13 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/migrations/1_initial_migration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="4" column="2" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -928,14 +929,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/main.js" />
-    <entry file="file://$PROJECT_DIR$/dev/test/voting.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/truffle/tmp/repo/config" />
     <entry file="file://$PROJECT_DIR$/truffle/tmp/repo/description" />
     <entry file="file://$PROJECT_DIR$/truffle/tmp/repo/HEAD" />
@@ -1045,14 +1038,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dev/contracts/main.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1000">
@@ -1071,16 +1056,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/contracts/dao.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="375" column="22" lean-forward="false" selection-start-line="375" selection-start-column="22" selection-end-line="375" selection-end-column="22" />
+        <state relative-caret-position="40">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/test/voting.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/migrations/1_initial_migration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="72" lean-forward="false" selection-start-line="4" selection-start-column="72" selection-end-line="4" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        <state relative-caret-position="140">
+          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
           <folding />
         </state>
       </provider>

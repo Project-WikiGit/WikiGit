@@ -1,3 +1,13 @@
+###
+  2_core_contracts.coffee
+  Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
+
+  This file defines the deployment process of the core contracts of
+  the DASP. In addition, it initializes the DASP's Git repo,
+  publishes it onto the IPFS network, and saves its hash in the
+  GitHandler module.
+###
+
 #Initialize contract abstractions
 main = artifacts.require 'Main'
 dao = artifacts.require 'Dao'

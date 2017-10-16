@@ -1,3 +1,10 @@
+/**
+ * 1_initial_migration.js
+ * Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
+ *
+ * This file deploys the initial migration contract required by Truffle.
+ */
+
 var truffle_migration = artifacts.require('Migrations');
 
 module.exports = (deployer) => {
