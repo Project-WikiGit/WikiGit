@@ -154,27 +154,6 @@
         "type": "uint256"
       },
       {
-        "name": "metadata",
-        "type": "string"
-      },
-      {
-        "name": "patchIPFSHash",
-        "type": "bytes32"
-      }
-    ],
-    "name": "submitSolution",
-    "outputs": [],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "taskId",
-        "type": "uint256"
-      },
-      {
         "name": "memberAddr",
         "type": "address"
       },
@@ -210,6 +189,27 @@
       }
     ],
     "name": "deleteRewardTokenCap",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "name": "metadata",
+        "type": "string"
+      },
+      {
+        "name": "patchIPFSHash",
+        "type": "bytes"
+      }
+    ],
+    "name": "submitSolution",
     "outputs": [],
     "payable": false,
     "type": "function"
@@ -251,7 +251,7 @@
       },
       {
         "name": "patchIPFSHash",
-        "type": "bytes32"
+        "type": "bytes"
       },
       {
         "name": "upvotes",
@@ -460,7 +460,7 @@
       {
         "indexed": false,
         "name": "patchIPFSHash",
-        "type": "bytes32"
+        "type": "bytes"
       }
     ],
     "name": "TaskSolutionAccepted",

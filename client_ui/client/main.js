@@ -1,1 +1,1 @@
-import '../imports/api/git-ipfs.js';
+import '../imports/daemon/git-ipfs.js';

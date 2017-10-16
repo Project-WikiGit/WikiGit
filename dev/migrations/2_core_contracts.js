@@ -37,8 +37,6 @@
         }
         newHash = '';
         return git.init(repoPath, function(err, _repo) {
-          var repo;
-          repo = _repo;
           return ipfs.util.addFromFs(repoPath, {
             recursive: true
           }, (function(_this) {

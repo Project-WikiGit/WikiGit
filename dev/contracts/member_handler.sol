@@ -210,7 +210,7 @@ contract MemberHandler is Module {
         memberId[msg.sender] = 0;
     }
 
-    //Helpers
+    //Helper functions
 
     function memberAtAddress(address addr) constant internal returns(Member storage m) {
         m = memberList[memberId[addr]];

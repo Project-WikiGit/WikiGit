@@ -1,20 +1,16 @@
+#Import web3
 Web3 = require 'web3'
-keccak256 = require('js-sha3').keccak256
-
 web3 = new Web3();
 web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"))
 
+#Import node modules
 ipfsAPI = require 'ipfs-api'
 ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
-
 git = require 'gift'
-
 fs = require 'fs'
+keccak256 = require('js-sha3').keccak256
 
-mainAddr = "0x90d82b1cf27933c7c9d046210f6d78691419c62d" #Todo: link this to client-side web app
-mainAbi = require './abi/mainABI.json'
-mainContract = new web3.eth.Contract(mainAbi, mainAddr)
-
+#Helper functions
 hexToStr = (hex) =>
   hex = hex.substr(2)
   str = ''
@@ -22,18 +18,33 @@ hexToStr = (hex) =>
     str += String.fromCharCode(parseInt(hex.substr(i, 2), 16))
   return str
 
+#Initialize main contract
+mainAddr = "0xd23d23eee823081dd9221335ddd15b4f61974029" #Todo: link this to client-side web app
+mainAbi = require './abi/mainABI.json'
+mainContract = new web3.eth.Contract(mainAbi, mainAddr)
+
+tasksHandlerAddr = tasksHandlerAbi = tasksHandlerContract = null
+gitHandlerAddr = gitHandlerAbi = gitHandlerContract = null
+
+#Get TasksHandler address
 mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
   (result) =>
+    #Initialize TaskHandler module
     tasksHandlerAddr = result
     tasksHandlerAbi = require './abi/tasksHandlerABI.json'
     tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
-
+).then(
+  () =>
+    #Get GitHandler address
     mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
       (result) =>
+        #Initialize GitHandler module
         gitHandlerAddr = result
         gitHandlerAbi = require './abi/gitHandlerABI.json'
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
-
+    ).then(
+      () =>
+        #Listen for solution accepted event
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
         solutionAcceptedEvent.on('data', (event) =>
           patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
@@ -42,31 +53,42 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
               masterIPFSHash = hexToStr result
               masterPath = "./tmp/#{masterIPFSHash}/"
 
+              #Create repo directory if it doesn't exist
               if !fs.existsSync(masterPath)
                 if !fs.existsSync('./tmp')
                   fs.mkdirSync('./tmp')
                 fs.mkdirSync(masterPath)
 
-              git.clone "git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (erro, _repo) ->
+              #Clone the master
+              git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
+                if error != null
+                  throw error
                 repo = _repo
+                #Add patched repo as remote
                 repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) =>
+                  if error != null
+                    throw error
+                  #Pull the patched repo and merge with the master
                   repo.pull("solution", "master", (error) =>
+                    if error != null
+                      throw error
+                    #Add new repo to the IPFS network
                     ipfs.util.addFromFs(masterPath, {recursive: true}, (error, result) =>
                       if error != null
                         throw error
-                      else
-                        for entry in result
-                          if entry.path is masterIPFSHash
-                            gitHandlerContract.methods.commitTaskSolutionToRepo(
-                              event.returnValues.taskId,
-                              event.returnValues.solId,
-                              entry.hash
-                            ).send()
-                            break
+                      for entry in result
+                        if entry.path is masterIPFSHash
+                          gitHandlerContract.methods.commitTaskSolutionToRepo(
+                            event.returnValues.taskId,
+                            event.returnValues.solId,
+                            entry.hash
+                          ).send()
+                          break
                     )
                   )
                 )
+              )
           )
+        )
     )
-  )
 )

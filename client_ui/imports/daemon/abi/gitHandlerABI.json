@@ -31,8 +31,8 @@
     "name": "getCurrentIPFSHash",
     "outputs": [
       {
-        "name": "",
-        "type": "bytes32"
+        "name": "hash",
+        "type": "bytes"
       }
     ],
     "payable": false,
@@ -51,7 +51,7 @@
       },
       {
         "name": "newHash",
-        "type": "bytes32"
+        "type": "bytes"
       }
     ],
     "name": "commitTaskSolutionToRepo",
@@ -67,7 +67,7 @@
       },
       {
         "name": "repoHash",
-        "type": "bytes32"
+        "type": "bytes"
       }
     ],
     "payable": false,

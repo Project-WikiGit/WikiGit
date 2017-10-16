@@ -254,7 +254,7 @@ contract TasksHandler is Module {
         taskList[taskId].hasBeenPenalized[memberAddr] = status;
     }
 
-    //Helpers
+    //Helper functions
 
     function rewardTokenIndex(uint taskId, uint tokenId) returns(uint) {
         return taskList[taskId].rewardTokenIdList[tokenId];
