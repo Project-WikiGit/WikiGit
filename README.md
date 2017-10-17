@@ -1,6 +1,6 @@
 # WikiGit
 
-A PoC implementation of Decentralized Autonomous Projects.
+A PoC implementation of Decentralized Autonomous Self-sustaining Projects.
 
 The smart contracts are at /dev/contracts/
 
@@ -12,15 +12,17 @@ WikiGit implements, in the simplest terms, an organic combination of DAOs (Decen
 
 In its complete form, WikiGit will realize the following scenario: One person or more has a great idea, creates a DASP with a cost of ~US$5, writes a white paper or something similar that explains the idea, find some interested people online and add them into the DASP, pitch in/crowd fund some ether and post tasks onto the crowdsourcing platform; maybe personally contribute to the project; maybe recruit some interested freelancers as part-time or full-time contributors; and voila, a self-sustaining DASP is born, with its own funding, voting mechanism, contributors, freelancers, and shareholders, and the idea would blossom into something wonderful through the power of the crowd.
 
-The WikiGit project consists of three parts: the backend, which is a set of Ethereum smart contracts that govern all of the core logics in a DASP; the frontend, which is a client-side web app that acts as a UI for interacting with the back end as well as a relay for connecting a DASP with its Git repository hosted by IPFS; and the developer tools, which is an application for deploying a DASP onto the Ethereum blockchain. A particular DASP is defined by its backend, and different DASPs usually differ in their backends; the front end and the developer tools are shared by all DASPs, although different implementations can be made, as long as they follow the backend's API.
+![Project Structure](./WikiGit.png)
 
-Currently, WikiGit is in its infant stages and is being worked by just one guy (me). I have finished an early implementation of the backend, part of the developer tools, and the daemon in the frontend used for connecting a DASP with its Git repository. I will do my best to find some more contributors, and anyone is welcome to join! (\***cough**\*you\***cough**\*)
+The WikiGit project consists of three parts: the back end, which is a set of Ethereum smart contracts that govern all of the core logics in a DASP; the front end, which is a client-side web app that acts as a UI for interacting with the back end as well as a relay for connecting a DASP with its Git repository hosted by IPFS; and the developer tools, which is an application for deploying a DASP onto the Ethereum blockchain. A particular DASP is defined by its back end, and different DASPs usually differ in their back ends; the front end and the developer tools are shared by all DASPs, although different implementations can be made, as long as they follow the back end's API.
+
+Currently, WikiGit is in its infant stages and is being worked by just one guy (me). I have finished an early implementation of the back end, part of the developer tools, and the daemon in the front end used for connecting a DASP with its Git repository. I will do my best to find some more contributors, and anyone is welcome to join! (\***cough**\*you\***cough**\*)
 
 
 
-## The Backend
+## The Back End
 
-The backend includes a ***DAO*** with a fully fledged voting mechanism; a ***MemberHandler*** that acts as a member manifest, with different rights associated with each member group; a ***Vault*** that allows for the safe withdrawl of funds, as well as ***reactive token minting*** that can be used for things like ICOs and honorary tokens (such as the unicorn token issued to people who donated to the Ethereum project); a ***TasksHandler*** for publishing tasks and accepting solutions on the crowdsourcing platform; and a ***GitHandler*** for communicating with the Git repository hosted by IPFS and storing the address of the repository.
+The back end includes a ***DAO*** with a fully fledged voting mechanism; a ***MemberHandler*** that acts as a member manifest, with different rights associated with each member group; a ***Vault*** that allows for the safe withdrawl of funds, as well as ***reactive token minting*** that can be used for things like ICOs and honorary tokens (such as the unicorn token issued to people who donated to the Ethereum project); a ***TasksHandler*** for publishing tasks and accepting solutions on the crowdsourcing platform; and a ***GitHandler*** for communicating with the Git repository hosted by IPFS and storing the address of the repository.
 
 ### Modular Design
 
@@ -30,7 +32,7 @@ Also, the modularized design means that it is possible to swap out a core module
 
 ### The Main Contract
 
-The main contract serves as an index for all of a DASP's modules. Modules can be added/removed through DAO votings. It is the only contract in the backend that cannot be upgraded, but it's simple enough that you won't need to.
+The main contract serves as an index for all of a DASP's modules. Modules can be added/removed through DAO votings. It is the only contract in the back end that cannot be upgraded, but it's simple enough that you won't need to.
 
 ### DAO
 
@@ -64,19 +66,19 @@ Completing tasks can not only provide financial rewards like Ether and tokens, b
 
 ### GitHandler
 
-Due to the fact that it's infeasible to have an on-chain Git implementation, Git would have to be handled by the off-chain frontend that interacts with the on-chain logic. However, the GitHandler module does serve important functions. Firstly, it communicates with the front end to in turn communicate with the Git repository. Secondly, and most importantly, the GitHandler stores the entire history of the Git repository's IPFS hash (for those of you unfamiliar with IPFS, the address of files and directories in IPFS are represented by their hashes) as a tree identical to the type of tree structure used in Git itself. A new IPFS hash that incorporates the most recent task solution would have a pointer that points to the current hash. If the reference to the current hash had been changed to that of a hash that's lower in the tree, a new branch would automatically be formed upon pushing a new hash. **This design ensures that any attack on the repository (e.g. pushing a new IPFS hash that points to a malicious repo) can be easily reverted by changing the reference to the hash of the last working repo. **
+Due to the fact that it's infeasible to have an on-chain Git implementation, Git would have to be handled by the off-chain front end that interacts with the on-chain logic. However, the GitHandler module does serve important functions. Firstly, it communicates with the front end to in turn communicate with the Git repository. Secondly, and most importantly, the GitHandler stores the entire history of the Git repository's IPFS hash (for those of you unfamiliar with IPFS, the address of files and directories in IPFS are represented by their hashes) as a tree identical to the type of tree structure used in Git itself. A new IPFS hash that incorporates the most recent task solution would have a pointer that points to the current hash. If the reference to the current hash had been changed to that of a hash that's lower in the tree, a new branch would automatically be formed upon pushing a new hash. **This design ensures that any attack on the repository (e.g. pushing a new IPFS hash that points to a malicious repo) can be easily reverted by changing the reference to the hash of the last working repo. **
 
 
 
 For more information, just check out the code! All of the contracts were written with readability in mind and have been well commented, so it'd be a treat for those who prefer code to English.
 
-## The Frontend
+## The Front End
 
-The front end is a client-side web app that will be hosted on the IPFS network. It is the gateway for the members of a DASP to interact with it, as well as what a DASP would use to add/remove modules from the backend.
+The front end is a client-side web app that will be hosted on the IPFS network. It is the gateway for the members of a DASP to interact with it, as well as what a DASP would use to add/remove modules from the back end.
 
-The frontend uses web3.js to communicate with a DASP's backend, and gift (a wrapper for the Git CLI) & js-ipfs-api to communicate with the DASP's Git repository on IPFS. 
+The front end uses web3.js to communicate with a DASP's back end, and gift (a wrapper for the Git CLI) & js-ipfs-api to communicate with the DASP's Git repository on IPFS. 
 
-The frontend includes a daemon, which uses all of the node.js modules mentioned above to connect a DASP with its Git repo. It works like this: the daemon listens for the TaskSolutionAccepted() event from the GitHandler module in the backend. Upon such an event, the daemon would clone the DASP's Git repo, pull from the updated repo where the task has been completed to merge the solution into the DASP's repo, publish the resulting repo onto IPFS, and send its IPFS multihash back to GitHandler as the current location of the DASP's repo. The ideal process would be where a solution's submitter can only upload a Git patch instead of the entire repo, but due to the limitations of the gift module, this currently cannot be implemented.
+The front end includes a daemon, which uses all of the node.js modules mentioned above to connect a DASP with its Git repo. It works like this: the daemon listens for the TaskSolutionAccepted() event from the GitHandler module in the back end. Upon such an event, the daemon would clone the DASP's Git repo, pull from the updated repo where the task has been completed to merge the solution into the DASP's repo, publish the resulting repo onto IPFS, and send its IPFS multihash back to GitHandler as the current location of the DASP's repo. The ideal process would be where a solution's submitter can only upload a Git patch instead of the entire repo, but due to the limitations of the gift module, this currently cannot be implemented.
 
 ## Developer Tools
 
