@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/project_structure.png" />
+    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="Update">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -231,11 +231,6 @@
             <path>
               <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
               <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WikiGit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WikiGit" type="462c0819:PsiDirectoryNode" />
               <item name="client_ui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -415,14 +410,7 @@
       <workItem from="1508138175297" duration="10174000" />
       <workItem from="1508197838275" duration="186000" />
       <workItem from="1508198057719" duration="11000" />
-      <workItem from="1508198095695" duration="6807000" />
-    </task>
-    <task id="LOCAL-00005" summary="Added basic voting structs.">
-      <created>1502870227413</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1502870227413</updated>
+      <workItem from="1508198095695" duration="7033000" />
     </task>
     <task id="LOCAL-00006" summary="Completed initialization, added helpers.">
       <created>1502959904913</created>
@@ -760,11 +748,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508259690012</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Added project_structure.png">
+      <created>1508259808218</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1508259808218</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="437266000" />
+    <option name="totallyTimeSpent" value="437492000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -847,7 +842,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Moved contracts to /truffle/contracts/. Added js-git." />
     <MESSAGE value="Started git-ipfs.js, installed js-ipfs-api." />
     <MESSAGE value="Finished preliminary git-ipfs.coffee" />
     <MESSAGE value="Used npm to install web3 instead of meteor. Minor changes to git-ipfs.coffee." />
@@ -872,7 +866,8 @@
     <MESSAGE value="Revamped Readme. Restricted the actor of a voting's execution to registered modules." />
     <MESSAGE value="Downsized project_structure.png" />
     <MESSAGE value="Updated Readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Readme" />
+    <MESSAGE value="Added project_structure.png" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added project_structure.png" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
