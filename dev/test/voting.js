@@ -6,9 +6,17 @@
 
   contract('Dao', (function(_this) {
     return function(accounts) {
-      return it('create voting', function() {
+      var account1, account2;
+      account1 = accounts[0];
+      account2 = accounts[1];
+      it('create voting', function() {
         return Dao.deployed().then(function(instance) {
           return instance.createVoting('Test Voting', 'For testing the creation of votings', 0, 0, [], "0x0");
+        });
+      });
+      return it('vote on voting', function() {
+        return Dao.deployed().then(function(instance) {
+          return instance.vote(0, true);
         });
       });
     };

@@ -2,6 +2,8 @@ Dao = artifacts.require 'Dao'
 
 contract('Dao',
   (accounts) =>
+    account1 = accounts[0];
+    account2 = accounts[1];
     it('create voting',
       () =>
         Dao.deployed().then(
@@ -13,6 +15,16 @@ contract('Dao',
               0,
               [],
               "0x0"
+            )
+        )
+    )
+    it('vote on voting',
+      () =>
+        Dao.deployed().then(
+          (instance) =>
+            return instance.vote(
+              0,
+              true
             )
         )
     )

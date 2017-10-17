@@ -16,13 +16,13 @@ contract GitHandler is Module {
         The Git handler stores the entire history of the Git repository's IPFS hash as a tree
         identical to the type of tree structure used in Git itself.
 
-        A new IPFS hash that encorporates the most recent commit would point to
-        the hash at the current currentHashID, pushed to ipfsHashes by the original poster of the task.
+        A new IPFS hash that incorporates the most recent commit would point to
+        the current hash, pushed to ipfsHashes by the original poster of the task.
         If currentHashID had been changed to the ID of a hash that's lower in the tree,
         a new branch would automatically be formed upon pushing a new hash.
 
-        This design ensures that any attack on the storage component (e.g. setting a new
-        IPFS hash that points to a completely different repo) can be easily reverted by
+        This design ensures that any attack on the Git repo (e.g. setting a new
+        IPFS hash that points to a malicious repo) can be easily reverted by
         changing currentHashID to the index of the IPFS hash of the last working repo,
         since no info is ever deleted.
     */

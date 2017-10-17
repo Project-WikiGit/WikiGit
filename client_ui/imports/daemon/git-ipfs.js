@@ -4,7 +4,7 @@
   git-ipfs.coffee
   Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
-  This file implements a daemon that listens for the TaskSolutionAccepted event
+  This file implements a daemon that listens for the TaskSolutionAccepted() event
   from the GitHandler module. Upon such an event, the daemon would clone the
   DASP's Git repo, pull from the updated repo where the task has been completed
   to merge the solution into the DASP's repo, publish the resulting repo onto IPFS,

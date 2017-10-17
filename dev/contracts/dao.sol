@@ -52,7 +52,7 @@ contract Dao is Module {
         uint againstVotes;
         uint votedMemberCount;
         bytes32[] executionHashList; //The list of hashes of the transaction bytecodes that are executed after the voting is passed.
-        address executionActor; //The address of the contract called when executing transaction bytecode.
+        string executionModule; //The name of the module that'll execute the transaction bytecode.
         mapping(address => bool) hasVoted;
         bool isInvalid;
         bool passed;
@@ -126,7 +126,7 @@ contract Dao is Module {
         uint votingTypeId,
         uint startBlockNumber,
         bytes32[] executionHashList,
-        address executionActor
+        string executionModule
     )
         needsRight('create_voting')
     {
@@ -139,7 +139,7 @@ contract Dao is Module {
             creator: msg.sender,
             startBlockNumber: startBlockNumber,
             executionHashList: executionHashList,
-            executionActor: executionActor,
+            executionModule: executionModule,
             forVotes: 0,
             againstVotes: 0,
             votedMemberCount: 0,
@@ -216,7 +216,7 @@ contract Dao is Module {
         require(voting.passed);
         require(voting.executionHashList[bytecodeHashId] == keccak256(executionBytecode));
 
-        voting.executionActor.call(executionBytecode);
+        moduleAddress(voting.executionModule).call(executionBytecode);
         delete voting.executionHashList[bytecodeHashId];
     }
 

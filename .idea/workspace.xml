@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="Added comments. Changed promise structure of git-ipfs.coffee.">
+    <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/preferred-vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" afterPath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Dao.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Dao.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" afterPath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Main.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Main.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Module.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Module.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Vault.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Vault.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/dao.sol" afterPath="$PROJECT_DIR$/dev/contracts/dao.sol" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/git_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/test/voting.coffee" afterPath="$PROJECT_DIR$/dev/test/voting.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/test/voting.js" afterPath="$PROJECT_DIR$/dev/test/voting.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/test/voting.js.map" afterPath="$PROJECT_DIR$/dev/test/voting.js.map" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="2_core_contracts.coffee" pinned="false" current-in-tab="true">
+      <file leaf-file-name="2_core_contracts.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+            <state relative-caret-position="-777">
+              <caret line="22" column="17" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -36,8 +48,18 @@
       <file leaf-file-name="git-ipfs.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+            <state relative-caret-position="80">
+              <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="git_handler.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/contracts/git_handler.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="15" column="37" lean-forward="false" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -46,8 +68,28 @@
       <file leaf-file-name="voting.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dev/test/voting.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+            <state relative-caret-position="260">
+              <caret line="13" column="16" lean-forward="false" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dao.sol" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dev/contracts/dao.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1973">
+              <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="member_handler.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/contracts/member_handler.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="228" column="5" lean-forward="true" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -128,12 +170,13 @@
         <option value="$PROJECT_DIR$/client_ui/imports/api/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/abi/tasksHandlerABI.json" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/abi/gitHandlerABI.json" />
-        <option value="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" />
-        <option value="$PROJECT_DIR$/dev/contracts/dao.sol" />
         <option value="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" />
         <option value="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
+        <option value="$PROJECT_DIR$/dev/test/voting.coffee" />
+        <option value="$PROJECT_DIR$/dev/contracts/dao.sol" />
+        <option value="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
       </list>
     </option>
@@ -382,7 +425,10 @@
       <workItem from="1508016551380" duration="176000" />
       <workItem from="1508017246292" duration="40934000" />
       <workItem from="1508103037146" duration="1020000" />
-      <workItem from="1508138175297" duration="9694000" />
+      <workItem from="1508138175297" duration="10174000" />
+      <workItem from="1508197838275" duration="186000" />
+      <workItem from="1508198057719" duration="11000" />
+      <workItem from="1508198095695" duration="5606000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1502850470422</created>
@@ -713,11 +759,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508179188992</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Updated comments for git-ipfs.coffee and 2_core_contracts.coffee">
+      <created>1508196013558</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1508196013558</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="429782000" />
+    <option name="totallyTimeSpent" value="436065000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -734,22 +787,25 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17336152" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.50528544" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32648125" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37605804" sideWeight="0.49612403" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31076178" sideWeight="0.4947146" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31076178" sideWeight="0.4947146" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39924905" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24894291" sideWeight="0.5045558" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,7 +854,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Added delayed withdrawl for tokens. Changed how the vault records current unfrozen funds. Implemented token task rewards." />
     <MESSAGE value="Changed solidity version to 0.4.17." />
     <MESSAGE value="Changed solidity version to 0.4.11." />
     <MESSAGE value="Debugged Main and Vault contracts so that they compile." />
@@ -823,7 +878,8 @@
     <MESSAGE value="Changed project file structure" />
     <MESSAGE value="Revamped project file structure" />
     <MESSAGE value="Added comments. Changed promise structure of git-ipfs.coffee." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added comments. Changed promise structure of git-ipfs.coffee." />
+    <MESSAGE value="Updated comments for git-ipfs.coffee and 2_core_contracts.coffee" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated comments for git-ipfs.coffee and 2_core_contracts.coffee" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -854,13 +910,7 @@
     <entry file="file://$PROJECT_DIR$/node_modules/web3/packages/web3-eth/src/index.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/web3/packages/web3-core/src/index.js" />
     <entry file="file://D:/msi-cn/AppData/Roaming/npm/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" />
-    <entry file="file://$PROJECT_DIR$/.meteor/packages">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.meteor/packages" />
     <entry file="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
     <entry file="file://$PROJECT_DIR$/dev/contracts/truffle_migrations.sol">
       <provider selected="true" editor-type-id="text-editor">
@@ -890,13 +940,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/coffee-script/lib/coffee-script/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="44" column="35" lean-forward="false" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/coffee-script/lib/coffee-script/register.js" />
     <entry file="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="620">
@@ -921,13 +965,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/api/abi/gitHandlerABI.json" />
     <entry file="file://$PROJECT_DIR$/imports/api/abi/tasksHandlerABI.json" />
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json" />
     <entry file="file://$PROJECT_DIR$/client/main.js" />
     <entry file="file://$PROJECT_DIR$/truffle/tmp/repo/config" />
     <entry file="file://$PROJECT_DIR$/truffle/tmp/repo/description" />
@@ -944,7 +982,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -952,15 +989,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -968,7 +996,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -976,7 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-525">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -984,7 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9400">
           <caret line="470" column="3" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="470" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -992,7 +1017,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9360">
           <caret line="468" column="1" lean-forward="false" selection-start-line="468" selection-start-column="1" selection-end-line="468" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1000,7 +1024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
           <caret line="81" column="3" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="81" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1008,23 +1031,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1125">
           <caret line="79" column="1" lean-forward="false" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/contracts/git_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="57" column="22" lean-forward="false" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/contracts/member_handler.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="212" column="22" lean-forward="false" selection-start-line="212" selection-start-column="22" selection-end-line="212" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1032,9 +1038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-14">
           <caret line="251" column="0" lean-forward="true" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
-          <folding>
-            <marker date="1508179066213" expanded="true" signature="9764:9770" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1042,31 +1045,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1000">
           <caret line="50" column="38" lean-forward="false" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/contracts/vault.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1228">
-          <caret line="182" column="34" lean-forward="false" selection-start-line="182" selection-start-column="34" selection-end-line="182" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/contracts/dao.sol">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/test/voting.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1074,22 +1052,76 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="4" column="72" lean-forward="false" selection-start-line="4" selection-start-column="72" selection-end-line="4" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/test/voting.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+        <state relative-caret-position="260">
+          <caret line="13" column="16" lean-forward="false" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        <state relative-caret-position="-777">
+          <caret line="22" column="17" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/contracts/git_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="15" column="37" lean-forward="false" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/contracts/vault.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-568">
+          <caret line="182" column="34" lean-forward="true" selection-start-line="182" selection-start-column="34" selection-end-line="182" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/contracts/member_handler.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="228" column="5" lean-forward="true" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/contracts/dao.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1973">
+          <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
           <folding />
         </state>
       </provider>
