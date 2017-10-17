@@ -16,7 +16,7 @@ In its complete form, WikiGit will realize the following scenario: One person or
 
 ### The Project
 
-<img src="WikiGit.png" alt="Project Structure" style="width: 350pt;"/>
+![Project Structure](assets/project_structure.png)
 
 The WikiGit project consists of three parts: the back end, which is a set of Ethereum smart contracts that govern all of the core logics in a DASP; the front end, which is a client-side web app that acts as a UI for interacting with the back end as well as a relay for connecting a DASP with its Git repository hosted by IPFS; and the developer tools, which is an application for deploying a DASP onto the Ethereum blockchain. A particular DASP is defined by its back end, and different DASPs usually differ in their back ends; the front end and the developer tools are shared by all DASPs, although different implementations can be made, as long as they follow the back end's API.
 
