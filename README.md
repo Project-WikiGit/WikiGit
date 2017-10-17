@@ -8,11 +8,15 @@ The smart contracts are at /dev/contracts/
 
 ## Introduction
 
+### The Vision
+
 WikiGit implements, in the simplest terms, an organic combination of DAOs (Decentralized Autonomous Organizations), crowdsourcing platforms (like Topcoder), and Git. We call this combination DASPs (Decentralized Autonomous Self-sustaining Projects). The hope is that WikiGit will allow ingenious ideas to incarnate into projects that are self-sustaining in both finances and talent, with minimal cost and hindrances, similar to how Wikipedia allowed an entire encyclopedia to spontaneously come into being. In fact, it is possible that in the near future, WikiGit itself will be a DASP powered by WikiGit!
 
 In its complete form, WikiGit will realize the following scenario: One person or more has a great idea, creates a DASP with a cost of ~US$5, writes a white paper or something similar that explains the idea, find some interested people online and add them into the DASP, pitch in/crowd fund some ether and post tasks onto the crowdsourcing platform; maybe personally contribute to the project; maybe recruit some interested freelancers as part-time or full-time contributors; and voila, a self-sustaining DASP is born, with its own funding, voting mechanism, contributors, freelancers, and shareholders, and the idea would blossom into something wonderful through the power of the crowd.
 
-![Project Structure](./WikiGit.png)
+### The Project
+
+<img src="WikiGit.png" alt="Project Structure" style="width: 350pt;"/>
 
 The WikiGit project consists of three parts: the back end, which is a set of Ethereum smart contracts that govern all of the core logics in a DASP; the front end, which is a client-side web app that acts as a UI for interacting with the back end as well as a relay for connecting a DASP with its Git repository hosted by IPFS; and the developer tools, which is an application for deploying a DASP onto the Ethereum blockchain. A particular DASP is defined by its back end, and different DASPs usually differ in their back ends; the front end and the developer tools are shared by all DASPs, although different implementations can be made, as long as they follow the back end's API.
 

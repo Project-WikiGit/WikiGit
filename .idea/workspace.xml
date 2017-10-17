@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -410,14 +409,7 @@
       <workItem from="1508138175297" duration="10174000" />
       <workItem from="1508197838275" duration="186000" />
       <workItem from="1508198057719" duration="11000" />
-      <workItem from="1508198095695" duration="6212000" />
-    </task>
-    <task id="LOCAL-00001" summary="Initial commit">
-      <created>1502850470422</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1502850470422</updated>
+      <workItem from="1508198095695" duration="6373000" />
     </task>
     <task id="LOCAL-00002" summary="Initial commit">
       <created>1502850488803</created>
@@ -755,11 +747,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508224735273</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Updated Readme">
+      <created>1508258910078</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1508258910092</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="436671000" />
+    <option name="totallyTimeSpent" value="436832000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -843,7 +842,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Changed solidity version to 0.4.11." />
     <MESSAGE value="Debugged Main and Vault contracts so that they compile." />
     <MESSAGE value="Moved contracts to /truffle/contracts/. Added js-git." />
     <MESSAGE value="Started git-ipfs.js, installed js-ipfs-api." />
@@ -868,7 +866,8 @@
     <MESSAGE value="Added comments. Changed promise structure of git-ipfs.coffee." />
     <MESSAGE value="Updated comments for git-ipfs.coffee and 2_core_contracts.coffee" />
     <MESSAGE value="Revamped Readme. Restricted the actor of a voting's execution to registered modules." />
-    <option name="LAST_COMMIT_MESSAGE" value="Revamped Readme. Restricted the actor of a voting's execution to registered modules." />
+    <MESSAGE value="Updated Readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
