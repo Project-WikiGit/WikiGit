@@ -1,5 +1,5 @@
 {
-  "name": "WikiGit Dev",
+  "name": "WikiGit_Dev",
   "private": true,
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -7,7 +7,6 @@
     "gift": "^0.10.0",
     "ipfs-api": "^14.3.5",
     "js-sha3": "^0.6.1",
-    "truffle": "^3.4.11",
-    "web3": "^1.0.0-beta.23"
+    "truffle": "^3.4.11"
   }
 }

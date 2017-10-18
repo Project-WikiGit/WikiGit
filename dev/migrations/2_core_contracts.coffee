@@ -65,7 +65,7 @@ module.exports = (deployer) =>
                       member_handler.address,
                       vault.address,
                       tasks_handler.address,
-                      git_handler.address,
+                      git_handler.address
                     ])
                 )
             ).then(
