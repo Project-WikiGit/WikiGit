@@ -90,4 +90,4 @@ The developer tools is used for deploying DASPs onto the Ethereum blockchain. It
 
 ## Contact
 
-Feel free to contact me at zeframlou@gmail.com !
+Feel free to contact me at info@wikigit.org !
