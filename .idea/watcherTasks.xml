@@ -20,7 +20,7 @@
         </array>
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$PROJECT_DIR$/client_ui/node_modules/coffee-script/bin/coffee" />
+      <option name="program" value="D:/msi-cn/AppData/Roaming/npm/coffee.cmd" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$FileDir$" />

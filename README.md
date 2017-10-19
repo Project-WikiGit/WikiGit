@@ -1,6 +1,6 @@
 # WikiGit
 
-A PoC implementation of Decentralized Autonomous Self-sustaining Projects.
+A PoC implementation of Decentralized Autonomous Self-sustaining Projects, powered by Ethereum.
 
 The smart contracts are at /dev/contracts/
 
@@ -20,7 +20,7 @@ In its complete form, WikiGit will realize the following scenario: One person or
 
 The WikiGit project consists of three parts: the ***back end***, which is a set of Ethereum smart contracts that govern all of the core logics in a DASP; the ***front end***, which is a client-side web app that acts as a UI for interacting with the back end as well as a relay for connecting a DASP with its Git repository hosted by IPFS; and the ***developer tools***, which is an application for deploying a DASP onto the Ethereum blockchain. A particular DASP is defined by its back end, and different DASPs usually differ in their back ends; the front end and the developer tools are shared by all DASPs, although different implementations can be made as long as they are compatible with the back end's API.
 
-Currently, WikiGit is in its infant stages and is being worked by just one guy (me). I have finished an early implementation of the back end, part of the developer tools, and the daemon in the front end used for connecting a DASP with its Git repository. I will do my best to find some more contributors, and anyone is welcome to join! (\***cough**\*you\***cough**\*)
+Currently, WikiGit is in its infant stages and is being worked by a handful of people. We have finished an early implementation of the back end, part of the developer tools, and the daemon in the front end used for connecting a DASP with its Git repository. We will do my best to find some more contributors, and anyone is welcome to join! (\***cough**\*you\***cough**\*)
 
 
 
@@ -90,4 +90,4 @@ The developer tools is used for deploying DASPs onto the Ethereum blockchain. It
 
 ## Contact
 
-Feel free to contact me at info@wikigit.org !
+Feel free to contact us at info@wikigit.org !
