@@ -135,20 +135,14 @@ contract TasksHandler is Module {
         require(rewardGoodRep <= rewardRepCap);
         require(penaltyBadRep <= penaltyRepCap);
 
-        uint[] storage rewardTokenIdList;
-        uint[] storage rewardTokenAmountList;
-        taskList.push(TaskListing({
-            metadata: metadata,
-            poster: poster,
-            rewardInWeis: 0,
-            rewardTokenIdList: rewardTokenIdList,
-            rewardTokenAmountList: rewardTokenAmountList,
-            rewardGoodRep: rewardGoodRep,
-            penaltyBadRep: penaltyBadRep,
-            isInvalid: false,
-            acceptedSolutionID: 0,
-            hasAcceptedSolution: false
-        }));
+        taskList.length += 1;
+
+        TaskListing storage task = taskList[taskList.length - 1];
+        task.metadata = metadata;
+        task.poster = poster;
+        task.rewardGoodRep = rewardGoodRep;
+        task.penaltyBadRep = penaltyBadRep;
+
         taskSolutionList.length += 1;
     }
 
@@ -256,19 +250,19 @@ contract TasksHandler is Module {
 
     //Helper functions
 
-    function rewardTokenIndex(uint taskId, uint tokenId) returns(uint) {
+    function rewardTokenIndex(uint taskId, uint tokenId) view returns(uint) {
         return taskList[taskId].rewardTokenIdList[tokenId];
     }
 
-    function rewardTokenAmount(uint taskId, uint tokenId) returns(uint) {
+    function rewardTokenAmount(uint taskId, uint tokenId) view returns(uint) {
         return taskList[taskId].rewardTokenAmountList[tokenId];
     }
 
-    function rewardTokenCount(uint taskId) returns(uint) {
+    function rewardTokenCount(uint taskId) view returns(uint) {
         return taskList[taskId].rewardTokenAmountList.length;
     }
 
-    function hasBeenPenalizedForTask(uint taskId, address memberAddr) returns(bool) {
+    function hasBeenPenalizedForTask(uint taskId, address memberAddr) view returns(bool) {
         return taskList[taskId].hasBeenPenalized[memberAddr];
     }
 

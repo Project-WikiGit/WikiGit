@@ -47,6 +47,7 @@ contract GitHandler is Module {
 
         require(poster == msg.sender); //Only the task's poster can commit.
         require(hasAcceptedSolution); //Can only commit after a solution has been accepted.
+        require(isInvalid);
         require(acceptedSolutionID == solId); //Has to be the accepted solution.
         require(!handler.hasBeenPenalizedForTask(taskId, submitter)); //Solution can't have been penalized.
 

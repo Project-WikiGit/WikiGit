@@ -38,6 +38,7 @@ contract Dao is Module {
         uint activeTimeInBlocks; //The number of blocks for which the voting is active.
         uint goodRepWeight;
         uint badRepWeight;
+        bytes32[] votableGroupList;
         mapping(address => uint) tokenWeights; //From token's address to weight
         mapping(bytes32 => bool) isEligible; //From group name's keccak256 hash to bool. For checking whether a group is allowed to vote.
     }
@@ -77,13 +78,6 @@ contract Dao is Module {
     RecognizedToken[] public recognizedTokenList;
 
     bool public isInitialized;
-    /*
-        Format: votableGroupsForType[votingTypeId][groupId]
-        groupId is local to this array
-        Stores the hashes of the groups that can vote for a
-        particular VotingType
-    */
-    bytes32[][] public votableGroupsForType;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
@@ -102,18 +96,17 @@ contract Dao is Module {
         bytes32 fullTimeHash = keccak256('full_time');
 
         //Initialize voting types
-        votingTypeList.push(VotingType({
-            name: "Default",
-            description: "For initializing",
-            quorumPercent: 100,
-            minForPercent: 100,
-            activeTimeInBlocks: 25,
-            goodRepWeight: 1,
-            badRepWeight: 1
-        }));
+        votingTypeList.length += 1;
 
-        votableGroupsForType.length += 1;
-        votableGroupsForType[votableGroupsForType.length - 1].push(fullTimeHash);
+        VotingType storage vType = votingTypeList[votingTypeList.length - 1];
+        vType.name = 'Default';
+        vType.description = 'For initializing';
+        vType.quorumPercent = 100;
+        vType.minForPercent = 100;
+        vType.activeTimeInBlocks = 25;
+        vType.goodRepWeight = 1;
+        vType.badRepWeight = 1;
+        vType.votableGroupList.push(fullTimeHash);
 
         votingTypeList[votingTypeList.length - 1].isEligible[fullTimeHash] = true;
     }
@@ -201,9 +194,8 @@ contract Dao is Module {
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
 
         uint votingMemberCount;
-        bytes32[] storage votableGroups = votableGroupsForType[voting.typeId];
-        for (uint i = 0; i < votableGroups.length; i++) {
-            votingMemberCount += h.groupMemberCount(votableGroups[i]);
+        for (uint i = 0; i < vType.votableGroupList.length; i++) {
+            votingMemberCount += h.groupMemberCount(vType.votableGroupList[i]);
         }
 
         voting.passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= vType.minForPercent)
@@ -230,7 +222,7 @@ contract Dao is Module {
         uint badRepWeight,
         address[] tokenAddresses,
         uint[] tokenWeights,
-        bytes32[] votableGroups
+        bytes32[] votableGroupList
     )
         onlyMod('DAO')
     {
@@ -244,11 +236,11 @@ contract Dao is Module {
             activeTimeInBlocks,
             goodRepWeight,
             badRepWeight,
-            votableGroups
+            votableGroupList
         );
 
-        for (uint i = 0; i < votableGroups.length; i++) {
-            votingTypeList[votingTypeList.length - 1].isEligible[votableGroups[i]] = true;
+        for (uint i = 0; i < votableGroupList.length; i++) {
+            votingTypeList[votingTypeList.length - 1].isEligible[votableGroupList[i]] = true;
         }
 
         setVotingTypeTokenWeights(tokenAddresses, tokenWeights);
@@ -263,7 +255,7 @@ contract Dao is Module {
         uint activeTimeInBlocks,
         uint goodRepWeight,
         uint badRepWeight,
-        bytes32[] votableGroups
+        bytes32[] votableGroupList
     )
         internal
     {
@@ -274,7 +266,8 @@ contract Dao is Module {
             minForPercent: minForPercent,
             activeTimeInBlocks: activeTimeInBlocks,
             goodRepWeight: goodRepWeight,
-            badRepWeight: badRepWeight
+            badRepWeight: badRepWeight,
+            votableGroupList: votableGroupList
         }));
     }
 
@@ -374,7 +367,7 @@ contract Dao is Module {
     }
 
     //Helper functions
-    function recognizedTokensCount() constant returns(uint) {
+    function recognizedTokensCount() view returns(uint) {
         return recognizedTokenList.length;
     }
 }

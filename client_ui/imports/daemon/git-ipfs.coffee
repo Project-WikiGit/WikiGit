@@ -22,7 +22,7 @@ fs = require 'fs'
 keccak256 = require('js-sha3').keccak256
 
 #Helper functions
-hexToStr = (hex) =>
+hexToStr = (hex) ->
   hex = hex.substr(2)
   str = ''
   for i in [0..hex.length - 1] by 2
@@ -30,7 +30,7 @@ hexToStr = (hex) =>
   return str
 
 #Initialize main contract
-mainAddr = "0xd23d23eee823081dd9221335ddd15b4f61974029" #Todo: link this to client-side web app
+mainAddr = "0x6bc5d7367aa082854c3e5b7ec86ee8a8e4215cd3" #Todo: link this to client-side web app
 mainAbi = require './abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
@@ -39,28 +39,28 @@ gitHandlerAddr = gitHandlerAbi = gitHandlerContract = null
 
 #Get TasksHandler address
 mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
-  (result) =>
+  (result) ->
     #Initialize TaskHandler module
     tasksHandlerAddr = result
     tasksHandlerAbi = require './abi/tasksHandlerABI.json'
     tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
 ).then(
-  () =>
+  () ->
     #Get GitHandler address
     mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
-      (result) =>
+      (result) ->
         #Initialize GitHandler module
         gitHandlerAddr = result
         gitHandlerAbi = require './abi/gitHandlerABI.json'
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
     ).then(
-      () =>
+      () ->
         #Listen for solution accepted event
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
-        solutionAcceptedEvent.on('data', (event) =>
+        solutionAcceptedEvent.on('data', (event) ->
           patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
           gitHandlerContract.methods.getCurrentIPFSHash().call().then(
-            (result) =>
+            (result) ->
               masterIPFSHash = hexToStr result
               masterPath = "./tmp/#{masterIPFSHash}/"
 
@@ -76,15 +76,15 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
                   throw error
                 repo = _repo
                 #Add patched repo as remote
-                repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) =>
+                repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) ->
                   if error != null
                     throw error
                   #Pull the patched repo and merge with the master
-                  repo.pull("solution", "master", (error) =>
+                  repo.pull("solution", "master", (error) ->
                     if error != null
                       throw error
                     #Add new repo to the IPFS network
-                    ipfs.util.addFromFs(masterPath, {recursive: true}, (error, result) =>
+                    ipfs.util.addFromFs(masterPath, {recursive: true}, (error, result) ->
                       if error != null
                         throw error
                       for entry in result
