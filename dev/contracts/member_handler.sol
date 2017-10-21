@@ -212,11 +212,11 @@ contract MemberHandler is Module {
 
     //Helper functions
 
-    function memberAtAddress(address addr) view internal returns(Member storage m) {
+    function memberAtAddress(address addr) constant internal returns(Member storage m) {
         m = memberList[memberId[addr]];
     }
 
-    function groupRight(string groupName, string right) view returns(bool) {
+    function groupRight(string groupName, string right) constant returns(bool) {
         return groupRights[keccak256(groupName)][keccak256(right)];
     }
 
@@ -224,11 +224,11 @@ contract MemberHandler is Module {
         groupRights[keccak256(groupName)][keccak256(right)] = hasRight;
     }
 
-    function memberHasRight(address addr, string right) view returns(bool) {
+    function memberHasRight(address addr, string right) constant returns(bool) {
         return groupRight(memberAtAddress(addr).groupName, right);
     }
 
-    function memberGroupNameHash(address addr) view returns(bytes32) {
+    function memberGroupNameHash(address addr) constant returns(bytes32) {
         return keccak256(memberAtAddress(addr).groupName);
     }
 
