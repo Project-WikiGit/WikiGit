@@ -2,15 +2,19 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/dev/test/voting.js" />
+        <item url="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_registry.js" />
         <item url="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
+        <item url="file://$PROJECT_DIR$/dev/test/voting.js" />
+        <item url="file://$PROJECT_DIR$/client_ui/imports/daemon/ipfs-test.js" />
         <item url="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/imports/api/git-ipfs.js" />
-      <root url="file://$PROJECT_DIR$/dev/test/voting.js" />
+      <root url="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_registry.js" />
       <root url="file://$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
+      <root url="file://$PROJECT_DIR$/dev/test/voting.js" />
+      <root url="file://$PROJECT_DIR$/client_ui/imports/daemon/ipfs-test.js" />
       <root url="file://$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
     </CLASSES>
     <SOURCES />

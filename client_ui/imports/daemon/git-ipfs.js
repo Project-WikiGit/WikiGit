@@ -77,13 +77,13 @@
             }
             fs.mkdirSync(masterPath);
           }
-          return git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
+          return git.clone("git@localhost:8080/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
             var repo;
             if (error !== null) {
               throw error;
             }
             repo = _repo;
-            return repo.remote_add("solution", "gateway.ipfs.io/ipfs/" + patchIPFSHash, function(error) {
+            return repo.remote_add("solution", "localhost:8080/ipfs/" + patchIPFSHash, function(error) {
               if (error !== null) {
                 throw error;
               }

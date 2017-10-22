@@ -71,12 +71,12 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
                 fs.mkdirSync(masterPath)
 
               #Clone the master
-              git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
+              git.clone("git@localhost:8080/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
                 if error != null
                   throw error
                 repo = _repo
                 #Add patched repo as remote
-                repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) ->
+                repo.remote_add("solution", "localhost:8080/ipfs/#{patchIPFSHash}", (error) ->
                   if error != null
                     throw error
                   #Pull the patched repo and merge with the master
