@@ -16,7 +16,7 @@
         <a href="#members" class="mdl-tabs__tab">Members</a>
     </div>
     <div class="mdl-tabs__panel is-active" id="repo">
-
+        {{> repo_tab}}
     </div>
     <div class="mdl-tabs__panel" id="votings">
 
@@ -41,8 +41,12 @@
 
 <template name="repo_tab">
     <ul class="mdl-list">
-        {{#each file_list}}
-
+        {{#each ls_file}}
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    {{Name}}
+                </span>
+            </li>
         {{/each}}
     </ul>
 </template>

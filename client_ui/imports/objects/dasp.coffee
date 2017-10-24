@@ -10,7 +10,6 @@ ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
 git = require 'gift'
 fs = require 'fs'
 keccak256 = require('js-sha3').keccak256
-async = require 'async'
 
 #Helper functions
 hexToStr = (hex) ->
@@ -46,59 +45,37 @@ export DASP = () ->
     self.addrs.main = addr
     mainAbi = (options && options.mainAbi) || require "../abi/mainABI.json"
     self.contracts.main = new web3.eth.Contract(mainAbi, self.addrs.main)
-
     moduleNames = (options && options.moduleNames) || ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT']
     initMod = (mod) ->
-      console.log(mod)
       return self.contracts.main.methods.moduleAddresses('0x' + keccak256(mod)).call().then(
         (result) ->
           lowerMod = mod.toLowerCase()
           self.addrs[lowerMod] = result;
-          abi = require '../abi/' + lowerMod + 'ABI.json'
+          abi = (options && options.mainAbi) || require("../abi/daoABI.json")
           self.contracts[lowerMod] = new web3.eth.Contract(abi, self.addrs[lowerMod])
+          return
       )
     initAllMods = (initMod(mod) for mod in moduleNames)
-    console.log(new Date())
     Promise.all(initAllMods).then(
-      setTimeout(
-        ()->
-          console.log(new Date())
-          console.log(self.contracts)
-          self.contracts.git.methods.getCurrentIPFSHash().call().then(
-            (result) ->
-              console.log(result)
-              self.repoIPFSHash = hexToStr result
-              console.log(self.repoIPFSHash)
-              if callback != null
-                callback
-              return
-          )
-      , 1000)
-
-    )
-    ###async.parallel(
-      initAllMods(self),
-      (error, result) ->
-        self.contracts.git.methods.getCurrentIPFSHash().call.then(
+      ()->
+        self.contracts.git.methods.getCurrentIPFSHash().call().then(
           (result) ->
             self.repoIPFSHash = hexToStr result
-            console.log(self.repoIPFSHash)
             if callback != null
               callback
             return
         )
-        return
-    )###
-    async.parallel(initAllMods())
-    console.log(self.addrs.member)
+    )
+
     return
 
   self.lsRepo = (path, callback) ->
     ipfs.ls("#{self.repoIPFSHash}#{path}", (error, result) ->
+      console.log(error, result)
       if error
         callback(error, null)
       else
-        callback(null, result.Objects.Links)
+        callback(null, result.Objects[0].Links)
     )
     return
 

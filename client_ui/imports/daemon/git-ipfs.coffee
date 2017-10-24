@@ -31,7 +31,7 @@ hexToStr = (hex) ->
   return str
 
 #Initialize main contract
-mainAddr = "0x39ceea5988705431029304112ddb4f47751646cf" #Todo: link this to client-side web app
+mainAddr = "0xf12743efeb6ede32de8356f617a90863638bd4d0" #Todo: link this to client-side web app
 mainAbi = require '../abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 

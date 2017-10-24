@@ -5,13 +5,12 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "async": "^2.5.0",
     "babel-runtime": "^6.26.0",
-    "coffee-script": "~1.12.7",
+    "coffee-script": "^1.12.7",
     "gift": "^0.10.0",
-    "ipfs-api": "^14.3.5",
+    "ipfs-api": "^15.0.1",
     "js-sha3": "^0.6.1",
-    "meteor-node-stubs": "~0.2.4",
-    "web3": "^1.0.0-beta.23"
+    "meteor-node-stubs": "^0.2.11",
+    "web3": "^1.0.0-beta.24"
   }
 }

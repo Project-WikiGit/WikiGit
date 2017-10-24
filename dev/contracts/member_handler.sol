@@ -41,7 +41,9 @@ contract MemberHandler is Module {
 
     mapping(address => bool) public isBanned;
 
-    function MemberHandler(string creatorUserName, address mainAddr) Module(mainAddr) {
+    function MemberHandler(string creatorUserName, address mainAddr, bytes _abiIPFSHash)
+        Module(mainAddr, _abiIPFSHash)
+    {
         //Add msg.sender as member #1
         memberList.push(Member('',0,'',0,0)); //Member at index 0 is reserved, for efficiently checking whether an address has already been registered.
         memberList.push(Member(creatorUserName, msg.sender, 'full_time', 1, 0));

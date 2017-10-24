@@ -84,7 +84,9 @@ contract Dao is Module {
 
     //Initializing
 
-    function Dao(address mainAddr) Module(mainAddr) {
+    function Dao(address mainAddr, bytes _abiIPFSHash)
+        Module(mainAddr, _abiIPFSHash)
+    {
 
     }
 

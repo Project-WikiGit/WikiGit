@@ -18,8 +18,12 @@ contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
 
     address public mainAddress;
+    bytes public abiIPFSHash;
 
-    function Module(address mainAddr) { mainAddress = mainAddr; }
+    function Module(address _mainAddress, bytes _abiIPFSHash) {
+        mainAddress = _mainAddress;
+        abiIPFSHash = _abiIPFSHash;
+    }
 
     function moduleAddress(string mod) constant internal returns(address addr){
         Main main = Main(mainAddress);
@@ -33,11 +37,13 @@ contract Main {
     string public metadata;
     bool public initialized;
     address private creator;
+    bytes public abiIPFSHash;
 
     modifier onlyDao{ require(msg.sender == moduleAddresses['DAO']); _; }
 
-    function Main(string meta) {
-        metadata = meta;
+    function Main(string _metadata, bytes _abiIPFSHash) {
+        metadata = _metadata;
+        abiIPFSHash = _abiIPFSHash;
         creator = msg.sender;
     }
 

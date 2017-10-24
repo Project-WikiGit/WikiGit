@@ -44,7 +44,7 @@
     return str;
   };
 
-  mainAddr = "0x39ceea5988705431029304112ddb4f47751646cf";
+  mainAddr = "0xf12743efeb6ede32de8356f617a90863638bd4d0";
 
   mainAbi = require('../abi/mainABI.json');
 

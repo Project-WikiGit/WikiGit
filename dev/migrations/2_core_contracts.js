@@ -36,41 +36,44 @@
   fs = require('fs');
 
   module.exports = function(deployer) {
-    return deployer.deploy(main, 'Test Metadata').then(function() {
-      var newHash, repoPath;
-      repoPath = './tmp/init_repo';
-      if (!fs.existsSync(repoPath)) {
-        if (!fs.existsSync('./tmp')) {
-          fs.mkdirSync('./tmp');
-        }
-        fs.mkdirSync(repoPath);
+    var abiPath;
+    abiPath = './build/contracts';
+    return ipfs.util.addFromFs(abiPath, {
+      recursive: true
+    }, function(error, abiAddrs) {
+      if (error !== null) {
+        throw error;
       }
-      newHash = '';
-      return git.init(repoPath, function(error, _repo) {
-        if (error !== null) {
-          throw error;
+      return deployer.deploy(main, 'Test Metadata').then(function() {
+        var newHash, repoPath;
+        repoPath = './tmp/repo.git';
+        if (!fs.existsSync(repoPath)) {
+          if (!fs.existsSync('./tmp')) {
+            fs.mkdirSync('./tmp');
+          }
+          fs.mkdirSync(repoPath);
         }
-        return ipfs.util.addFromFs(repoPath, {
-          recursive: true
-        }, function(error, result) {
-          var entry, i, len;
+        newHash = '';
+        return git.init(repoPath, true, function(error, _repo) {
           if (error !== null) {
             throw error;
           }
-          for (i = 0, len = result.length; i < len; i++) {
-            entry = result[i];
-            if (entry.path === 'repo') {
-              newHash = entry.hash;
-              break;
+          return ipfs.util.addFromFs(repoPath, {
+            recursive: true
+          }, function(error, result) {
+            if (error !== null) {
+              throw error;
             }
-          }
-          return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, main.address, newHash]]).then(function() {
-            return main.deployed().then(function(instance) {
-              return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address], 0);
-            });
-          }).then(function() {
-            return dao.deployed().then(function(instance) {
-              return instance.init();
+            console.log(error, result);
+            newHash = result[result.length - 1].hash;
+            return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, newHash, main.address]]).then(function() {
+              return main.deployed().then(function(instance) {
+                return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address], 0);
+              });
+            }).then(function() {
+              return dao.deployed().then(function(instance) {
+                return instance.init();
+              });
             });
           });
         });
