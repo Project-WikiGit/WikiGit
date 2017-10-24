@@ -484,9 +484,44 @@
           "type": "event"
         }
       },
-      "updated_at": 1508568541942
+      "updated_at": 1508697106724
+    },
+    "1508741476492": {
+      "links": {},
+      "events": {
+        "0x3205be6c9f54a5e02a1ee7ed665ab460898cce94d5976b5937f48ec19682036d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "votingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VotingCreated",
+          "type": "event"
+        },
+        "0x0c77796cd10a570d9e9676dfefd3bd24776fa13e25f41d0b2e13a0069add50ab": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "votingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "passed",
+              "type": "bool"
+            }
+          ],
+          "name": "VotingConcluded",
+          "type": "event"
+        }
+      },
+      "updated_at": 1508803874423
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508570224135
+  "updated_at": 1508803874423
 }

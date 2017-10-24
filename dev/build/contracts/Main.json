@@ -143,10 +143,16 @@
     "1508559237577": {
       "events": {},
       "links": {},
-      "address": "0x26b27d176404e9fcca8924f59021547fe681025e",
-      "updated_at": 1508568541946
+      "address": "0x5a8feb89299599b4d905eff02bfb28fac61e1c76",
+      "updated_at": 1508697106721
+    },
+    "1508741476492": {
+      "events": {},
+      "links": {},
+      "address": "0xb260fe5ff4a171f86288549ddd8e4c96916870ea",
+      "updated_at": 1508803874421
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508570224136
+  "updated_at": 1508803874421
 }

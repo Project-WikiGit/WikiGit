@@ -497,9 +497,37 @@
           "type": "event"
         }
       },
-      "updated_at": 1508568541947
+      "updated_at": 1508697106722
+    },
+    "1508741476492": {
+      "links": {},
+      "events": {
+        "0x5688b42433f5850a07335a44d50b6e955e88073f39fa3ac6ab9c8d1a4093df12": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "taskId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "solutionId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "patchIPFSHash",
+              "type": "bytes"
+            }
+          ],
+          "name": "TaskSolutionAccepted",
+          "type": "event"
+        }
+      },
+      "updated_at": 1508803874427
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508570224137
+  "updated_at": 1508803874427
 }

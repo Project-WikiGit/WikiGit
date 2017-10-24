@@ -18,12 +18,14 @@
 
   web3 = new Web3();
 
-  web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
+  if (web3.currentProvider === null) {
+    web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
 
   ipfsAPI = require('ipfs-api');
 
-  ipfs = ipfsAPI('localhost', '5001', {
-    protocol: 'http'
+  ipfs = ipfsAPI('ipfs.infura.io', '5001', {
+    protocol: 'https'
   });
 
   git = require('gift');
@@ -42,9 +44,9 @@
     return str;
   };
 
-  mainAddr = "0x6bc5d7367aa082854c3e5b7ec86ee8a8e4215cd3";
+  mainAddr = "0x39ceea5988705431029304112ddb4f47751646cf";
 
-  mainAbi = require('./abi/mainABI.json');
+  mainAbi = require('../abi/mainABI.json');
 
   mainContract = new web3.eth.Contract(mainAbi, mainAddr);
 
@@ -54,12 +56,12 @@
 
   mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(function(result) {
     tasksHandlerAddr = result;
-    tasksHandlerAbi = require('./abi/tasksHandlerABI.json');
+    tasksHandlerAbi = require('../abi/tasksABI.json');
     return tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr);
   }).then(function() {
     return mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(function(result) {
       gitHandlerAddr = result;
-      gitHandlerAbi = require('./abi/gitHandlerABI.json');
+      gitHandlerAbi = require('../abi/gitABI.json');
       return gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr);
     }).then(function() {
       var solutionAcceptedEvent;
@@ -77,13 +79,13 @@
             }
             fs.mkdirSync(masterPath);
           }
-          return git.clone("git@localhost:8080/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
+          return git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
             var repo;
             if (error !== null) {
               throw error;
             }
             repo = _repo;
-            return repo.remote_add("solution", "localhost:8080/ipfs/" + patchIPFSHash, function(error) {
+            return repo.remote_add("solution", "gateway.ipfs.io/ipfs/" + patchIPFSHash, function(error) {
               if (error !== null) {
                 throw error;
               }

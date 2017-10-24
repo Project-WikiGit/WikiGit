@@ -12,11 +12,12 @@
 #Import web3
 Web3 = require 'web3'
 web3 = new Web3();
-web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"))
+if web3.currentProvider == null
+  web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"))
 
 #Import node modules
 ipfsAPI = require 'ipfs-api'
-ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
+ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
 git = require 'gift'
 fs = require 'fs'
 keccak256 = require('js-sha3').keccak256
@@ -30,8 +31,8 @@ hexToStr = (hex) ->
   return str
 
 #Initialize main contract
-mainAddr = "0x6bc5d7367aa082854c3e5b7ec86ee8a8e4215cd3" #Todo: link this to client-side web app
-mainAbi = require './abi/mainABI.json'
+mainAddr = "0x39ceea5988705431029304112ddb4f47751646cf" #Todo: link this to client-side web app
+mainAbi = require '../abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
 tasksHandlerAddr = tasksHandlerAbi = tasksHandlerContract = null
@@ -42,7 +43,7 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
   (result) ->
     #Initialize TaskHandler module
     tasksHandlerAddr = result
-    tasksHandlerAbi = require './abi/tasksHandlerABI.json'
+    tasksHandlerAbi = require '../abi/tasksABI.json'
     tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
 ).then(
   () ->
@@ -51,7 +52,7 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
       (result) ->
         #Initialize GitHandler module
         gitHandlerAddr = result
-        gitHandlerAbi = require './abi/gitHandlerABI.json'
+        gitHandlerAbi = require '../abi/gitABI.json'
         gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
     ).then(
       () ->
@@ -71,12 +72,12 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
                 fs.mkdirSync(masterPath)
 
               #Clone the master
-              git.clone("git@localhost:8080/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
+              git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
                 if error != null
                   throw error
                 repo = _repo
                 #Add patched repo as remote
-                repo.remote_add("solution", "localhost:8080/ipfs/#{patchIPFSHash}", (error) ->
+                repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) ->
                   if error != null
                     throw error
                   #Pull the patched repo and merge with the master

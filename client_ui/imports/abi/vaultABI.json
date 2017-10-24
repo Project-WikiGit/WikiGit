@@ -1,0 +1,399 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "mainAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "payoutPendingTokenWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "removeAllPayBehaviors",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "name": "tokenAddr",
+        "type": "address"
+      },
+      {
+        "name": "isReward",
+        "type": "bool"
+      }
+    ],
+    "name": "addPendingTokenWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "multiplier",
+        "type": "uint256"
+      },
+      {
+        "name": "oracleAddress",
+        "type": "address"
+      },
+      {
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "name": "startBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "endBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "donationCapInWeis",
+        "type": "uint256"
+      }
+    ],
+    "name": "addPayBehavior",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardFreezeTime",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "withdrawlFreezeTime",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "invalidatePendingWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "pendingTokenWithdrawlList",
+    "outputs": [
+      {
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "frozenUntilBlock",
+        "type": "uint256"
+      },
+      {
+        "name": "isInvalid",
+        "type": "bool"
+      },
+      {
+        "name": "tokenSymbol",
+        "type": "string"
+      },
+      {
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newVaultAddr",
+        "type": "address"
+      },
+      {
+        "name": "burn",
+        "type": "bool"
+      }
+    ],
+    "name": "exportToVault",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "payoutPendingWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "frozenFunds",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "length",
+        "type": "uint256"
+      }
+    ],
+    "name": "importFromVault",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newTime",
+        "type": "uint256"
+      },
+      {
+        "name": "isReward",
+        "type": "bool"
+      }
+    ],
+    "name": "changeFreezeTime",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "payBehaviorList",
+    "outputs": [
+      {
+        "name": "multiplier",
+        "type": "uint256"
+      },
+      {
+        "name": "oracleAddress",
+        "type": "address"
+      },
+      {
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "name": "startBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "endBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "totalDonationInWeis",
+        "type": "uint256"
+      },
+      {
+        "name": "donationCapInWeis",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "removePayBehaviorAtIndex",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "frozenTokens",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "pendingWithdrawlList",
+    "outputs": [
+      {
+        "name": "amountInWeis",
+        "type": "uint256"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "frozenUntilBlock",
+        "type": "uint256"
+      },
+      {
+        "name": "isInvalid",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "amountInWeis",
+        "type": "uint256"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "isReward",
+        "type": "bool"
+      }
+    ],
+    "name": "addPendingWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "invalidatePendingTokenWithdrawl",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "mainAddr",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "constructor"
+  },
+  {
+    "payable": true,
+    "type": "fallback"
+  }
+]

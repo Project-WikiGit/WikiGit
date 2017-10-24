@@ -1,0 +1,449 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "name": "solId",
+        "type": "uint256"
+      },
+      {
+        "name": "banSubmitter",
+        "type": "bool"
+      }
+    ],
+    "name": "penalizeSolutionSubmitter",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "mainAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "votingTypeList",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "quorumPercent",
+        "type": "uint256"
+      },
+      {
+        "name": "minForPercent",
+        "type": "uint256"
+      },
+      {
+        "name": "activeTimeInBlocks",
+        "type": "uint256"
+      },
+      {
+        "name": "goodRepWeight",
+        "type": "uint256"
+      },
+      {
+        "name": "badRepWeight",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "votingId",
+        "type": "uint256"
+      }
+    ],
+    "name": "concludeVoting",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isInitialized",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "votingTypeId",
+        "type": "uint256"
+      },
+      {
+        "name": "startBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "executionHashList",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "executionModule",
+        "type": "string"
+      }
+    ],
+    "name": "createVoting",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "votingList",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "typeId",
+        "type": "uint256"
+      },
+      {
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "name": "startBlockNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "forVotes",
+        "type": "uint256"
+      },
+      {
+        "name": "againstVotes",
+        "type": "uint256"
+      },
+      {
+        "name": "votedMemberCount",
+        "type": "uint256"
+      },
+      {
+        "name": "executionModule",
+        "type": "string"
+      },
+      {
+        "name": "isInvalid",
+        "type": "bool"
+      },
+      {
+        "name": "passed",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "recognizedTokensCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "name": "solId",
+        "type": "uint256"
+      }
+    ],
+    "name": "paySolutionReward",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeVotingTypeAtIndex",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "name": "rewardTokenCap",
+        "type": "uint256"
+      }
+    ],
+    "name": "addRecognizedToken",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "recognizedTokenList",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "quorumPercent",
+        "type": "uint256"
+      },
+      {
+        "name": "minForPercent",
+        "type": "uint256"
+      },
+      {
+        "name": "activeTimeInBlocks",
+        "type": "uint256"
+      },
+      {
+        "name": "goodRepWeight",
+        "type": "uint256"
+      },
+      {
+        "name": "badRepWeight",
+        "type": "uint256"
+      },
+      {
+        "name": "tokenAddresses",
+        "type": "address[]"
+      },
+      {
+        "name": "tokenWeights",
+        "type": "uint256[]"
+      },
+      {
+        "name": "votableGroupList",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "createVotingType",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "invalidateVotingAtIndex",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "votingId",
+        "type": "uint256"
+      },
+      {
+        "name": "bytecodeHashId",
+        "type": "uint256"
+      },
+      {
+        "name": "executionBytecode",
+        "type": "bytes"
+      }
+    ],
+    "name": "executeVoting",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "votingId",
+        "type": "uint256"
+      },
+      {
+        "name": "support",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "init",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeRecognizedTokenAtIndex",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "mainAddr",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "votingId",
+        "type": "uint256"
+      }
+    ],
+    "name": "VotingCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "votingId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "passed",
+        "type": "bool"
+      }
+    ],
+    "name": "VotingConcluded",
+    "type": "event"
+  }
+]

@@ -18,7 +18,7 @@ git_handler = artifacts.require 'GitHandler'
 
 #Import node modules
 ipfsAPI = require 'ipfs-api'
-ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
+ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
 git = require 'gift'
 fs = require 'fs'
 

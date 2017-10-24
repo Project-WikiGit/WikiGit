@@ -58,7 +58,7 @@ contract GitHandler is Module {
 
     //Helper functions
 
-    function getCurrentIPFSHash() returns(bytes hash) {
+    function getCurrentIPFSHash() constant returns(bytes hash) {
         return ipfsHashes[currentHashID];
     }
 

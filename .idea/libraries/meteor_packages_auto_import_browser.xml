@@ -151,7 +151,6 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/backcompat.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/events.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/html.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/meson_electron/0.1.3/web.browser/client/index.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/lookup.js" />
       </sourceFilesUrls>
     </properties>
@@ -305,7 +304,6 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/backcompat.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/events.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/html.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/meson_electron/0.1.3/web.browser/client/index.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.2/web.browser/lookup.js" />
     </CLASSES>
     <SOURCES />

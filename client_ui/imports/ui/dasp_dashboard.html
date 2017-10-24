@@ -1,0 +1,48 @@
+<body>
+<div style="text-align: center;">
+    <form class="dasp_addr_input">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="dasp_addr">
+            <label class="mdl-textfield__label" for="dasp_addr">DASP Address...</label>
+        </div>
+    </form>
+</div>
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#repo" class="mdl-tabs__tab is-active">Repo</a>
+        <a href="#votings" class="mdl-tabs__tab">Votings</a>
+        <a href="#tasks" class="mdl-tabs__tab">Tasks</a>
+        <a href="#finances" class="mdl-tabs__tab">Finances</a>
+        <a href="#members" class="mdl-tabs__tab">Members</a>
+    </div>
+    <div class="mdl-tabs__panel is-active" id="repo">
+
+    </div>
+    <div class="mdl-tabs__panel" id="votings">
+
+    </div>
+    <div class="mdl-tabs__panel" id="tasks">
+
+    </div>
+    <div class="mdl-tabs__panel" id="finances">
+
+    </div>
+    <div class="mdl-tabs__panel" id="members">
+
+    </div>
+</div>
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
+
+<template name="repo_tab">
+    <ul class="mdl-list">
+        {{#each file_list}}
+
+        {{/each}}
+    </ul>
+</template>
