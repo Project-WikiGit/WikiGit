@@ -18,11 +18,9 @@ contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
 
     address public mainAddress;
-    bytes public abiIPFSHash;
 
-    function Module(address _mainAddress, bytes _abiIPFSHash) {
+    function Module(address _mainAddress) {
         mainAddress = _mainAddress;
-        abiIPFSHash = _abiIPFSHash;
     }
 
     function moduleAddress(string mod) constant internal returns(address addr){
@@ -35,15 +33,17 @@ contract Main {
     mapping(bytes32 => address) public moduleAddresses;
     string[] public moduleNames;
     string public metadata;
-    bool public initialized;
+    bool public hasInitedAddrs;
+    bool public hasInitedABIs;
     address private creator;
-    bytes public abiIPFSHash;
+    bytes[] public abiIPFSHashes;
+    mapping(bytes32 => uint) public abiHashId;
 
     modifier onlyDao{ require(msg.sender == moduleAddresses['DAO']); _; }
 
     function Main(string _metadata, bytes _abiIPFSHash) {
         metadata = _metadata;
-        abiIPFSHash = _abiIPFSHash;
+        abiIPFSHashes.push(_abiIPFSHash);
         creator = msg.sender;
     }
 
@@ -55,28 +55,51 @@ contract Main {
     */
 
     function initializeModuleAddresses(address[] addrs) {
-        require(! initialized);
+        require(!hasInitedAddrs);
         require(msg.sender == creator);
-        initialized = true;
+        hasInitedAddrs = true;
         moduleNames = ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT'];
         for (uint i = 0; i < moduleNames.length; i++) {
             moduleAddresses[keccak256(moduleNames[i])] = addrs[i];
         }
     }
 
-    function changeModuleAddress(string modName, address addr, bool isNew) onlyDao {
+    function initializeABIHashForMod(uint modId, bytes abiHash) {
+        require(msg.sender == creator);
+        require(!hasInitedABIs);
+
+        abiIPFSHashes.push(abiHash);
+        abiHashId[keccak256(moduleNames[modId])] = abiIPFSHashes.length - 1;
+
+        if (abiIPFSHashes.length >= 6) {
+            hasInitedABIs = true;
+        }
+    }
+
+    function getABIHashForMod(bytes32 modHash) public constant returns(bytes abiHash) {
+        return abiIPFSHashes[abiHashId[modHash]];
+    }
+
+    function setABIHashForMod(bytes32 modHash, bytes abiHash) public onlyDao {
+        abiIPFSHashes[abiHashId[modHash]] = abiHash;
+    }
+
+    function setModuleAddress(string modName, address addr, bool isNew) public onlyDao {
         moduleAddresses[keccak256(modName)] = addr;
         if (isNew) {
             moduleNames.push(modName);
         }
     }
 
-    function removeModuleAtIndex(uint index) onlyDao {
-        delete moduleAddresses[keccak256(moduleNames[index])];
+    function removeModuleAtIndex(uint index) public onlyDao {
+        bytes32 nameHash = keccak256(moduleNames[index]);
+        delete moduleAddresses[nameHash];
         delete moduleNames[index];
+        delete abiIPFSHashes[index];
+        delete abiHashId[nameHash];
     }
 
-    function changeMetadata(string meta) onlyDao {
+    function setMetadata(string meta) public onlyDao {
         metadata = meta;
     }
 

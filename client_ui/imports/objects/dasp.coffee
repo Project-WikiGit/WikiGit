@@ -9,6 +9,7 @@ ipfsAPI = require 'ipfs-api'
 ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
 git = require 'gift'
 fs = require 'fs'
+bl = require 'bl'
 keccak256 = require('js-sha3').keccak256
 
 #Helper functions
@@ -46,14 +47,31 @@ export DASP = () ->
     mainAbi = (options && options.mainAbi) || require "../abi/mainABI.json"
     self.contracts.main = new web3.eth.Contract(mainAbi, self.addrs.main)
     moduleNames = (options && options.moduleNames) || ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT']
+
     initMod = (mod) ->
       return self.contracts.main.methods.moduleAddresses('0x' + keccak256(mod)).call().then(
         (result) ->
           lowerMod = mod.toLowerCase()
-          self.addrs[lowerMod] = result;
-          abi = (options && options.mainAbi) || require("../abi/daoABI.json")
-          self.contracts[lowerMod] = new web3.eth.Contract(abi, self.addrs[lowerMod])
-          return
+          self.addrs[lowerMod] = result
+          return self.contracts.main.methods.getABIHashForMod('0x' + keccak256(mod)).call().then(
+            (abiHash) ->
+              return new Promise((fullfill, reject) ->
+                ipfs.files.cat(hexToStr(abiHash),
+                  (error, stream) ->
+                    if error != null
+                      reject(error)
+                    stream.pipe(bl((error, data) ->
+                      if error != null
+                        reject(error)
+                      abi = JSON.parse(data.toString()).abi
+                      self.contracts[lowerMod] = new web3.eth.Contract(abi, self.addrs[lowerMod])
+                      fullfill()
+                      return
+                    ))
+                    return
+                )
+              )
+          )
       )
     initAllMods = (initMod(mod) for mod in moduleNames)
     Promise.all(initAllMods).then(
@@ -62,17 +80,15 @@ export DASP = () ->
           (result) ->
             self.repoIPFSHash = hexToStr result
             if callback != null
-              callback
+              callback()
             return
         )
     )
-
     return
 
   self.lsRepo = (path, callback) ->
     ipfs.ls("#{self.repoIPFSHash}#{path}", (error, result) ->
-      console.log(error, result)
-      if error
+      if error != null
         callback(error, null)
       else
         callback(null, result.Objects[0].Links)

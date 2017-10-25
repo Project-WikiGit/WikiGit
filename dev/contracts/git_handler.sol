@@ -30,9 +30,7 @@ contract GitHandler is Module {
     mapping(uint => uint) prevHashIDPointer; //Stores the pointers pointing from an IPFS hash's index to the index of the previous hash with respect to the tree structure.
     uint currentHashID; //Stores the index of the IPFS hash of the Git repository at the current state.
 
-    function GitHandler(bytes repoHash, address mainAddr, bytes _abiIPFSHash)
-        Module(mainAddr, _abiIPFSHash)
-    {
+    function GitHandler(bytes repoHash, address mainAddr) Module(mainAddr) {
         ipfsHashes.push(repoHash);
         prevHashIDPointer[0] = 0; //For clarity
         currentHashID = 0; //For clarity

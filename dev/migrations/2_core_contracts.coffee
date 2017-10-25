@@ -24,11 +24,18 @@ fs = require 'fs'
 
 module.exports = (deployer) ->
   abiPath = './build/contracts'
-  ipfs.util.addFromFs(abiPath, {recursive: true}, (error, abiAddrs) ->
+  ipfs.util.addFromFs(abiPath, {recursive: true}, (error, abiFiles) ->
     if error != null
       throw error
+
+    getABIHash = (modName) ->
+      for f in abiFiles
+        if f.path == "D:WebstormProjects/WikiGit/dev/build/contracts/#{modName}.json"
+          return f.hash
+
+    mainHash = getABIHash('Main')
     #Deploy main contract
-    deployer.deploy(main, 'Test Metadata').then(
+    deployer.deploy(main, 'Test Metadata', mainHash).then(
       () ->
         repoPath = './tmp/repo.git'
 
@@ -47,7 +54,6 @@ module.exports = (deployer) ->
           ipfs.util.addFromFs(repoPath, {recursive: true}, (error, result) ->
             if error != null
               throw error
-            console.log(error, result)
             #Get repo's IPFS multihash
             newHash = result[result.length - 1].hash
             #Deploy core modules
@@ -59,7 +65,7 @@ module.exports = (deployer) ->
               [git_handler, newHash, main.address]
             ]).then(
               () ->
-#Add core module addresses to main contract
+                #Add core module addresses to main contract
                 return main.deployed().then(
                   (instance) ->
                     return instance.initializeModuleAddresses([
@@ -72,10 +78,20 @@ module.exports = (deployer) ->
                 )
             ).then(
               () ->
-#Initialize the DAO
+                #Initialize the DAO
                 return dao.deployed().then(
                   (instance) ->
                     return instance.init()
+                )
+            ).then(
+              () ->
+                #Initialize the ABI hashes
+                modAbsNames = ['Dao', 'MemberHandler', 'Vault', 'TasksHandler', 'GitHandler']
+                return main.deployed().then(
+                  (instance) ->
+                    initABIHashForMod = (modId) ->
+                      return instance.initializeABIHashForMod(modId, getABIHash(modAbsNames[modId]))
+                    return Promise.all(initABIHashForMod(modId) for modId in [0..4])
                 )
             )
           )

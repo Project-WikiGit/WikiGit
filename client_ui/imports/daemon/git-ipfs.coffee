@@ -9,6 +9,8 @@
   and send its IPFS multihash back to GitHandler as the current location of the DASP's repo.
 ###
 
+import {DASP_Address} from '../ui/dasp_dashboard.js'
+
 #Import web3
 Web3 = require 'web3'
 web3 = new Web3();
@@ -31,7 +33,7 @@ hexToStr = (hex) ->
   return str
 
 #Initialize main contract
-mainAddr = "0xf12743efeb6ede32de8356f617a90863638bd4d0" #Todo: link this to client-side web app
+mainAddr = DASP_Address.get()
 mainAbi = require '../abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
@@ -43,8 +45,25 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
   (result) ->
     #Initialize TaskHandler module
     tasksHandlerAddr = result
-    tasksHandlerAbi = require '../abi/tasksABI.json'
-    tasksHandlerContract = new web3.eth.Contract(tasksHandlerAbi, tasksHandlerAddr)
+    return main.methods.getABIHashForMod('0x' + keccak256('TASKS')).call().then(
+      (abiHash) ->
+        return new Promise((fullfill, reject) ->
+          ipfs.files.cat(hexToStr(abiHash),
+            (error, stream) ->
+              if error != null
+                reject(error)
+              stream.pipe(bl((error, data) ->
+                if error != null
+                  reject(error)
+                abi = JSON.parse(data.toString()).abi
+                tasksHandlerContract = new web3.eth.Contract(abi, tasksHandlerAddr)
+                fullfill()
+                return
+              ))
+              return
+          )
+        )
+    )
 ).then(
   () ->
     #Get GitHandler address
@@ -52,13 +71,30 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
       (result) ->
         #Initialize GitHandler module
         gitHandlerAddr = result
-        gitHandlerAbi = require '../abi/gitABI.json'
-        gitHandlerContract = new web3.eth.Contract(gitHandlerAbi, gitHandlerAddr)
+        return main.methods.getABIHashForMod('0x' + keccak256('GIT')).call().then(
+          (abiHash) ->
+            return new Promise((fullfill, reject) ->
+              ipfs.files.cat(hexToStr(abiHash),
+                (error, stream) ->
+                  if error != null
+                    reject(error)
+                  stream.pipe(bl((error, data) ->
+                    if error != null
+                      reject(error)
+                    abi = JSON.parse(data.toString()).abi
+                    gitHandlerContract = new web3.eth.Contract(abi, gitHandlerAddr)
+                    fullfill()
+                    return
+                  ))
+                  return
+              )
+            )
+        )
     ).then(
       () ->
         #Listen for solution accepted event
         solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
-        solutionAcceptedEvent.on('data', (event) ->
+        return solutionAcceptedEvent.on('data', (event) ->
           patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
           gitHandlerContract.methods.getCurrentIPFSHash().call().then(
             (result) ->

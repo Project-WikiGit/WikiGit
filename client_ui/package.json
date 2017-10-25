@@ -6,11 +6,14 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "coffee-script": "^1.12.7",
+    "bl": "^1.2.1",
     "gift": "^0.10.0",
     "ipfs-api": "^15.0.1",
     "js-sha3": "^0.6.1",
     "meteor-node-stubs": "^0.2.11",
     "web3": "^1.0.0-beta.24"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.0.1"
   }
 }

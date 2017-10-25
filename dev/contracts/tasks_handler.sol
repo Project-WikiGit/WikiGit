@@ -68,7 +68,7 @@ contract TasksHandler is Module {
 
     event TaskSolutionAccepted(uint taskId, uint solutionId, bytes patchIPFSHash);
 
-    function TasksHandler(address mainAddr, bytes _abiIPFSHash) Module(mainAddr, _abiIPFSHash) {
+    function TasksHandler(address mainAddr) Module(mainAddr) {
         //Initialize reward caps
         rewardRepCap = 3;
         penaltyRepCap = 6;

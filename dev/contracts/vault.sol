@@ -134,9 +134,7 @@ contract Vault is Module {
     uint public frozenFunds; //The amount of ethers currently frozen, in weis.
     mapping(address => uint) public frozenTokens; //The amount of ERC20 tokens currently frozen. Mapping from token address to amount.
 
-    function Vault(address mainAddr, bytes _abiIPFSHash)
-        Module(mainAddr, _abiIPFSHash)
-    {
+    function Vault(address mainAddr) Module(mainAddr) {
         //Initialize withdrawl freeze times
         rewardFreezeTime = 3524; //Roughly 24 hours
         withdrawlFreezeTime = 3524; //Roughly 24 hours
