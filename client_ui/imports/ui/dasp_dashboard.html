@@ -1,4 +1,9 @@
 <body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
 <div style="text-align: center;">
     <form class="dasp_addr_input">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -31,22 +36,54 @@
 
     </div>
 </div>
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 
 <template name="repo_tab">
-    <ul class="mdl-list">
-        {{#each ls_file}}
-            <li class="mdl-list__item">
-                <span class="mdl-list__item-primary-content">
-                    {{Name}}
-                </span>
-            </li>
-        {{/each}}
-    </ul>
+    {{#if display_file_list}}
+        <div style="text-align: center;">
+            <h6>
+                Path: {{current_path}}
+            </h6>
+        </div>
+        <div class="mdl-grid">
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-cell mdl-cell--7-col">
+                <table class="mdl-data-table mdl-js-data-table" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Name</th>
+                        <th class="mdl-data-table__cell--non-numeric">IPFS Hash</th>
+                        <th>File Size</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each ls_file}}
+                        <tr class="file_item">
+                            <td class="mdl-data-table__cell--non-numeric">{{Name}}</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{Hash}}</td>
+                            <td>{{Size}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    {{else}}
+
+        <div class="mdl-grid">
+            <div class="mdl-layout-spacer">
+                <button class="back_to_dir mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 3%;">
+                    <i class="material-icons">chevron_left</i>
+                </button>
+            </div>
+            <div class="mdl-cell mdl-cell--7-col">
+                {{file_data}}
+            </div>
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    {{/if}}
+    <div style="text-align: center;">
+
+    </div>
 </template>

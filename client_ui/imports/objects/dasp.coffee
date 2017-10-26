@@ -47,15 +47,18 @@ export DASP = () ->
     mainAbi = (options && options.mainAbi) || require "../abi/mainABI.json"
     self.contracts.main = new web3.eth.Contract(mainAbi, self.addrs.main)
     moduleNames = (options && options.moduleNames) || ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT']
-
+    #Todo: read module names from main contract
     initMod = (mod) ->
+      #Get module address
       return self.contracts.main.methods.moduleAddresses('0x' + keccak256(mod)).call().then(
         (result) ->
           lowerMod = mod.toLowerCase()
           self.addrs[lowerMod] = result
+          #Get module ABI's IPFS hash
           return self.contracts.main.methods.getABIHashForMod('0x' + keccak256(mod)).call().then(
             (abiHash) ->
               return new Promise((fullfill, reject) ->
+                #Get module ABI
                 ipfs.files.cat(hexToStr(abiHash),
                   (error, stream) ->
                     if error != null
@@ -64,7 +67,10 @@ export DASP = () ->
                       if error != null
                         reject(error)
                       abi = JSON.parse(data.toString()).abi
+
+                      #Initialize module contract
                       self.contracts[lowerMod] = new web3.eth.Contract(abi, self.addrs[lowerMod])
+
                       fullfill()
                       return
                     ))
@@ -87,12 +93,21 @@ export DASP = () ->
     return
 
   self.lsRepo = (path, callback) ->
-    ipfs.ls("#{self.repoIPFSHash}#{path}", (error, result) ->
-      if error != null
-        callback(error, null)
+    fullPath = "#{self.repoIPFSHash}#{path}"
+    ipfs.files.cat(fullPath, (err, stream) ->
+      if err != null
+        ipfs.ls(fullPath, (error, result) ->
+          if error != null
+            callback(error, 'dir', null)
+          else
+            callback(null, 'dir', result.Objects[0].Links)
+        )
       else
-        callback(null, result.Objects[0].Links)
+        stream.pipe(bl((error, data) ->
+          callback(null, 'file', data)
+        ))
     )
+
     return
 
   return
