@@ -15,6 +15,10 @@ currentRepoPath = new ReactiveVar("")
 displayFileList = new ReactiveVar(true)
 fileData = new ReactiveVar("")
 
+memberList = new ReactiveVar([])
+isSigningUp = new ReactiveVar(false)
+signUpType = new String()
+
 Template.repo_tab.helpers(
   ls_file:
     () ->
@@ -35,6 +39,16 @@ Template.repo_tab.helpers(
       return currentRepoPath.get()
 )
 
+Template.members_tab.helpers(
+  member_list:
+    () ->
+      return memberList.get()
+
+  not_signing_up:
+    () ->
+      return !isSigningUp.get()
+)
+
 Template.body.events(
   'submit .dasp_addr_input':
     (event) ->
@@ -52,8 +66,13 @@ Template.body.events(
         dasp.lsRepo('', (error, type, result) ->
           currentFileList.set(result)
         )
+        dasp.lsMembers((result) ->
+          memberList.set(result)
+        )
       )
+)
 
+Template.repo_tab.events(
   'dblclick .file_item':
     (event) ->
       item = this
@@ -96,4 +115,44 @@ Template.body.events(
           throw error
         currentFileList.set(result)
       )
+)
+
+Template.members_tab.events(
+  'click .signup_freelancer':
+    (event) ->
+      isSigningUp.set(true)
+      signUpType = 'freelancer'
+
+  'click .signup_shareholder':
+    (event) ->
+      isSigningUp.set(true)
+      signUpType = 'shareholder'
+
+  'click .cancel_signup':
+    (event) ->
+      isSigningUp.set(false)
+
+  'click .refresh_member_list':
+    (event) ->
+      dasp.lsMembers((result) ->
+        memberList.set(result)
+      )
+
+  'submit .signup_username':
+    (event) ->
+      event.preventDefault()
+
+      target = event.target
+      userName = target.username.value
+
+      dasp.signUp(signUpType, userName, (error) ->
+        if error != null
+          throw error
+        dasp.lsMembers((result) ->
+          memberList.set(result)
+        )
+      )
+      isSigningUp.set(false)
+      target.username.value = ''
+
 )

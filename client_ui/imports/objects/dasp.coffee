@@ -1,8 +1,15 @@
 #Import web3
 Web3 = require 'web3'
-web3 = new Web3();
-if web3.currentProvider == null
-  web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"))
+web3 = window.web3
+if typeof web3 != undefined
+  web3 = new Web3(web3.currentProvider)
+else
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+
+web3.eth.getAccounts().then(
+  (accounts) ->
+    web3.eth.defaultAccount = accounts[0]
+)
 
 #Import node modules
 ipfsAPI = require 'ipfs-api'
@@ -41,6 +48,7 @@ export DASP = () ->
     git: null
 
   self.repoIPFSHash = null
+  self.memberList = [];
 
   self.initWithAddr = (addr, options, callback) ->
     self.addrs.main = addr
@@ -110,4 +118,49 @@ export DASP = () ->
 
     return
 
+  self.lsMembers = (callback) ->
+    self.memberList = []
+    return self.contracts.member.methods.memberCount().call().then(
+      (memberCount) ->
+        getMember = (id) ->
+          return self.contracts.member.methods.memberList(id).call().then(
+            (member) ->
+              return new Promise((fullfill, reject) ->
+                self.memberList.push(member)
+                if member.userAddress != '0x'
+                  fullfill()
+                else
+                  reject()
+                return
+              )
+          )
+        getAllMembers = (getMember(id) for id in [1..memberCount-1])
+        Promise.all(getAllMembers).then(
+          () ->
+            if callback != null
+              callback(self.memberList)
+            return
+        )
+        return
+    )
+
+  self.signUp = (type, userName, callback) ->
+    ethFunction = null
+    if type == 'freelancer'
+      ethFunction = self.contracts.member.methods.setSelfAsFreelancer(userName)
+    if type == 'shareholder'
+      ethFunction = self.contracts.member.methods.setSelfAsPureShareholder(userName)
+
+    if ethFunction == null
+      callback(Error('Invalid type'))
+      return
+    return web3.eth.getAccounts().then(
+      (accounts) ->
+        web3.eth.defaultAccount = accounts[0]
+        return ethFunction.send({from: web3.eth.defaultAccount, gas: 1000000}).then(
+          () ->
+            if callback != null
+              callback(null)
+        )
+    )
   return

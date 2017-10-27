@@ -232,6 +232,10 @@ contract MemberHandler is Module {
         return keccak256(memberAtAddress(addr).groupName);
     }
 
+    function memberCount() constant returns(uint) {
+        return memberList.length;
+    }
+
     function() {
         revert();
     }

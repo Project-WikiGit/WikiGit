@@ -6,9 +6,9 @@
 
 <div style="text-align: center;">
     <form class="dasp_addr_input">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="dasp_addr">
-            <label class="mdl-textfield__label" for="dasp_addr">DASP Address...</label>
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" placeholder="DASP Address..." id="dasp_addr">
+            <label class="mdl-textfield__label" for="dasp_addr"></label>
         </div>
     </form>
 </div>
@@ -33,21 +33,21 @@
 
     </div>
     <div class="mdl-tabs__panel" id="members">
-
+        {{> members_tab}}
     </div>
 </div>
 </body>
 
 <template name="repo_tab">
     {{#if display_file_list}}
-        <div style="text-align: center;">
-            <h6>
-                Path: {{current_path}}
-            </h6>
-        </div>
         <div class="mdl-grid">
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-cell mdl-cell--7-col">
+                <div style="text-align: left;">
+                    <h6>
+                        Path: {{current_path}}
+                    </h6>
+                </div>
                 <table class="mdl-data-table mdl-js-data-table" width="100%">
                     <thead>
                     <tr>
@@ -70,20 +70,67 @@
             <div class="mdl-layout-spacer"></div>
         </div>
     {{else}}
-
         <div class="mdl-grid">
             <div class="mdl-layout-spacer">
                 <button class="back_to_dir mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 3%;">
                     <i class="material-icons">chevron_left</i>
                 </button>
             </div>
-            <div class="mdl-cell mdl-cell--7-col">
+            <div class="mdl-cell mdl-cell--7-col" style="white-space: pre-wrap">
                 {{file_data}}
             </div>
             <div class="mdl-layout-spacer"></div>
         </div>
     {{/if}}
-    <div style="text-align: center;">
+</template>
 
+<template name="members_tab">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--7-col">
+            <button id="menu-register" class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">person_add</i>
+                Sign Up
+            </button>
+            <ul class="mdl-menu mdl-js-menu" for="menu-register">
+                <li class="mdl-menu__item signup_freelancer">Sign up as freelancer</li>
+                <li class="mdl-menu__item signup_shareholder">Sign up as shareholder</li>
+            </ul>
+            <form class="signup_username" style="float: left; margin-top: -1%; margin-left: 1%; {{#if not_signing_up}}display: none;{{/if}}">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="username" placeholder="Username...">
+                    <label class="mdl-textfield__label" for="username"></label>
+                </div>
+            </form>
+            <button class="cancel_signup mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_signing_up}}display: none;{{/if}}">
+                <i class="material-icons">cancel</i>
+            </button>
+            <button id="refresh_member_list" class="mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">refresh</i>
+            </button>
+            <table class="mdl-data-table mdl-js-data-table" width="100%">
+                <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Username</th>
+                    <th class="mdl-data-table__cell--non-numeric">Group Name</th>
+                    <th>Good Reputation</th>
+                    <th>Bad Reputation</th>
+                    <th class="mdl-data-table__cell--non-numeric">Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each member_list}}
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">{{userName}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+                        <td>{{goodRep}}</td>
+                        <td>{{badRep}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{userAddress}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="mdl-layout-spacer"></div>
     </div>
 </template>
