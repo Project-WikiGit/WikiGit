@@ -12,6 +12,11 @@
         </div>
     </form>
 </div>
+<!--Status toast-->
+<div id="status_toast" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
 <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
         <a href="#repo" class="mdl-tabs__tab is-active">Repo</a>
@@ -40,14 +45,24 @@
 
 <template name="repo_tab">
     {{#if display_file_list}}
+        <!--Display file list-->
         <div class="mdl-grid">
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-cell mdl-cell--7-col">
-                <div style="text-align: left;">
+                <!--Display current path-->
+                <div style="text-align: left; float: left;">
                     <h6>
                         Path: {{current_path}}
                     </h6>
                 </div>
+
+                <!--Clone button-->
+                <button class="clone_repo_btn mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:right; margin-top: 1%; margin-bottom: 2.6%;">
+                    <i class="material-icons">content_copy</i>
+                    Clone Repo
+                </button>
+
+                <!--File list-->
                 <table class="mdl-data-table mdl-js-data-table" width="100%">
                     <thead>
                     <tr>
@@ -70,16 +85,29 @@
             <div class="mdl-layout-spacer"></div>
         </div>
     {{else}}
+        <!--Display file data-->
         <div class="mdl-grid">
             <div class="mdl-layout-spacer">
-                <button class="back_to_dir mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 3%;">
+                <!--Back button-->
+                <button class="back_to_dir mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 3%; float:right;">
                     <i class="material-icons">chevron_left</i>
                 </button>
             </div>
+
+            <!--File data-->
             <div class="mdl-cell mdl-cell--7-col" style="white-space: pre-wrap">
                 {{file_data}}
             </div>
-            <div class="mdl-layout-spacer"></div>
+
+            <div class="mdl-layout-spacer">
+                <!--Download button-->
+                <a href="{{file_download_url}}" download>
+                    <button class="download_file mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="margin-left: 3%; margin-top: 3%; float:left;">
+                        <i class="material-icons">file_download</i>
+                    </button>
+                </a>
+
+            </div>
         </div>
     {{/if}}
 </template>
@@ -88,6 +116,7 @@
     <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell--7-col">
+            <!--Sign Up Menu-->
             <button id="menu-register" class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
                 <i class="material-icons">person_add</i>
                 Sign Up
@@ -96,6 +125,8 @@
                 <li class="mdl-menu__item signup_freelancer">Sign up as freelancer</li>
                 <li class="mdl-menu__item signup_shareholder">Sign up as shareholder</li>
             </ul>
+
+            <!--Username entry-->
             <form class="signup_username" style="float: left; margin-top: -1%; margin-left: 1%; {{#if not_signing_up}}display: none;{{/if}}">
                 <div class="mdl-textfield mdl-js-textfield">
                     <input class="mdl-textfield__input" type="text" id="username" placeholder="Username...">
@@ -105,9 +136,23 @@
             <button class="cancel_signup mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_signing_up}}display: none;{{/if}}">
                 <i class="material-icons">cancel</i>
             </button>
+
+            <!--<div style="float: left;">
+                {{#if show_signup_status}}
+                    {{#if signup_success}}
+                        <h6>Success</h6>
+                    {{else}}
+                        <h6>Error</h6>
+                    {{/if}}
+                {{/if}}
+            </div>-->
+
+            <!--Refresh Button-->
             <button id="refresh_member_list" class="mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
                 <i class="material-icons">refresh</i>
             </button>
+
+            <!--Member list-->
             <table class="mdl-data-table mdl-js-data-table" width="100%">
                 <thead>
                 <tr>

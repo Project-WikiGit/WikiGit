@@ -70,10 +70,16 @@ export DASP = () ->
                 ipfs.files.cat(hexToStr(abiHash),
                   (error, stream) ->
                     if error != null
+                      if callback != null
+                        callback(error)
                       reject(error)
+                      throw error
                     stream.pipe(bl((error, data) ->
                       if error != null
+                        if callback != null
+                          callback(error)
                         reject(error)
+                        throw error
                       abi = JSON.parse(data.toString()).abi
 
                       #Initialize module contract
@@ -90,11 +96,16 @@ export DASP = () ->
     initAllMods = (initMod(mod) for mod in moduleNames)
     Promise.all(initAllMods).then(
       ()->
-        self.contracts.git.methods.getCurrentIPFSHash().call().then(
-          (result) ->
-            self.repoIPFSHash = hexToStr result
-            if callback != null
-              callback()
+        self.contracts.git.methods.getCurrentIPFSHash().call(
+          (error, result) ->
+            if error != null
+              if callback != null
+                callback(error)
+            else
+              self.repoIPFSHash = hexToStr result
+              if callback != null
+                callback(null)
+
             return
         )
     )
@@ -106,16 +117,34 @@ export DASP = () ->
       if err != null
         ipfs.ls(fullPath, (error, result) ->
           if error != null
-            callback(error, 'dir', null)
+            if callback != null
+              callback(error, 'dir', null)
           else
-            callback(null, 'dir', result.Objects[0].Links)
+            if callback != null
+              callback(null, 'dir', result.Objects[0].Links)
         )
       else
         stream.pipe(bl((error, data) ->
-          callback(null, 'file', data)
+          if callback != null
+            callback(null, 'file', data)
         ))
     )
 
+    return
+
+  self.downloadFile = (path, callback) ->
+    fullPath = "#{self.repoIPFSHash}#{path}"
+    ipfs.files.cat(fullPath, (err, stream) ->
+      if err != null
+        if callback != null
+          callback(err)
+        throw err
+      if callback != null
+        fileName = path.slice(path.lastIndexOf('/'))
+        file = fs.createWriteStream(fileName)
+        stream.pipe(file)
+        callback(null)
+    )
     return
 
   self.lsMembers = (callback) ->
@@ -130,6 +159,8 @@ export DASP = () ->
                 if member.userAddress != '0x'
                   fullfill()
                 else
+                  if callback != null
+                    callback(new Error('Load member data error'))
                   reject()
                 return
               )
@@ -138,7 +169,7 @@ export DASP = () ->
         Promise.all(getAllMembers).then(
           () ->
             if callback != null
-              callback(self.memberList)
+              callback(null, self.memberList)
             return
         )
         return
@@ -152,15 +183,21 @@ export DASP = () ->
       ethFunction = self.contracts.member.methods.setSelfAsPureShareholder(userName)
 
     if ethFunction == null
-      callback(Error('Invalid type'))
+      callback(new Error('Invalid type'))
       return
     return web3.eth.getAccounts().then(
       (accounts) ->
         web3.eth.defaultAccount = accounts[0]
-        return ethFunction.send({from: web3.eth.defaultAccount, gas: 1000000}).then(
-          () ->
+        return ethFunction.send({from: web3.eth.defaultAccount, gas: 1000000}).on(
+          'receipt',
+          (receipt) ->
             if callback != null
               callback(null)
+        ).on(
+          'error',
+          (error) ->
+            if callback != null
+              callback(error)
         )
     )
   return
