@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a2a56d5e-67d8-4ca3-aeda-442e5c8fb375" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="dasp_dashboard.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state relative-caret-position="187">
+              <caret line="134" column="51" lean-forward="true" selection-start-line="134" selection-start-column="51" selection-end-line="134" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -155,6 +154,7 @@
       <find>showToastMsg(msg})</find>
       <find>//</find>
       <find>;</find>
+      <find>meteor build ../ui_build --directory</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,7 +168,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/truffle/contracts/git_handler.sol" />
         <option value="$PROJECT_DIR$/client/main.js" />
         <option value="$PROJECT_DIR$/truffle/contracts/tasks_handler.sol" />
         <option value="$PROJECT_DIR$/imports/api/git-ipfs.coffee" />
@@ -218,6 +217,7 @@
         <option value="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
         <option value="$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
+        <option value="$USER_HOME$/AppData/Roaming/npm/node_modules/meteor-build-client/meteor.js" />
         <option value="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" />
       </list>
     </option>
@@ -545,14 +545,7 @@
       <workItem from="1508198095695" duration="7033000" />
       <workItem from="1508301613140" duration="67629000" />
       <workItem from="1508735985698" duration="24004000" />
-      <workItem from="1508812049579" duration="115099000" />
-    </task>
-    <task id="LOCAL-00016" summary="Added submitting task solutions, voting on solutions, task reward caps, adding oneself as freelancer.">
-      <created>1503983234324</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1503983234324</updated>
+      <workItem from="1508812049579" duration="129171000" />
     </task>
     <task id="LOCAL-00017" summary="Added reward cap setter.">
       <created>1503987114489</created>
@@ -890,11 +883,18 @@
       <option name="project" value="LOCAL" />
       <updated>1509084238378</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Added clone and download feature for repo UI">
+      <created>1509169991997</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1509169991997</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="644515000" />
+    <option name="totallyTimeSpent" value="658587000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -907,14 +907,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17336152" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32826748" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3090172" sideWeight="0.50951374" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32624114" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2147923" sideWeight="0.49612403" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2147923" sideWeight="0.49612403" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32624114" sideWeight="0.49048626" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -981,7 +980,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/WikiGit" />
     </ignored-roots>
-    <MESSAGE value="Added member_handler.sol" />
     <MESSAGE value="Removed useless comment. Commented out DAO init() in migration to circumvent truffle/testrpc bug." />
     <MESSAGE value="Added Truffle testing. Debugged git-ipfs.coffee" />
     <MESSAGE value="Debugged git-ipfs.coffee &amp; migrations" />
@@ -1006,28 +1004,14 @@
     <MESSAGE value="The repo tab can now list files in the IPFS Git repo. Debugged the hell out of everything." />
     <MESSAGE value="Completed basic version of repo tab." />
     <MESSAGE value="Completed members tab for the UI." />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed members tab for the UI." />
+    <MESSAGE value="Added clone and download feature for repo UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added clone and download feature for repo UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dev/test/voting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="20" column="5" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="20" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/test/voting_alt.js" />
-    <entry file="file://$PROJECT_DIR$/dev/migrations/1_initial_migration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="7" column="55" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dev/truffle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1372,10 +1356,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/npm/node_modules/meteor-build-client/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-291">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/npm/node_modules/meteor-build-client/meteor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="63" column="68" lean-forward="false" selection-start-line="63" selection-start-column="68" selection-end-line="63" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/.meteor/packages/meteor-tool/1.5.2_2/package.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="187">
+          <caret line="134" column="51" lean-forward="true" selection-start-line="134" selection-start-column="51" selection-end-line="134" selection-end-column="51" />
           <folding />
         </state>
       </provider>

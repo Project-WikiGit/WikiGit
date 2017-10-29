@@ -130,8 +130,6 @@ Template.body.events(
 
       DASP_Address.set(text)
 
-      target.dasp_addr.value = ''
-
       dasp.initWithAddr(DASP_Address.get(), null, (error) ->
         if error != null
           showToastMsg('Ethereum Connection Error')
