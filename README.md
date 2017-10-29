@@ -58,16 +58,15 @@ The WikiGit ecosystem contains three major components: ***Self-governing Project
   * Most of the time, the applications that the project teams are building don't actually require a custom token to function, and Ether, the native currency of Ethereum, would easily suffice. This would lead to a fractured blockchain, where a user must hold a type of token for each application one is using.
   * IPO usually occurs before a team has any presentable product, and the uncertainty would a) scare many investors away and b) make it difficult for investors to determine the feasibility of a project.
 
-  ​
 
-  WikiGit aims to solve all of the abovementioned problems through organically combining self-governing projects, crowdsourcing, and crowdfunding to form a vibrant ecosystem for innovation & cooperation, where
+WikiGit aims to solve all of the abovementioned problems through organically combining self-governing projects, crowdsourcing, and crowdfunding to form a vibrant ecosystem for innovation & cooperation, where
 
   * project teams can easily obtain funding, recruit talented people, and use bounties to crowdsource tasks;
   * talents can do freelancing, work on projects they're excited about without any barriers, and join any project team with minimal red-tape;
   * contributors and patrons can vote on proposals to make decisions for the project, their votes are weighted by the amount of their contribution and investment, and neither party would be able to dominate the other;
   * investors can invest in projects with minimal risk and uncertainty, as everything in a project is transparent and instead of a single million-dollar ICO, a project will have many small-scale coin offerings spread out across different phases of the project.
 
-  The details of the WikiGit ecosystem will be explained below.
+The details of the WikiGit ecosystem will be explained below.
 
 ### Contribution-based Fair Governance
 
