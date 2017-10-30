@@ -14,9 +14,9 @@ The developer tool is at /dev/
 
 ### The Vision
 
-WikiGit implements an ecosystem for creating and interacting with what we call DASPs (Decentralized Autonomous Self-sustaining Projects). In the simplest terms, DASPs are an organic combination of DAOs (Decentralized Autonomous Organizations), coin offerings, crowdsourcing platforms (like Topcoder), and Git. The hope is that WikiGit will allow ingenious ideas to incarnate into projects that are self-sustaining in both finances and talent, with minimal cost and hindrances, similar to how Wikipedia allowed an entire encyclopedia to spontaneously come into being. In fact, it is possible that in the near future, WikiGit itself will be a DASP powered by WikiGit!
+WikiGit implements an ecosystem for creating and interacting with what we call DASPs (Decentralized Autonomous Self-sustaining Projects). In the simplest terms, a DASP is a DAO (Decentralized Autonomous Organization) that comes with its own Git repository (for hosting & managing the work being done in the project), voting mechanism, crowdfunding mechanism, and crowdsourcing mechanism. The hope is that WikiGit will allow ingenious ideas to incarnate into projects that are self-sustaining in both finances and talent, with minimal cost and hindrances, similar to how Wikipedia allowed an entire encyclopedia to spontaneously come into being. In fact, it is possible that in the near future WikiGit itself will be a DASP powered by WikiGit.
 
-In its complete form, WikiGit will realize the following scenario: One person or more has a great idea, creates a DASP with a cost of ~US$5, writes a white paper or something similar that explains the idea, find some interested people online and add them into the DASP, pitch in/crowd fund some ether and post tasks onto the crowdsourcing platform; maybe personally contribute to the project; maybe recruit some interested freelancers as part-time or full-time contributors; and voila, a self-sustaining DASP is born, with its own funding, voting mechanism, contributors, freelancers, and shareholders, and the idea would blossom into something wonderful through the power of the crowd.
+In its complete form, WikiGit will realize the following scenario: One or more person has a great idea, creates a DASP with a cost of ~US$1, writes a white paper or something similar that explains the idea, find some likeminded people online to form an initial team, pitch in and/or crowdfund some Ether and use them to post tasks onto the crowdsourcing platform, personally contribute to the project and/or recruit some interested freelancers as part-time or full-time contributors; and voila, a self-sustaining project is born, with its own funding, voting mechanism, contributors, freelancers, and shareholders, and the initial idea would blossom into something wonderful through the power of the crowd.
 
 ### The Project
 
@@ -49,13 +49,13 @@ The WikiGit ecosystem contains three major components: ***Self-governing Project
 * **Kickstarter** is one of the most successful crowdfunding platforms, where creators with brilliant ideas can fund their projects through the financial support of people who love their ideas, and ordinary users can easily fund projects they find interesting and receive numerous benefits depending on the amount of their donation. However,
 
   *  Kickstarter patrons who have the necessary skills cannot easily contribute to the project through means other than financial support, which is bad for both the patrons and the creators;
-  * project teams are not necessarily transparent in sharing the state of their projects;
-  * there is no formal way for patrons to suggest how the projects should be developed and influence the outcome of the projects.
+  *  project teams are not necessarily transparent in sharing the state of their projects;
+  *  there is no formal way for patrons to suggest how the projects should be developed and influence the outcome of the projects.
 
 * **Initial Coin Offering (ICO)** is a crowdfunding method not dissimilar to IPOs that recently emerged on the Ethereum blockchain, where project teams offer custom ERC20 tokens in exchange for Ether, a type of cryptocurrency. The tokens are usually claimed to have utility on the applications that the teams are building. Funders would judge a project's feasibility based on its whitepaper, the current state of the project, the roadmap, etc., and send Ether to the project's team during the ICO if they feel optimistic about the project's future. ICOs have seen amazing success, with small teams raising millions of US$ of funding, but it suffers many severe problems that most people in the space have observed:
 
   * any small team with a whitepaper and a good-looking website seem to have been able to raise millions, which many observers have claimed as "scammy", and in fact many of the projects *are* scams. This problem stems from the lack of transparency in the projects.
-  * Most of the time, the applications that the project teams are building don't actually require a custom token to function, and Ether, the native currency of Ethereum, would easily suffice. This would lead to a fractured blockchain, where a user must hold a type of token for each application one is using.
+  * Most of the time, the applications that the project teams are building don't actually require a custom token to function, and Ether, the native currency of Ethereum, would easily suffice. This would lead to a fragmented blockchain, where a user must hold a type of token for each application one is using.
   * IPO usually occurs before a team has any presentable product, and the uncertainty would a) scare many investors away and b) make it difficult for investors to determine the feasibility of a project.
 
 
@@ -70,7 +70,7 @@ The details of the WikiGit ecosystem will be explained below.
 
 ### Contribution-based Fair Governance
 
-In a DASP, members use voting sessions to make collective decisions about the project. Each member's vote is weighted not only by how much shares (tokens issued during coin offerings) they hold, but also the member's ***reputation score***: a metric for measuring how involved a member is with the project, determined mostly by the number of *tasks* a member has completed. 
+In a DASP, members use voting sessions to make collective decisions about the project. Each member's vote is weighted not only by how much shares (tokens issued during coin offerings) they hold, but also the member's ***reputation score***: a metric for measuring how involved a member is with the project, determined mostly by **the number of tasks** a member has completed. 
 
 Each member has two types of reputation: *good reputation* and *bad reputation*. A member can earn good reputation through completing tasks, and the amount rewarded depends on the difficulty of the task. A member would receive bad reputation when the member submits a task solution that's deemed malicious. A member's reputation score is specific to each DASP, but there will be a platform for viewing a user's reputation score in all of the DASPs they're in.
 
@@ -78,7 +78,7 @@ The reputation score can be used by project teams to determine, say, whether or 
 
 * incentivize users to contribute to projects they're passionate about, since a better reputation means more say in project decisions;
 * incentivize users to behave honestly, since even a small amount of bad reputation may discourage project teams from recruiting a user, thus tainting all the good reputation a user have earned;
-* incentivize users to complete all the low-hanging tasks to get a better overall reputation, so that even infant projects without existing funds can get tasks done by offering reputation rewards.
+* incentivize users to complete all the low-hanging tasks across DASPs to get a better overall reputation, so that even infant projects without existing funds can get tasks done by offering reputation rewards.
 
 Of course, since reputation systems are complex and need thorough designing, the system described above is only an early version and may be subject to change.
 
@@ -86,7 +86,7 @@ A voting-based governing system where both financial support and actual contribu
 
 ### Zero-barrier Crowdsourcing & Talent Recruitment
 
-In WikiGit, a user can choose to complete any task on the crowdsourcing platform as a freelancer and get paid, without asking for any authorization etc.. This is the existing norm on crowdsourcing platforms, but what differentiates WikiGit is that it's project-centered rather than task-centered, meaning that the user can continue working on a particular project if they found it interesting, and even attempt to join the project team backed by all the reputation they earned through completing tasks. Coupled with the fact that users are incentivized to discover projects and freelance for them, the WikiGit ecosystem automatically pairs users with projects they would be interested in, which in turn solves the problem of finding talent for projects.
+In WikiGit, a user can choose to complete any task on the crowdsourcing platform as a freelancer and get paid, without asking for any authorization etc.. This is the existing norm on crowdsourcing platforms, but what differentiates WikiGit is that WikiGit is project-oriented rather than task-oriented, meaning that the user can continue working on a particular project if they found it interesting, and even attempt to join the project team backed by all the reputation they earned through completing tasks. **Coupled with the fact that users are incentivized to discover projects and freelance for them (see *Contribution-based Fair Governance*, 3rd paragraph), the WikiGit ecosystem automatically pairs users with projects they would be interested in, which in turn solves the problem of finding talent for DASPs.**
 
 ### Transparent & Effective Coin Offerings 
 
