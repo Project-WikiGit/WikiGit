@@ -78,8 +78,8 @@ The reputation score can be used by project teams to determine, say, whether or 
 
 * incentivize users to contribute to projects they're passionate about, since a better reputation means more say in project decisions;
 * incentivize users to behave honestly, since even a small amount of bad reputation may discourage project teams from recruiting a user, thus tainting all the good reputation a user have earned;
-* **incentivize users to complete all the low-hanging tasks across DASPs to get a better overall reputation, so that **
-  * **users are encouraged to discover different projects, and **
+* **incentivize users to complete all the low-hanging tasks across DASPs to get a better overall reputation, so that**
+  * **users are encouraged to discover different projects, and**
   * **even infant projects without existing funds can get tasks done by offering reputation rewards.**
 
 Of course, since reputation systems are complex and need thorough designing, the system described above is only an early version and may be subject to change.
