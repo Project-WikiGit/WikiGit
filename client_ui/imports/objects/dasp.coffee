@@ -4,7 +4,7 @@ web3 = window.web3
 if typeof web3 != undefined
   web3 = new Web3(web3.currentProvider)
 else
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
 web3.eth.getAccounts().then(
   (accounts) ->
@@ -54,12 +54,14 @@ export DASP = () ->
     self.addrs.main = addr
     mainAbi = (options && options.mainAbi) || require "../abi/mainABI.json"
     self.contracts.main = new web3.eth.Contract(mainAbi, self.addrs.main)
+    console.log(self.contracts.main)
     moduleNames = (options && options.moduleNames) || ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT']
     #Todo: read module names from main contract
     initMod = (mod) ->
       #Get module address
       return self.contracts.main.methods.moduleAddresses('0x' + keccak256(mod)).call().then(
         (result) ->
+          console.log(result)
           lowerMod = mod.toLowerCase()
           self.addrs[lowerMod] = result
           #Get module ABI's IPFS hash
@@ -81,7 +83,6 @@ export DASP = () ->
                         reject(error)
                         throw error
                       abi = JSON.parse(data.toString()).abi
-
                       #Initialize module contract
                       self.contracts[lowerMod] = new web3.eth.Contract(abi, self.addrs[lowerMod])
 

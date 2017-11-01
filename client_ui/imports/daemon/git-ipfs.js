@@ -9,7 +9,7 @@
   to merge the solution into the DASP's repo, publish the resulting repo onto IPFS,
   and send its IPFS multihash back to GitHandler as the current location of the DASP's repo.
 */
-var Web3, fs, git, gitHandlerAbi, gitHandlerAddr, gitHandlerContract, hexToStr, ipfs, ipfsAPI, keccak256, mainAbi, mainAddr, mainContract, tasksHandlerAbi, tasksHandlerAddr, tasksHandlerContract, web3;
+var Web3, fs, git, gitHandlerAddr, gitHandlerContract, hexToStr, ipfs, ipfsAPI, keccak256, mainAbi, mainAddr, mainContract, tasksHandlerAddr, tasksHandlerContract, web3;
 
 import {
   DASP_Address
@@ -55,9 +55,9 @@ mainAbi = require('../abi/mainABI.json');
 
 mainContract = new web3.eth.Contract(mainAbi, mainAddr);
 
-tasksHandlerAddr = tasksHandlerAbi = tasksHandlerContract = null;
+tasksHandlerAddr = tasksHandlerContract = null;
 
-gitHandlerAddr = gitHandlerAbi = gitHandlerContract = null;
+gitHandlerAddr = gitHandlerContract = null;
 
 //Get TasksHandler address
 mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(function(result) {
@@ -104,60 +104,60 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(func
         });
       });
     });
-  }).then(function() {
-    var solutionAcceptedEvent;
-    //Listen for solution accepted event
-    solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted();
-    return solutionAcceptedEvent.on('data', function(event) {
-      var patchIPFSHash;
-      patchIPFSHash = hexToStr(event.returnValues.patchIPFSHash);
-      return gitHandlerContract.methods.getCurrentIPFSHash().call().then(function(result) {
-        var masterIPFSHash, masterPath;
-        masterIPFSHash = hexToStr(result);
-        masterPath = `./tmp/${masterIPFSHash}/`;
-        if (!fs.existsSync(masterPath)) {
-          if (!fs.existsSync('./tmp')) {
-            fs.mkdirSync('./tmp');
-          }
-          fs.mkdirSync(masterPath);
+  });
+}).then(function() {
+  var solutionAcceptedEvent;
+  //Listen for solution accepted event
+  solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted();
+  return solutionAcceptedEvent.on('data', function(event) {
+    var patchIPFSHash;
+    patchIPFSHash = hexToStr(event.returnValues.patchIPFSHash);
+    return gitHandlerContract.methods.getCurrentIPFSHash().call().then(function(result) {
+      var masterIPFSHash, masterPath;
+      masterIPFSHash = hexToStr(result);
+      masterPath = `./tmp/${masterIPFSHash}/`;
+      if (!fs.existsSync(masterPath)) {
+        if (!fs.existsSync('./tmp')) {
+          fs.mkdirSync('./tmp');
         }
-        //Clone the master
-        return git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
-          var repo;
+        fs.mkdirSync(masterPath);
+      }
+      //Clone the master
+      return git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", function(error, _repo) {
+        var repo;
+        if (error !== null) {
+          throw error;
+        }
+        repo = _repo;
+        //Add patched repo as remote
+        return repo.remote_add("solution", `gateway.ipfs.io/ipfs/${patchIPFSHash}`, function(error) {
           if (error !== null) {
             throw error;
           }
-          repo = _repo;
-          //Add patched repo as remote
-          return repo.remote_add("solution", `gateway.ipfs.io/ipfs/${patchIPFSHash}`, function(error) {
+          //Pull the patched repo and merge with the master
+          return repo.pull("solution", "master", function(error) {
             if (error !== null) {
               throw error;
             }
-            //Pull the patched repo and merge with the master
-            return repo.pull("solution", "master", function(error) {
+            //Add new repo to the IPFS network
+            return ipfs.util.addFromFs(masterPath, {
+              recursive: true
+            }, function(error, result) {
+              var entry, j, len, results;
               if (error !== null) {
                 throw error;
               }
-              //Add new repo to the IPFS network
-              return ipfs.util.addFromFs(masterPath, {
-                recursive: true
-              }, function(error, result) {
-                var entry, j, len, results;
-                if (error !== null) {
-                  throw error;
+              results = [];
+              for (j = 0, len = result.length; j < len; j++) {
+                entry = result[j];
+                if (entry.path === masterIPFSHash) {
+                  gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, entry.hash).send();
+                  break;
+                } else {
+                  results.push(void 0);
                 }
-                results = [];
-                for (j = 0, len = result.length; j < len; j++) {
-                  entry = result[j];
-                  if (entry.path === masterIPFSHash) {
-                    gitHandlerContract.methods.commitTaskSolutionToRepo(event.returnValues.taskId, event.returnValues.solId, entry.hash).send();
-                    break;
-                  } else {
-                    results.push(void 0);
-                  }
-                }
-                return results;
-              });
+              }
+              return results;
             });
           });
         });

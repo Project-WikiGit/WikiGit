@@ -75,7 +75,7 @@ module.exports = (deployer) ->
                       vault.address,
                       tasks_handler.address,
                       git_handler.address
-                    ],0) #added 0 due to Truffle bug
+                    ])
                 )
             ).then(
               () ->

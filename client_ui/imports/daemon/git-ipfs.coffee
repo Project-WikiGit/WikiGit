@@ -37,8 +37,8 @@ mainAddr = DASP_Address.get()
 mainAbi = require '../abi/mainABI.json'
 mainContract = new web3.eth.Contract(mainAbi, mainAddr)
 
-tasksHandlerAddr = tasksHandlerAbi = tasksHandlerContract = null
-gitHandlerAddr = gitHandlerAbi = gitHandlerContract = null
+tasksHandlerAddr = tasksHandlerContract = null
+gitHandlerAddr = gitHandlerContract = null
 
 #Get TasksHandler address
 mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
@@ -67,7 +67,7 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
 ).then(
   () ->
     #Get GitHandler address
-    mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
+    return mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(
       (result) ->
         #Initialize GitHandler module
         gitHandlerAddr = result
@@ -90,53 +90,53 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(
               )
             )
         )
-    ).then(
-      () ->
-        #Listen for solution accepted event
-        solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
-        return solutionAcceptedEvent.on('data', (event) ->
-          patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
-          gitHandlerContract.methods.getCurrentIPFSHash().call().then(
-            (result) ->
-              masterIPFSHash = hexToStr result
-              masterPath = "./tmp/#{masterIPFSHash}/"
+    )
+).then(
+  () ->
+    #Listen for solution accepted event
+    solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted()
+    return solutionAcceptedEvent.on('data', (event) ->
+      patchIPFSHash = hexToStr event.returnValues.patchIPFSHash
+      gitHandlerContract.methods.getCurrentIPFSHash().call().then(
+        (result) ->
+          masterIPFSHash = hexToStr result
+          masterPath = "./tmp/#{masterIPFSHash}/"
 
-              #Create repo directory if it doesn't exist
-              if !fs.existsSync(masterPath)
-                if !fs.existsSync('./tmp')
-                  fs.mkdirSync('./tmp')
-                fs.mkdirSync(masterPath)
+          #Create repo directory if it doesn't exist
+          if !fs.existsSync(masterPath)
+            if !fs.existsSync('./tmp')
+              fs.mkdirSync('./tmp')
+            fs.mkdirSync(masterPath)
 
-              #Clone the master
-              git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
+          #Clone the master
+          git.clone("git@gateway.ipfs.io/ipfs/" + masterIPFSHash.toString(), masterPath, Number.POSITIVE_INFINITY, "master", (error, _repo) ->
+            if error != null
+              throw error
+            repo = _repo
+            #Add patched repo as remote
+            repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) ->
+              if error != null
+                throw error
+              #Pull the patched repo and merge with the master
+              repo.pull("solution", "master", (error) ->
                 if error != null
                   throw error
-                repo = _repo
-                #Add patched repo as remote
-                repo.remote_add("solution", "gateway.ipfs.io/ipfs/#{patchIPFSHash}", (error) ->
+                #Add new repo to the IPFS network
+                ipfs.util.addFromFs(masterPath, {recursive: true}, (error, result) ->
                   if error != null
                     throw error
-                  #Pull the patched repo and merge with the master
-                  repo.pull("solution", "master", (error) ->
-                    if error != null
-                      throw error
-                    #Add new repo to the IPFS network
-                    ipfs.util.addFromFs(masterPath, {recursive: true}, (error, result) ->
-                      if error != null
-                        throw error
-                      for entry in result
-                        if entry.path is masterIPFSHash
-                          gitHandlerContract.methods.commitTaskSolutionToRepo(
-                            event.returnValues.taskId,
-                            event.returnValues.solId,
-                            entry.hash
-                          ).send()
-                          break
-                    )
-                  )
+                  for entry in result
+                    if entry.path is masterIPFSHash
+                      gitHandlerContract.methods.commitTaskSolutionToRepo(
+                        event.returnValues.taskId,
+                        event.returnValues.solId,
+                        entry.hash
+                      ).send()
+                      break
                 )
               )
+            )
           )
-        )
+      )
     )
 )

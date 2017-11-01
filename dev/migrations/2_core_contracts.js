@@ -85,7 +85,7 @@
             return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, newHash, main.address]]).then(function() {
               //Add core module addresses to main contract
               return main.deployed().then(function(instance) {
-                return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address], 0); //added 0 due to Truffle bug
+                return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address]);
               });
             }).then(function() {
               //Initialize the DAO
