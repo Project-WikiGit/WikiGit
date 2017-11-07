@@ -4,7 +4,7 @@ web3 = window.web3
 if typeof web3 != undefined
   web3 = new Web3(web3.currentProvider)
 else
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
 
 web3.eth.getAccounts().then(
   (accounts) ->
@@ -49,19 +49,20 @@ export DASP = () ->
 
   self.repoIPFSHash = null
   self.memberList = [];
+  self.payBehaviorList = [];
+  self.pendingWithdrawlList = [];
+  self.pendingTokenWithdrawlList = [];
 
   self.initWithAddr = (addr, options, callback) ->
     self.addrs.main = addr
     mainAbi = (options && options.mainAbi) || require "../abi/mainABI.json"
     self.contracts.main = new web3.eth.Contract(mainAbi, self.addrs.main)
-    console.log(self.contracts.main)
     moduleNames = (options && options.moduleNames) || ['DAO', 'MEMBER', 'VAULT', 'TASKS', 'GIT']
     #Todo: read module names from main contract
     initMod = (mod) ->
       #Get module address
       return self.contracts.main.methods.moduleAddresses('0x' + keccak256(mod)).call().then(
         (result) ->
-          console.log(result)
           lowerMod = mod.toLowerCase()
           self.addrs[lowerMod] = result
           #Get module ABI's IPFS hash
@@ -112,7 +113,7 @@ export DASP = () ->
     )
     return
 
-  self.lsRepo = (path, callback) ->
+  self.getRepoFile = (path, callback) ->
     fullPath = "#{self.repoIPFSHash}#{path}"
     ipfs.files.cat(fullPath, (err, stream) ->
       if err != null
@@ -133,25 +134,13 @@ export DASP = () ->
 
     return
 
-  self.downloadFile = (path, callback) ->
-    fullPath = "#{self.repoIPFSHash}#{path}"
-    ipfs.files.cat(fullPath, (err, stream) ->
-      if err != null
-        if callback != null
-          callback(err)
-        throw err
-      if callback != null
-        fileName = path.slice(path.lastIndexOf('/'))
-        file = fs.createWriteStream(fileName)
-        stream.pipe(file)
-        callback(null)
-    )
-    return
-
-  self.lsMembers = (callback) ->
+  self.getMemberList = (callback) ->
     self.memberList = []
-    return self.contracts.member.methods.memberCount().call().then(
+    return self.contracts.member.methods.getMemberListCount().call().then(
       (memberCount) ->
+        memberCount = +memberCount
+        if memberCount == 0
+          return
         getMember = (id) ->
           return self.contracts.member.methods.memberList(id).call().then(
             (member) ->
@@ -161,19 +150,17 @@ export DASP = () ->
                   fullfill()
                 else
                   if callback != null
-                    callback(new Error('Load member data error'))
+                    callback(new Error('Load Member Data Error'))
                   reject()
                 return
               )
           )
         getAllMembers = (getMember(id) for id in [1..memberCount-1])
-        Promise.all(getAllMembers).then(
+        return Promise.all(getAllMembers).then(
           () ->
             if callback != null
               callback(null, self.memberList)
-            return
         )
-        return
     )
 
   self.signUp = (type, userName, callback) ->
@@ -201,4 +188,75 @@ export DASP = () ->
               callback(error)
         )
     )
+
+  self.getVaultBalance = () ->
+    return web3.eth.getBalance(self.addrs.vault)
+
+  self.getAccounts = () ->
+    return web3.eth.getAccounts().then(
+      (accounts) ->
+        web3.eth.defaultAccount = accounts[0]
+    )
+
+  self.fundDasp = (amountInEther) ->
+    return web3.eth.sendTransaction({from: web3.eth.defaultAccount, to: self.addrs.vault, value: amountInEther * Math.pow(10, 18)})
+
+  self.getPayBehaviorList = (callback) ->
+    self.payBehaviorList = []
+    return self.contracts.vault.methods.getPayBehaviorListCount().call().then(
+      (payBehaviorCount) ->
+        payBehaviorCount = +payBehaviorCount
+        if payBehaviorCount == 0
+          return
+        getPayBehavior = (id) ->
+          return self.contracts.vault.methods.payBehaviorList(id).call().then(
+            (payBehavior) ->
+              return new Promise((fullfill, reject) ->
+                self.payBehaviorList.push(payBehavior)
+                if payBehavior.tokenAddress != '0x'
+                  fullfill()
+                else
+                  if callback != null
+                    callback(new Error('Load Pay Behaviors Error'))
+                  reject()
+                return
+              )
+          )
+        getAllPayBehaviors = (getPayBehavior(id) for id in [1..payBehaviorCount-1])
+        return Promise.all(getAllPayBehaviors).then(
+          () ->
+            if callback != null
+              callback(null, self.payBehaviorList)
+        )
+    )
+
+  self.getPendingWithdrawlList = (callback) ->
+    self.pendingWithdrawlList = []
+    return self.contracts.vault.methods.getPendingWithdrawlListCount().call().then(
+      (pendingWithdrawlCount) ->
+        pendingWithdrawlCount = +pendingWithdrawlCount
+        if pendingWithdrawlCount == 0
+          return
+        getPendingWithdrawl = (id) ->
+          return self.contracts.vault.methods.pendingWithdrawlList(id).call().then(
+            (pendingWithdrawl) ->
+              return new Promise((fullfill, reject) ->
+                self.payBehaviorList.push(pendingWithdrawl)
+                if pendingWithdrawl != null
+                  fullfill()
+                else
+                  if callback != null
+                    callback(new Error('Load Pending Withdrawls Error'))
+                  reject()
+                return
+              )
+          )
+        getAllPendingWithdrawls = (getPendingWithdrawl(id) for id in [1..pendingWithdrawlCount-1])
+        return Promise.all(getAllPendingWithdrawls).then(
+          () ->
+            if callback != null
+              callback(null, self.pendingWithdrawlList)
+        )
+    )
+
   return

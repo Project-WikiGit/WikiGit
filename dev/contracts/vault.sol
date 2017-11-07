@@ -35,7 +35,7 @@ contract Vault is Module {
             Use zero if Wei is the desired input currency unit.
             Use of oracles not yet implemented.
         */
-        address oracleAddress;
+        //address oracleAddress;
 
         /*
             Address of the contract that grants donor tokens.
@@ -141,7 +141,7 @@ contract Vault is Module {
     }
 
     //Import and export functions for updating modules.
-
+    /*
     //Called by the old vault to transfer data to the new vault.
     function importFromVault(uint length) onlyMod('VAULT') {
         Vault oldVault = Vault(moduleAddress('VAULT'));
@@ -170,7 +170,7 @@ contract Vault is Module {
             newVault.transfer(this.balance);
         }
     }
-
+    */
     //Withdrawl handlers
 
     function addPendingWithdrawl(uint amountInWeis, address to, bool isReward) onlyMod('DAO') {
@@ -279,7 +279,7 @@ contract Vault is Module {
 
     function addPayBehavior(
         uint multiplier,
-        address oracleAddress,
+        //address oracleAddress,
         address tokenAddress,
         uint startBlockNumber,
         uint endBlockNumber,
@@ -289,7 +289,7 @@ contract Vault is Module {
     {
         payBehaviorList.push(PayBehavior({
             multiplier: multiplier,
-            oracleAddress: oracleAddress,
+            //oracleAddress: oracleAddress,
             tokenAddress: tokenAddress,
             startBlockNumber: startBlockNumber,
             endBlockNumber: endBlockNumber,
@@ -297,7 +297,7 @@ contract Vault is Module {
             donationCapInWeis: donationCapInWeis
         }));
     }
-
+    /*
     function removePayBehaviorAtIndex(uint index) onlyMod('DAO') {
         delete payBehaviorList[index];
     }
@@ -305,14 +305,14 @@ contract Vault is Module {
     function removeAllPayBehaviors() onlyMod('DAO') {
         delete payBehaviorList;
     }
-
+    */
     //Handles incoming donation.
     function() payable {
         for (uint i = 0; i < payBehaviorList.length; i++) {
             PayBehavior storage behavior = payBehaviorList[i];
             if (behavior.startBlockNumber < block.number && block.number < behavior.endBlockNumber) {
                 //Todo: implement specific interface for oracle and token
-                if (behavior.oracleAddress == 0) {
+                //if (behavior.oracleAddress == 0) {
                     //Ensure cap won't be exceeded
                     require(behavior.totalDonationInWeis + msg.value <= behavior.donationCapInWeis);
                     //Prevent overflow
@@ -324,15 +324,29 @@ contract Vault is Module {
                     //Using transfer() here to conform with ERC20. Effectively mint().
                     //The token contract should have infinite tokens for the vault contract's account.
                     token.transfer(msg.sender, behavior.multiplier * msg.value);
-                } else {
+                //} else {
                     /*
                     Oracle oracle = Oracle(behavior.oracleAddress);
                     uint inputCurrencyPriceInWeis = oracle.getPrice();
                     ERC20 token = ERC20(behavior.tokenAddress());
                     token.transfer(msg.sender, behavior.multiplier * msg.value / inputCurrencyPriceInWeis);
                     */
-                }
+                //}
             }
         }
+    }
+
+    //Helper functions
+
+    function getPayBehaviorListCount() public view returns(uint) {
+        return payBehaviorList.length;
+    }
+
+    function getPendingWithdrawlListCount() public view returns(uint) {
+        return pendingWithdrawlList.length;
+    }
+
+    function getPendingTokenWithdrawlListCount() public view returns(uint) {
+        return pendingTokenWithdrawlList.length;
     }
 }

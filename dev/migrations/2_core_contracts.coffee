@@ -23,7 +23,7 @@ git = require 'gift'
 fs = require 'fs'
 
 module.exports = (deployer) ->
-  abiPath = './build/contracts'
+  abiPath = './build/contracts/'
   ipfs.util.addFromFs(abiPath, {recursive: true}, (error, abiFiles) ->
     if error != null
       throw error

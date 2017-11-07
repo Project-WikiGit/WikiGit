@@ -37,7 +37,7 @@
 
   module.exports = function(deployer) {
     var abiPath;
-    abiPath = './build/contracts';
+    abiPath = './build/contracts/';
     return ipfs.util.addFromFs(abiPath, {
       recursive: true
     }, function(error, abiFiles) {

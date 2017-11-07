@@ -111,7 +111,7 @@ contract TasksHandler is Module {
     }
 
     //Split out as an independent function to prevent StackTooDeep error
-    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) constant private {
+    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) view private {
         Dao dao = Dao(moduleAddress('DAO'));
         for (uint i = 0; i < rewardTokenIndexList.length; i++) {
             uint id = rewardTokenIndexList[i];
@@ -250,19 +250,19 @@ contract TasksHandler is Module {
 
     //Helper functions
 
-    function rewardTokenIndex(uint taskId, uint tokenId) constant returns(uint) {
+    function rewardTokenIndex(uint taskId, uint tokenId) view returns(uint) {
         return taskList[taskId].rewardTokenIdList[tokenId];
     }
 
-    function rewardTokenAmount(uint taskId, uint tokenId) constant returns(uint) {
+    function rewardTokenAmount(uint taskId, uint tokenId) view returns(uint) {
         return taskList[taskId].rewardTokenAmountList[tokenId];
     }
 
-    function rewardTokenCount(uint taskId) constant returns(uint) {
+    function rewardTokenCount(uint taskId) view returns(uint) {
         return taskList[taskId].rewardTokenAmountList.length;
     }
 
-    function hasBeenPenalizedForTask(uint taskId, address memberAddr) constant returns(bool) {
+    function hasBeenPenalizedForTask(uint taskId, address memberAddr) view returns(bool) {
         return taskList[taskId].hasBeenPenalized[memberAddr];
     }
 

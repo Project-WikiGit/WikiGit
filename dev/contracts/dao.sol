@@ -367,7 +367,7 @@ contract Dao is Module {
     }
 
     //Helper functions
-    function recognizedTokensCount() constant returns(uint) {
+    function recognizedTokensCount() view returns(uint) {
         return recognizedTokenList.length;
     }
 }

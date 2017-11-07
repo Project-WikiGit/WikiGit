@@ -5,7 +5,7 @@
  * This file deploys the initial migration contract required by Truffle.
  */
 
-var truffle_migration = artifacts.require('Migrations');
+let truffle_migration = artifacts.require('Migrations');
 
 module.exports = (deployer) => {
     deployer.deploy(truffle_migration);

@@ -6,24 +6,53 @@
 
 <div style="text-align: center;">
     <form class="dasp_addr_input">
-        <div class="mdl-textfield mdl-js-textfield">
+        <span class="mdl-textfield mdl-js-textfield">
             <input class="mdl-textfield__input" type="text" placeholder="DASP Address..." id="dasp_addr">
             <label class="mdl-textfield__label" for="dasp_addr"></label>
-        </div>
+        </span>
     </form>
+    <button class="refresh_dasp mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; display: inline;">
+        <i class="material-icons">refresh</i>
+    </button>
 </div>
 <!--Status toast-->
 <div id="status_toast" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text"></div>
     <button class="mdl-snackbar__action" type="button"></button>
 </div>
-<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+<!--Main view-->
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="visibility: {{#if initialized}}visible{{else}}hidden{{/if}};">
     <div class="mdl-tabs__tab-bar">
-        <a href="#repo" class="mdl-tabs__tab is-active">Repo</a>
-        <a href="#votings" class="mdl-tabs__tab">Votings</a>
-        <a href="#tasks" class="mdl-tabs__tab">Tasks</a>
-        <a href="#finances" class="mdl-tabs__tab">Finances</a>
-        <a href="#members" class="mdl-tabs__tab">Members</a>
+        <a href="#repo" class="mdl-tabs__tab is-active">
+            <div style="margin-top: 8%; float: left;">
+                <i class="material-icons">folder</i>
+            </div>
+            Repo
+        </a>
+        <a href="#votings" class="mdl-tabs__tab">
+            <div style="margin-top: 8%; float: left;">
+                <i class="material-icons">thumbs_up_down</i>
+            </div>
+            Votings
+        </a>
+        <a href="#tasks" class="mdl-tabs__tab">
+            <div style="margin-top: 8%; float: left;">
+                <i class="material-icons">assignment_turned_in</i>
+            </div>
+            Tasks
+        </a>
+        <a href="#finances" class="mdl-tabs__tab">
+            <div style="margin-top: 8%; float: left;">
+                <i class="material-icons">attach_money</i>
+            </div>
+            Finances
+        </a>
+        <a href="#members" class="mdl-tabs__tab">
+            <div style="margin-top: 8%; float: left;">
+                <i class="material-icons">supervisor_account</i>
+            </div>
+            Members
+        </a>
     </div>
     <div class="mdl-tabs__panel is-active" id="repo">
         {{> repo_tab}}
@@ -35,11 +64,17 @@
 
     </div>
     <div class="mdl-tabs__panel" id="finances">
-
+        {{> finances_tab}}
     </div>
     <div class="mdl-tabs__panel" id="members">
         {{> members_tab}}
     </div>
+</div>
+<!--Prompts user to enter address-->
+<div style="text-align: center; visibility: {{#if initialized}}hidden{{else}}visible{{/if}};">
+    <h4>
+        Please enter a valid DASP address.
+    </h4>
 </div>
 </body>
 
@@ -48,7 +83,7 @@
         <!--Display file list-->
         <div class="mdl-grid">
             <div class="mdl-layout-spacer"></div>
-            <div class="mdl-cell mdl-cell--7-col">
+            <div class="mdl-cell mdl-cell--8-col">
                 <!--Display current path-->
                 <div style="text-align: left; float: left;">
                     <h6>
@@ -95,7 +130,7 @@
             </div>
 
             <!--File data-->
-            <div class="mdl-cell mdl-cell--7-col" style="white-space: pre-wrap">
+            <div class="mdl-cell mdl-cell--8-col" style="white-space: pre-wrap">
                 {{file_data}}
             </div>
 
@@ -115,7 +150,7 @@
 <template name="members_tab">
     <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
-        <div class="mdl-cell mdl-cell--7-col">
+        <div class="mdl-cell mdl-cell--8-col">
             <!--Sign Up Menu-->
             <button id="menu-register" class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
                 <i class="material-icons">person_add</i>
@@ -137,18 +172,8 @@
                 <i class="material-icons">cancel</i>
             </button>
 
-            <!--<div style="float: left;">
-                {{#if show_signup_status}}
-                    {{#if signup_success}}
-                        <h6>Success</h6>
-                    {{else}}
-                        <h6>Error</h6>
-                    {{/if}}
-                {{/if}}
-            </div>-->
-
             <!--Refresh Button-->
-            <button id="refresh_member_list" class="mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
+            <button class="refresh_member_list mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
                 <i class="material-icons">refresh</i>
             </button>
 
@@ -175,6 +200,101 @@
                 {{/each}}
                 </tbody>
             </table>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+    </div>
+</template>
+
+<template name="finances_tab">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+            <!--Fund DASP button-->
+            <button class="fund_dasp_btn mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">attach_money</i>
+                Fund the DASP
+            </button>
+            <!--Fund amount textfield-->
+            <form class="fund_amount_entry" style="float: left; margin-top: -1%; margin-left: 1%; {{#if not_entering_fund_amount}}display: none;{{/if}}">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="fund_amount" pattern="-?[0-9]*(\.[0-9]+)?" placeholder="Enter amount in Ether...">
+                    <label class="mdl-textfield__label" for="fund_amount"></label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+            </form>
+            <!--Cancel button-->
+            <button class="cancel_funding mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_entering_fund_amount}}display: none;{{/if}}">
+                <i class="material-icons">cancel</i>
+            </button>
+
+            <!--Vault balance-->
+            <h5 style="text-align: center; float:right;">
+                DASP Balance: {{vault_balance}} Ether
+            </h5>
+
+            <!--Pay Behavior list-->
+            {{#if pay_behavior_list_empty}}
+                <h5>
+                    Oops, this DASP hasn't had any coin offerings.
+                </h5>
+            {{else}}
+                <h4>
+                    Coin Offerings
+                </h4>
+                <table class="mdl-data-table mdl-js-data-table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Multiplier</th>
+                        <th class="mdl-data-table__cell--non-numeric">Token Address</th>
+                        <th>Start Block Number</th>
+                        <th>End Block Number</th>
+                        <th>Current Donation</th>
+                        <th>Donation Cap</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each pay_behavior_list}}
+                        <tr>
+                            <td>{{multiplier}}</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{tokenAddress}}</td>
+                            <td>{{startBlockNumber}}</td>
+                            <td>{{endBlockNumber}}</td>
+                            <td>{{wei_to_ether totalDonationInWeis}} Ether</td>
+                            <td>{{wei_to_ether donationCapInWeis}} Ether</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{/if}}
+
+            <!--Pending Withdrawl list-->
+            {{#if pending_withdrawl_list_empty}}
+                <h5>
+                    Oops, this DASP hasn't had any pending withdrawls.
+                </h5>
+            {{else}}
+                <h4>
+                    Pending Withdrawls
+                </h4>
+                <table class="mdl-data-table mdl-js-data-table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th class="mdl-data-table__cell--non-numeric">Receipient Address</th>
+                        <th>Frozen Until Block</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each pending_withdrawl_list}}
+                        <tr>
+                            <td>{{wei_to_ether amountInWeis}} Ether</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{to}}</td>
+                            <td>{{frozenUntilBlock}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{/if}}
         </div>
         <div class="mdl-layout-spacer"></div>
     </div>

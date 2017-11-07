@@ -3,11 +3,10 @@
   "private": true,
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "coffee": "^4.1.0",
     "coffee-script": "^1.12.7",
     "gift": "^0.10.0",
     "ipfs-api": "^15.0.1",
     "js-sha3": "^0.6.1",
-    "truffle": "^3.4.11"
+    "truffle": "^4.0.1"
   }
 }

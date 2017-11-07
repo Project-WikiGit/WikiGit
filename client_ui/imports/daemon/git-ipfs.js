@@ -18,11 +18,17 @@ import {
 //Import web3
 Web3 = require('web3');
 
-web3 = new Web3();
+web3 = window.web3;
 
-if (web3.currentProvider === null) {
-  web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
+if (typeof web3 !== void 0) {
+  web3 = new Web3(web3.currentProvider);
+} else {
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
+
+web3.eth.getAccounts().then(function(accounts) {
+  return web3.eth.defaultAccount = accounts[0];
+});
 
 //Import node modules
 ipfsAPI = require('ipfs-api');

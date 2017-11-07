@@ -64,9 +64,34 @@ copyTextToClipboard = (text) ->
   catch err
     showToastMsg('Oops, unable to copy')
 
-
   document.body.removeChild(textArea)
   return
+
+refreshDasp = () ->
+  dasp.initWithAddr(DASP_Address.get(), null, (error) ->
+    if error != null
+      showToastMsg('Ethereum Connection Error')
+      throw error
+    dasp.getRepoFile('', (error, type, result) ->
+      if error != null
+        showToastMsg('List Repo Error')
+        throw error
+      currentFileList.set(result)
+    )
+    dasp.getVaultBalance().then(
+      (result) ->
+        vaultBalance.set(result / Math.pow(10, 18))
+    )
+    dasp.getPayBehaviorList((error, result) ->
+      payBehaviorList.set(result)
+    )
+    dasp.getMemberList((error, result) ->
+      if error != null
+        showToastMsg('Load Member Data Error')
+        throw error
+      memberList.set(result)
+    )
+  )
 
 #Repo tab variables
 currentFileList = new ReactiveVar([])
@@ -80,6 +105,18 @@ memberList = new ReactiveVar([])
 isSigningUp = new ReactiveVar(false)
 signUpType = new String()
 SIGNUP_STATUS_SHOWTIME = 3000
+
+#Finances tab variables
+vaultBalance = new ReactiveVar(0)
+isEnteringFundAmount = new ReactiveVar(false)
+payBehaviorList = new ReactiveVar([])
+pendingWithdrawlList = new ReactiveVar([])
+
+Template.body.helpers(
+  initialized:
+    () ->
+      return DASP_Address.get().length != 0
+)
 
 Template.repo_tab.helpers(
   ls_file:
@@ -119,6 +156,36 @@ Template.members_tab.helpers(
       return !isSigningUp.get()
 )
 
+Template.finances_tab.helpers(
+  vault_balance:
+    () ->
+      return vaultBalance.get()
+
+  not_entering_fund_amount:
+    () ->
+      return !isEnteringFundAmount.get()
+
+  pay_behavior_list:
+    () ->
+      return payBehaviorList.get()
+
+  pay_behavior_list_empty:
+    () ->
+      return payBehaviorList.get().length == 0
+
+  pending_withdrawl_list:
+    () ->
+      return pendingWithdrawlList.get()
+
+  pending_withdrawl_list_empty:
+    () ->
+      return pendingWithdrawlList.get().length == 0
+
+  wei_to_ether:
+    (wei) ->
+      return +wei / Math.pow(10, 18)
+)
+
 Template.body.events(
   'submit .dasp_addr_input':
     (event) ->
@@ -130,23 +197,11 @@ Template.body.events(
 
       DASP_Address.set(text)
 
-      dasp.initWithAddr(DASP_Address.get(), null, (error) ->
-        if error != null
-          showToastMsg('Ethereum Connection Error')
-          throw error
-        dasp.lsRepo('', (error, type, result) ->
-          if error != null
-            showToastMsg('List Repo Error')
-            throw error
-          currentFileList.set(result)
-        )
-        dasp.lsMembers((error, result) ->
-          if error != null
-            showToastMsg('Load Member Data Error')
-            throw error
-          memberList.set(result)
-        )
-      )
+      refreshDasp()
+
+  'click .refresh_dasp':
+    (event) ->
+      refreshDasp()
 )
 
 Template.repo_tab.events(
@@ -155,7 +210,7 @@ Template.repo_tab.events(
       item = this
       if item.Name == '..'
         currentRepoPath.set(currentRepoPath.get().slice(0, currentRepoPath.get().lastIndexOf('/')))
-        dasp.lsRepo(currentRepoPath.get(), (error, type, result) ->
+        dasp.getRepoFile(currentRepoPath.get(), (error, type, result) ->
           if error != null
             showToastMsg('List Repo Error')
             throw error
@@ -167,7 +222,7 @@ Template.repo_tab.events(
           return
         )
       else
-        dasp.lsRepo("#{currentRepoPath.get()}/#{item.Name}", (error, type, result) ->
+        dasp.getRepoFile("#{currentRepoPath.get()}/#{item.Name}", (error, type, result) ->
           if error != null
             showToastMsg('List Repo Error')
             throw error
@@ -191,7 +246,7 @@ Template.repo_tab.events(
   'click .upper_dir_btn':
     (event) ->
       currentRepoPath.set(currentRepoPath.get().slice(0, currentRepoPath.get().lastIndexOf('/')))
-      dasp.lsRepo(currentRepoPath.get(), (error, type, result) ->
+      dasp.getRepoFile(currentRepoPath.get(), (error, type, result) ->
         if error != null
           showToastMsg('List Repo Error')
           throw error
@@ -220,7 +275,7 @@ Template.members_tab.events(
 
   'click .refresh_member_list':
     (event) ->
-      dasp.lsMembers((error, result) ->
+      dasp.getMemberList((error, result) ->
         console.log(error)
         if error != null
           showToastMsg('Load Member Data Error')
@@ -240,7 +295,7 @@ Template.members_tab.events(
           showToastMsg('Sign Up Error')
           throw error
         else
-          dasp.lsMembers((error, result) ->
+          dasp.getMemberList((error, result) ->
             if error != null
               showToastMsg('Sign Up Error')
               throw error
@@ -252,5 +307,39 @@ Template.members_tab.events(
       )
       isSigningUp.set(false)
       target.username.value = ''
+)
 
+Template.finances_tab.events(
+  'click .fund_dasp_btn':
+    (event) ->
+      isEnteringFundAmount.set(true)
+      return
+
+  'click .cancel_funding':
+    (event) ->
+      isEnteringFundAmount.set(false)
+      return
+
+  'submit .fund_amount_entry':
+    (event) ->
+      event.preventDefault()
+
+      target = event.target
+      fundAmount = +target.fund_amount.value
+
+      isEnteringFundAmount.set(false)
+      target.fund_amount.value = ''
+
+      dasp.getAccounts().then(
+        () ->
+          dasp.fundDasp(fundAmount).on('receipt', (receipt) ->
+            showToastMsg('Fund Success')
+            refreshDasp()
+          ).on('error', (error) ->
+            showToastMsg('Fund Failed')
+            throw error
+          )
+      )
+
+      return
 )
