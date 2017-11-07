@@ -88,6 +88,10 @@ refreshDasp = () ->
       if error != null
         showToastMsg('Get Coin Offerings Error')
         throw error
+      #Descending by startBlockNumber
+      result.sort((a, b) ->
+        return parseInt(b.startBlockNumber) - parseInt(a.startBlockNumber)
+      )
       payBehaviorList.set(result)
     )
     dasp.getPendingWithdrawlList((error, result) ->
@@ -99,6 +103,10 @@ refreshDasp = () ->
           showToastMsg('Get Pending Token Withdrawls Error')
           throw error
         result.concat(r)
+      )
+      #Descending by frozenUntilBlock
+      result.sort((a, b) ->
+        return parseInt(b.frozenUntilBlock) - parseInt(a.frozenUntilBlock)
       )
       pendingWithdrawlList.set(result)
     )

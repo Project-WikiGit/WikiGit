@@ -210,7 +210,7 @@
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell--8-col">
             <!--Fund DASP button-->
-            <button class="fund_dasp_btn mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="margin-top: 1%; margin-bottom: 2.2%;">
+            <button class="fund_dasp_btn mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
                 <i class="material-icons">attach_money</i>
                 Fund the DASP
             </button>
@@ -232,6 +232,9 @@
                 DASP Balance: {{vault_balance}} Ether
             </h5>
 
+            <h5>
+                &nbsp;
+            </h5>
             <!--Pay Behavior list-->
             {{#if pay_behavior_list_empty}}
                 <h5>
@@ -246,7 +249,7 @@
                     <tr>
                         <th>Multiplier</th>
                         <th class="mdl-data-table__cell--non-numeric">Token Address</th>
-                        <th>Start Block Number</th>
+                        <th class="mdl-data-table__header--sorted-descending">Start Block Number</th>
                         <th>End Block Number</th>
                         <th>Current Donation</th>
                         <th>Donation Cap</th>
@@ -282,7 +285,7 @@
                         <th>Amount</th>
                         <th class="mdl-data-table__cell--non-numeric">Currency</th>
                         <th class="mdl-data-table__cell--non-numeric">Receipient Address</th>
-                        <th>Frozen Until Block</th>
+                        <th class="mdl-data-table__header--sorted-descending">Frozen Until Block</th>
                     </tr>
                     </thead>
                     <tbody>
