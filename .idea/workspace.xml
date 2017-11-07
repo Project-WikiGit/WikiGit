@@ -5,36 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce9e50c8-b486-4520-b7a4-bc8adbd3536d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/Main.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/Module.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev/build/contracts/Vault.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" afterPath="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/dao.sol" afterPath="$PROJECT_DIR$/dev/contracts/dao.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/git_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/git_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/member_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" afterPath="$PROJECT_DIR$/dev/contracts/tasks_handler.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/contracts/vault.sol" afterPath="$PROJECT_DIR$/dev/contracts/vault.sol" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" afterPath="$PROJECT_DIR$/dev/migrations/1_initial_migration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package-lock.json" afterPath="$PROJECT_DIR$/dev/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package.json" afterPath="$PROJECT_DIR$/dev/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/truffle.js" afterPath="$PROJECT_DIR$/dev/truffle.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dev/build/contracts/Dao.json" afterPath="$PROJECT_DIR$/dev/build/contracts/a_dummy.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/client_ui/.meteor/local/" />
@@ -52,18 +26,18 @@
       <file leaf-file-name="dasp_dashboard.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="173" column="43" lean-forward="false" selection-start-line="173" selection-start-column="43" selection-end-line="173" selection-end-column="43" />
+            <state relative-caret-position="551">
+              <caret line="211" column="19" lean-forward="false" selection-start-line="211" selection-start-column="19" selection-end-line="211" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dasp_dashboard.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dasp_dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1591">
-              <caret line="241" column="34" lean-forward="true" selection-start-line="241" selection-start-column="34" selection-end-line="241" selection-end-column="34" />
+            <state relative-caret-position="523">
+              <caret line="291" column="103" lean-forward="false" selection-start-line="291" selection-start-column="103" selection-end-line="291" selection-end-column="103" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#body#0;n#!!top" expanded="true" />
@@ -83,17 +57,16 @@
                 <element signature="n#style#0;n#button#1;n#div#1;n#div#0;n#template#2;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h5#0;n#div#1;n#div#0;n#template#2;n#!!top" expanded="true" />
                 <element signature="n#table#0;n#div#1;n#div#0;n#template#2;n#!!top" expanded="false" />
-                <element signature="n#table#1;n#div#1;n#div#0;n#template#2;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dasp.coffee" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dasp.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="971">
-              <caret line="256" column="31" lean-forward="true" selection-start-line="256" selection-start-column="31" selection-end-line="256" selection-end-column="31" />
+            <state relative-caret-position="-3285">
+              <caret line="149" column="28" lean-forward="true" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -102,7 +75,7 @@
       <file leaf-file-name="vault.sol" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dev/contracts/vault.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-208">
+            <state relative-caret-position="-1300">
               <caret line="57" column="62" lean-forward="true" selection-start-line="57" selection-start-column="62" selection-end-line="57" selection-end-column="62" />
               <folding />
             </state>
@@ -307,13 +280,20 @@
       <option name="presentableId" value="Default" />
       <updated>1509608574325</updated>
       <workItem from="1509608581470" duration="258000" />
-      <workItem from="1509610877796" duration="42322000" />
+      <workItem from="1509610877796" duration="43630000" />
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Finished Finances Tab in UI">
+      <created>1510038158513</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1510038158513</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71611000" />
+    <option name="totallyTimeSpent" value="72919000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -359,7 +339,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
+    <MESSAGE value="Finished Finances Tab in UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Finances Tab in UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -569,6 +550,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -651,9 +633,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3285">
+          <caret line="149" column="28" lean-forward="true" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dev/contracts/vault.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-208">
+        <state relative-caret-position="-1300">
           <caret line="57" column="62" lean-forward="true" selection-start-line="57" selection-start-column="62" selection-end-line="57" selection-end-column="62" />
           <folding />
         </state>
@@ -661,16 +651,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="173" column="43" lean-forward="false" selection-start-line="173" selection-start-column="43" selection-end-line="173" selection-end-column="43" />
+        <state relative-caret-position="551">
+          <caret line="211" column="19" lean-forward="false" selection-start-line="211" selection-start-column="19" selection-end-line="211" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1591">
-          <caret line="241" column="34" lean-forward="true" selection-start-line="241" selection-start-column="34" selection-end-line="241" selection-end-column="34" />
+        <state relative-caret-position="523">
+          <caret line="291" column="103" lean-forward="false" selection-start-line="291" selection-start-column="103" selection-end-line="291" selection-end-column="103" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#0;n#body#0;n#!!top" expanded="true" />
@@ -690,16 +680,7 @@
             <element signature="n#style#0;n#button#1;n#div#1;n#div#0;n#template#2;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h5#0;n#div#1;n#div#0;n#template#2;n#!!top" expanded="true" />
             <element signature="n#table#0;n#div#1;n#div#0;n#template#2;n#!!top" expanded="false" />
-            <element signature="n#table#1;n#div#1;n#div#0;n#template#2;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client_ui/imports/objects/dasp.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="971">
-          <caret line="256" column="31" lean-forward="true" selection-start-line="256" selection-start-column="31" selection-end-line="256" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>

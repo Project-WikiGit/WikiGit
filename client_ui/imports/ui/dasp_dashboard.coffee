@@ -50,7 +50,6 @@ copyTextToClipboard = (text) ->
   # Avoid flash of white box if rendered for any reason.
   textArea.style.background = 'transparent'
 
-
   textArea.value = text
 
   document.body.appendChild(textArea)
@@ -72,19 +71,40 @@ refreshDasp = () ->
     if error != null
       showToastMsg('Ethereum Connection Error')
       throw error
+    #Init repo tab
     dasp.getRepoFile('', (error, type, result) ->
       if error != null
         showToastMsg('List Repo Error')
         throw error
       currentFileList.set(result)
     )
+
+    #Init finances tab
     dasp.getVaultBalance().then(
       (result) ->
         vaultBalance.set(result / Math.pow(10, 18))
     )
     dasp.getPayBehaviorList((error, result) ->
+      if error != null
+        showToastMsg('Get Coin Offerings Error')
+        throw error
       payBehaviorList.set(result)
     )
+    dasp.getPendingWithdrawlList((error, result) ->
+      if error != null
+        showToastMsg('Get Pending Withdrawls Error')
+        throw error
+      dasp.getPendingTokenWithdrawlList((e, r) ->
+        if error != null
+          showToastMsg('Get Pending Token Withdrawls Error')
+          throw error
+        result.concat(r)
+      )
+      pendingWithdrawlList.set(result)
+    )
+
+
+    #Init member tab
     dasp.getMemberList((error, result) ->
       if error != null
         showToastMsg('Load Member Data Error')
@@ -184,6 +204,12 @@ Template.finances_tab.helpers(
   wei_to_ether:
     (wei) ->
       return +wei / Math.pow(10, 18)
+
+  currency_symbol:
+    (symbol) ->
+      if symbol == null
+        return 'ETH'
+      return symbol
 )
 
 Template.body.events(

@@ -280,6 +280,7 @@
                     <thead>
                     <tr>
                         <th>Amount</th>
+                        <th class="mdl-data-table__cell--non-numeric">Currency</th>
                         <th class="mdl-data-table__cell--non-numeric">Receipient Address</th>
                         <th>Frozen Until Block</th>
                     </tr>
@@ -288,6 +289,7 @@
                     {{#each pending_withdrawl_list}}
                         <tr>
                             <td>{{wei_to_ether amountInWeis}} Ether</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{currency_symbol tokenSymbol}}</td>
                             <td class="mdl-data-table__cell--non-numeric">{{to}}</td>
                             <td>{{frozenUntilBlock}}</td>
                         </tr>

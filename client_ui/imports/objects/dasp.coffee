@@ -150,7 +150,7 @@ export DASP = () ->
                   fullfill()
                 else
                   if callback != null
-                    callback(new Error('Load Member Data Error'))
+                    callback(new Error('Load Member Data Error'), null)
                   reject()
                 return
               )
@@ -246,7 +246,7 @@ export DASP = () ->
                   fullfill()
                 else
                   if callback != null
-                    callback(new Error('Load Pending Withdrawls Error'))
+                    callback(new Error('Load Pending Withdrawls Error'), null)
                   reject()
                 return
               )
@@ -256,6 +256,35 @@ export DASP = () ->
           () ->
             if callback != null
               callback(null, self.pendingWithdrawlList)
+        )
+    )
+
+  self.getPendingTokenWithdrawlList = (callback) ->
+    self.pendingTokenWithdrawlList = []
+    return self.contracts.vault.methods.getPendingTokenWithdrawlListCount().call().then(
+      (pendingWithdrawlCount) ->
+        pendingWithdrawlCount = +pendingWithdrawlCount
+        if pendingWithdrawlCount == 0
+          return
+        getPendingWithdrawl = (id) ->
+          return self.contracts.vault.methods.pendingTokenWithdrawlList(id).call().then(
+            (pendingWithdrawl) ->
+              return new Promise((fullfill, reject) ->
+                self.payBehaviorList.push(pendingWithdrawl)
+                if pendingWithdrawl != null
+                  fullfill()
+                else
+                  if callback != null
+                    callback(new Error('Load Pending Token Withdrawls Error'), null)
+                  reject()
+                return
+              )
+          )
+        getAllPendingWithdrawls = (getPendingWithdrawl(id) for id in [1..pendingWithdrawlCount-1])
+        return Promise.all(getAllPendingWithdrawls).then(
+          () ->
+            if callback != null
+              callback(null, self.pendingTokenWithdrawlList)
         )
     )
 
