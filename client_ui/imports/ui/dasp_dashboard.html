@@ -147,62 +147,12 @@
     {{/if}}
 </template>
 
-<template name="members_tab">
-    <div class="mdl-grid">
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-cell mdl-cell--8-col">
-            <!--Sign Up Menu-->
-            <button id="menu-register" class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
-                <i class="material-icons">person_add</i>
-                Sign Up
-            </button>
-            <ul class="mdl-menu mdl-js-menu" for="menu-register">
-                <li class="mdl-menu__item signup_freelancer">Sign up as freelancer</li>
-                <li class="mdl-menu__item signup_shareholder">Sign up as shareholder</li>
-            </ul>
+<template name="voting_tab">
 
-            <!--Username entry-->
-            <form class="signup_username" style="float: left; margin-top: -1%; margin-left: 1%; {{#if not_signing_up}}display: none;{{/if}}">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="username" placeholder="Username...">
-                    <label class="mdl-textfield__label" for="username"></label>
-                </div>
-            </form>
-            <button class="cancel_signup mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_signing_up}}display: none;{{/if}}">
-                <i class="material-icons">cancel</i>
-            </button>
+</template>
 
-            <!--Refresh Button-->
-            <button class="refresh_member_list mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
-                <i class="material-icons">refresh</i>
-            </button>
+<template name="tasks_tab">
 
-            <!--Member list-->
-            <table class="mdl-data-table mdl-js-data-table" width="100%">
-                <thead>
-                <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Username</th>
-                    <th class="mdl-data-table__cell--non-numeric">Group Name</th>
-                    <th>Good Reputation</th>
-                    <th>Bad Reputation</th>
-                    <th class="mdl-data-table__cell--non-numeric">Address</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each member_list}}
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric">{{userName}}</td>
-                        <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
-                        <td>{{goodRep}}</td>
-                        <td>{{badRep}}</td>
-                        <td class="mdl-data-table__cell--non-numeric">{{userAddress}}</td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
-        </div>
-        <div class="mdl-layout-spacer"></div>
-    </div>
 </template>
 
 <template name="finances_tab">
@@ -304,3 +254,62 @@
         <div class="mdl-layout-spacer"></div>
     </div>
 </template>
+
+<template name="members_tab">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+            <!--Sign Up Menu-->
+            <button id="menu-register" class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">person_add</i>
+                Sign Up
+            </button>
+            <ul class="mdl-menu mdl-js-menu" for="menu-register">
+                <li class="mdl-menu__item signup_freelancer">Sign up as freelancer</li>
+                <li class="mdl-menu__item signup_shareholder">Sign up as shareholder</li>
+            </ul>
+
+            <!--Username entry-->
+            <form class="signup_username" style="float: left; margin-top: -1%; margin-left: 1%; {{#if not_signing_up}}display: none;{{/if}}">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="username" placeholder="Username...">
+                    <label class="mdl-textfield__label" for="username"></label>
+                </div>
+            </form>
+            <button class="cancel_signup mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_signing_up}}display: none;{{/if}}">
+                <i class="material-icons">cancel</i>
+            </button>
+
+            <!--Refresh Button-->
+            <button class="refresh_member_list mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">refresh</i>
+            </button>
+
+            <!--Member list-->
+            <table class="mdl-data-table mdl-js-data-table" width="100%">
+                <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Username</th>
+                    <th class="mdl-data-table__cell--non-numeric">Group Name</th>
+                    <th>Good Reputation</th>
+                    <th>Bad Reputation</th>
+                    <th class="mdl-data-table__cell--non-numeric">Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each member_list}}
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">{{userName}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+                        <td>{{goodRep}}</td>
+                        <td>{{badRep}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{userAddress}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+    </div>
+</template>
+

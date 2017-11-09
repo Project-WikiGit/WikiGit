@@ -12,18 +12,18 @@
     the main contract is the only contract in the DAP that cannot be updated.
 */
 
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
 contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
 
     address public mainAddress;
 
-    function Module(address _mainAddress) {
+    function Module(address _mainAddress) public {
         mainAddress = _mainAddress;
     }
 
-    function moduleAddress(string mod) constant internal returns(address addr){
+    function moduleAddress(string mod) internal view returns(address addr){
         Main main = Main(mainAddress);
         addr = main.moduleAddresses(keccak256(mod));
     }
@@ -41,7 +41,7 @@ contract Main {
 
     modifier onlyDao{ require(msg.sender == moduleAddresses['DAO']); _; }
 
-    function Main(string _metadata, bytes _abiIPFSHash) {
+    function Main(string _metadata, bytes _abiIPFSHash) public {
         metadata = _metadata;
         abiIPFSHashes.push(_abiIPFSHash);
         creator = msg.sender;
@@ -54,7 +54,7 @@ contract Main {
         @param address[] addrs The array that stores the addresses of all initial modules. Must follow the specified format.
     */
 
-    function initializeModuleAddresses(address[] addrs) {
+    function initializeModuleAddresses(address[] addrs) public {
         require(!hasInitedAddrs);
         require(msg.sender == creator);
         hasInitedAddrs = true;
@@ -64,7 +64,7 @@ contract Main {
         }
     }
 
-    function initializeABIHashForMod(uint modId, bytes abiHash) {
+    function initializeABIHashForMod(uint modId, bytes abiHash) public {
         require(msg.sender == creator);
         require(!hasInitedABIs);
 
@@ -76,7 +76,7 @@ contract Main {
         }
     }
 
-    function getABIHashForMod(bytes32 modHash) public constant returns(bytes abiHash) {
+    function getABIHashForMod(bytes32 modHash) public view returns(bytes abiHash) {
         return abiIPFSHashes[abiHashId[modHash]];
     }
 
@@ -84,7 +84,14 @@ contract Main {
         abiIPFSHashes[abiHashId[modHash]] = abiHash;
     }
 
-    function setModuleAddress(string modName, address addr, bool isNew) public onlyDao {
+    function setModuleAddress(
+        string modName,
+        address addr,
+        bool isNew
+    )
+        public
+        onlyDao
+    {
         moduleAddresses[keccak256(modName)] = addr;
         if (isNew) {
             moduleNames.push(modName);
@@ -103,7 +110,8 @@ contract Main {
         metadata = meta;
     }
 
-    function() {
+    //Fallback
+    function() public {
         revert();
     }
 }

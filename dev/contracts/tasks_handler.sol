@@ -8,7 +8,7 @@
     platforms.
 */
 
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
 import './main.sol';
 import './dao.sol';
@@ -68,7 +68,7 @@ contract TasksHandler is Module {
 
     event TaskSolutionAccepted(uint taskId, uint solutionId, bytes patchIPFSHash);
 
-    function TasksHandler(address mainAddr) Module(mainAddr) {
+    function TasksHandler(address mainAddr) Module(mainAddr) public {
         //Initialize reward caps
         rewardRepCap = 3;
         penaltyRepCap = 6;
@@ -84,6 +84,7 @@ contract TasksHandler is Module {
         uint rewardGoodRep,
         uint penaltyBadRep
     )
+        public
         needsRight('submit_task')
     {
         //Check format
@@ -111,7 +112,7 @@ contract TasksHandler is Module {
     }
 
     //Split out as an independent function to prevent StackTooDeep error
-    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) view private {
+    function checkTokenCap(uint[] rewardTokenIndexList, uint[] rewardTokenAmountList) private view {
         Dao dao = Dao(moduleAddress('DAO'));
         for (uint i = 0; i < rewardTokenIndexList.length; i++) {
             uint id = rewardTokenIndexList[i];
@@ -130,6 +131,7 @@ contract TasksHandler is Module {
         uint rewardGoodRep,
         uint penaltyBadRep
     )
+        public
         needsRight('submit_task_rewardless')
     {
         require(rewardGoodRep <= rewardRepCap);
@@ -146,12 +148,17 @@ contract TasksHandler is Module {
         taskSolutionList.length += 1;
     }
 
-    function invalidateTaskListingAtIndex(uint index) onlyMod('DAO') {
+    function invalidateTaskListingAtIndex(uint index) public onlyMod('DAO') {
         require(index < taskList.length);
         taskList[index].isInvalid = true;
     }
 
-    function submitSolution(uint taskId, string metadata, bytes patchIPFSHash)
+    function submitSolution(
+        uint taskId,
+        string metadata,
+        bytes patchIPFSHash
+    )
+        public
         needsRight('submit_solution')
     {
         require(taskId < taskList.length);
@@ -178,7 +185,13 @@ contract TasksHandler is Module {
         }
     }
 
-    function voteOnSolution(address sender, uint taskId, uint solId, bool isUpvote)
+    function voteOnSolution(
+        address sender,
+        uint taskId,
+        uint solId,
+        bool isUpvote
+    )
+        public
         needsRight('vote_solution')
     {
         require(taskId < taskList.length);
@@ -200,7 +213,7 @@ contract TasksHandler is Module {
         Accepts a solution and pays the rewards to the solution submitter.
         Can only be called by the poster of the task listing.
     */
-    function acceptSolution(uint taskId, uint solId) {
+    function acceptSolution(uint taskId, uint solId) public {
         require(taskId < taskList.length); //Ensure that taskId is valid.
         TaskListing storage task = taskList[taskId];
 
@@ -224,7 +237,12 @@ contract TasksHandler is Module {
         dao.paySolutionReward(taskId, solId);
     }
 
-    function setCap(string capType, uint newCap, address tokenAddress)
+    function setCap(
+        string capType,
+        uint newCap,
+        address tokenAddress
+    )
+        public
         onlyMod('DAO')
     {
         if (keccak256(capType) == keccak256('wei')) {
@@ -238,35 +256,47 @@ contract TasksHandler is Module {
         }
     }
 
-    function deleteRewardTokenCap(address tokenAddress)
-        onlyMod('DAO')
+    function deleteRewardTokenCap(address tokenAddress) public onlyMod('DAO')
     {
         delete rewardTokenCap[tokenAddress];
     }
 
-    function setPenalizedStatus(uint taskId, address memberAddr, bool status) onlyMod('DAO') {
+    function setPenalizedStatus(uint taskId, address memberAddr, bool status) public onlyMod('DAO') {
         taskList[taskId].hasBeenPenalized[memberAddr] = status;
     }
 
-    //Helper functions
+    //Getters
 
-    function rewardTokenIndex(uint taskId, uint tokenId) view returns(uint) {
+    function tHasSubmitted(uint taskId, address addr) public view returns(bool) {
+        return taskList[taskId].hasSubmitted[addr];
+    }
+
+    function tHasBeenPenalized(uint taskId, address addr) public view returns(bool) {
+        return taskList[taskId].hasBeenPenalized[addr];
+    }
+
+    function tMemberSolId(uint taskId, address addr) public view returns(uint) {
+        return taskList[taskId].memberSolId[addr];
+    }
+
+    function sHasVoted(uint taskId, uint solId, address addr) public view returns(bool) {
+        return taskSolutionList[taskId][solId].hasVoted[addr];
+    }
+
+    function getTRewardTokenIndex(uint taskId, uint tokenId) public view returns(uint) {
         return taskList[taskId].rewardTokenIdList[tokenId];
     }
 
-    function rewardTokenAmount(uint taskId, uint tokenId) view returns(uint) {
+    function getTRewardTokenAmount(uint taskId, uint tokenId) public view returns(uint) {
         return taskList[taskId].rewardTokenAmountList[tokenId];
     }
 
-    function rewardTokenCount(uint taskId) view returns(uint) {
+    function getTRewardTokenListCount(uint taskId) public view returns(uint) {
         return taskList[taskId].rewardTokenAmountList.length;
     }
 
-    function hasBeenPenalizedForTask(uint taskId, address memberAddr) view returns(bool) {
-        return taskList[taskId].hasBeenPenalized[memberAddr];
-    }
-
-    function() {
+    //Fallback
+    function() public {
         revert();
     }
 }

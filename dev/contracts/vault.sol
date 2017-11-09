@@ -10,7 +10,7 @@
     honorary tokens (such as the unicorn token), and more.
 */
 
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
 import './main.sol';
 
@@ -134,7 +134,7 @@ contract Vault is Module {
     uint public frozenFunds; //The amount of ethers currently frozen, in weis.
     mapping(address => uint) public frozenTokens; //The amount of ERC20 tokens currently frozen. Mapping from token address to amount.
 
-    function Vault(address mainAddr) Module(mainAddr) {
+    function Vault(address mainAddr) Module(mainAddr) public {
         //Initialize withdrawl freeze times
         rewardFreezeTime = 3524; //Roughly 24 hours
         withdrawlFreezeTime = 3524; //Roughly 24 hours
@@ -173,7 +173,14 @@ contract Vault is Module {
     */
     //Withdrawl handlers
 
-    function addPendingWithdrawl(uint amountInWeis, address to, bool isReward) onlyMod('DAO') {
+    function addPendingWithdrawl(
+        uint amountInWeis,
+        address to,
+        bool isReward
+    )
+        public
+        onlyMod('DAO')
+    {
         uint availableFunds = this.balance - frozenFunds;
         require(availableFunds >= amountInWeis); //Make sure there's enough free ether in the vault
         require(to.balance + amountInWeis > to.balance); //Prevent overflow
@@ -202,6 +209,7 @@ contract Vault is Module {
         address tokenAddr,
         bool isReward
     )
+        public
         onlyMod('DAO')
     {
         ERC20 token = ERC20(tokenAddr);
@@ -228,7 +236,7 @@ contract Vault is Module {
         }));
     }
 
-    function payoutPendingWithdrawl(uint id) {
+    function payoutPendingWithdrawl(uint id) public {
         require(id < pendingWithdrawlList.length); //Ensure the id is valid.
         PendingWithdrawl storage w = pendingWithdrawlList[id];
         require(!w.isInvalid); //Ensure the withdrawl is valid.
@@ -240,7 +248,7 @@ contract Vault is Module {
         w.to.transfer(w.amountInWeis);
     }
 
-    function payoutPendingTokenWithdrawl(uint id) {
+    function payoutPendingTokenWithdrawl(uint id) public {
         require(id < pendingTokenWithdrawlList.length); //Ensure the id is valid.
         PendingTokenWithdrawl storage w = pendingTokenWithdrawlList[id];
         require(!w.isInvalid); //Ensure the withdrawl is valid.
@@ -253,21 +261,21 @@ contract Vault is Module {
         token.transfer(w.to, w.amount);
     }
 
-    function invalidatePendingWithdrawl(uint id) onlyMod('DAO') {
+    function invalidatePendingWithdrawl(uint id) public onlyMod('DAO') {
         require(id < pendingWithdrawlList.length);
         PendingWithdrawl storage w = pendingWithdrawlList[id];
         w.isInvalid = true;
         frozenFunds -= w.amountInWeis; //Defrost the frozen funds.
     }
 
-    function invalidatePendingTokenWithdrawl(uint id) onlyMod('DAO') {
+    function invalidatePendingTokenWithdrawl(uint id) public onlyMod('DAO') {
         require(id < pendingTokenWithdrawlList.length);
         PendingTokenWithdrawl storage w = pendingTokenWithdrawlList[id];
         w.isInvalid = true;
         frozenTokens[w.tokenAddress] -= w.amount; //Defrost the frozen funds.
     }
 
-    function changeFreezeTime(uint newTime, bool isReward) onlyMod('DAO') {
+    function changeFreezeTime(uint newTime, bool isReward) public onlyMod('DAO') {
         if (isReward) {
             rewardFreezeTime = newTime;
         } else {
@@ -285,6 +293,7 @@ contract Vault is Module {
         uint endBlockNumber,
         uint donationCapInWeis
     )
+        public
         onlyMod('DAO')
     {
         payBehaviorList.push(PayBehavior({
@@ -307,7 +316,7 @@ contract Vault is Module {
     }
     */
     //Handles incoming donation.
-    function() payable {
+    function() public payable {
         for (uint i = 0; i < payBehaviorList.length; i++) {
             PayBehavior storage behavior = payBehaviorList[i];
             if (behavior.startBlockNumber < block.number && block.number < behavior.endBlockNumber) {
@@ -336,7 +345,7 @@ contract Vault is Module {
         }
     }
 
-    //Helper functions
+    //Getters
 
     function getPayBehaviorListCount() public view returns(uint) {
         return payBehaviorList.length;

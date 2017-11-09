@@ -310,7 +310,6 @@ Template.members_tab.events(
   'click .refresh_member_list':
     (event) ->
       dasp.getMemberList((error, result) ->
-        console.log(error)
         if error != null
           showToastMsg('Load Member Data Error')
           throw error
