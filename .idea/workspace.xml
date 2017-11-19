@@ -5,28 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce9e50c8-b486-4520-b7a4-bc8adbd3536d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Technical Details.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev/migrations/config.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Dao.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Dao.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" afterPath="$PROJECT_DIR$/dev/build/contracts/ERC20.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/GitHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Main.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Main.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/MemberHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Migrations.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Module.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Module.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" afterPath="$PROJECT_DIR$/dev/build/contracts/TasksHandler.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/build/contracts/Vault.json" afterPath="$PROJECT_DIR$/dev/build/contracts/Vault.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" afterPath="$PROJECT_DIR$/dev/migrations/2_core_contracts.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package-lock.json" afterPath="$PROJECT_DIR$/dev/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package.json" afterPath="$PROJECT_DIR$/dev/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/truffle.js" afterPath="$PROJECT_DIR$/dev/truffle.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/client_ui/.meteor/local/" />
@@ -461,7 +441,7 @@
       <workItem from="1509608581470" duration="258000" />
       <workItem from="1509610877796" duration="60922000" />
       <workItem from="1510733347766" duration="4615000" />
-      <workItem from="1511076554140" duration="3539000" />
+      <workItem from="1511076554140" duration="4135000" />
     </task>
     <task id="LOCAL-00003" summary="Finished Finances Tab in UI">
       <created>1510038158513</created>
@@ -491,11 +471,18 @@
       <option name="project" value="LOCAL" />
       <updated>1510205367340</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Updated README.md, added config file for contract migration.">
+      <created>1511119685388</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1511119685389</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98365000" />
+    <option name="totallyTimeSpent" value="98961000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -510,7 +497,7 @@
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17230444" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17230444" sideWeight="0.49544418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32826748" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32624114" sideWeight="0.5116279" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32624114" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -568,7 +555,8 @@
     <MESSAGE value="Added token withdrawl to finances tab in UI" />
     <MESSAGE value="Orders the tables in finances tab properly" />
     <MESSAGE value="Improved smart contract style, added getters." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved smart contract style, added getters." />
+    <MESSAGE value="Updated README.md, added config file for contract migration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md, added config file for contract migration." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
