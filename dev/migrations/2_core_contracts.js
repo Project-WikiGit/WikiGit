@@ -9,7 +9,7 @@
     publishes it onto the IPFS network, and saves its hash in the
     GitHandler module.
   */
-  var dao, fs, git, git_handler, ipfs, ipfsAPI, main, member_handler, tasks_handler, vault;
+  var config, dao, fs, git, git_handler, ipfs, ipfsAPI, main, member_handler, tasks_handler, vault;
 
   //Initialize contract abstractions
   main = artifacts.require('Main');
@@ -35,6 +35,9 @@
 
   fs = require('fs');
 
+  //Import config
+  config = require('./config.json');
+
   module.exports = function(deployer) {
     var abiPath;
     abiPath = './build/contracts/';
@@ -57,7 +60,7 @@
       };
       mainHash = getABIHash('Main');
       //Deploy main contract
-      return deployer.deploy(main, 'Test Metadata', mainHash).then(function() {
+      return deployer.deploy(main, config.main_metadata, mainHash).then(function() {
         var newHash, repoPath;
         repoPath = './tmp/repo.git';
         if (!fs.existsSync(repoPath)) {
@@ -82,7 +85,7 @@
             //Get repo's IPFS multihash
             newHash = result[result.length - 1].hash;
             //Deploy core modules
-            return deployer.deploy([[dao, main.address], [member_handler, 'Test Username', main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, newHash, main.address]]).then(function() {
+            return deployer.deploy([[dao, main.address], [member_handler, config.member_init_username, main.address], [vault, main.address], [tasks_handler, main.address], [git_handler, newHash, main.address]]).then(function() {
               //Add core module addresses to main contract
               return main.deployed().then(function(instance) {
                 return instance.initializeModuleAddresses([dao.address, member_handler.address, vault.address, tasks_handler.address, git_handler.address]);

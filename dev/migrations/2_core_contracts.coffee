@@ -22,6 +22,9 @@ ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
 git = require 'gift'
 fs = require 'fs'
 
+#Import config
+config = require './config.json'
+
 module.exports = (deployer) ->
   abiPath = './build/contracts/'
   ipfs.util.addFromFs(abiPath, {recursive: true}, (error, abiFiles) ->
@@ -36,7 +39,7 @@ module.exports = (deployer) ->
 
     mainHash = getABIHash('Main')
     #Deploy main contract
-    deployer.deploy(main, 'Test Metadata', mainHash).then(
+    deployer.deploy(main, config.main_metadata, mainHash).then(
       () ->
         repoPath = './tmp/repo.git'
 
@@ -60,7 +63,7 @@ module.exports = (deployer) ->
             #Deploy core modules
             deployer.deploy([
               [dao, main.address],
-              [member_handler, 'Test Username', main.address],
+              [member_handler, config.member_init_username, main.address],
               [vault, main.address],
               [tasks_handler, main.address],
               [git_handler, newHash, main.address]

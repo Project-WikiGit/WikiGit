@@ -140,6 +140,8 @@ isEnteringFundAmount = new ReactiveVar(false)
 payBehaviorList = new ReactiveVar([])
 pendingWithdrawlList = new ReactiveVar([])
 
+#Helpers
+
 Template.body.helpers(
   initialized:
     () ->
@@ -174,14 +176,10 @@ Template.repo_tab.helpers(
       return currentRepoPath.get()
 )
 
-Template.members_tab.helpers(
-  member_list:
+Template.tasks_tab.helpers(
+  task_list:
     () ->
-      return memberList.get()
 
-  not_signing_up:
-    () ->
-      return !isSigningUp.get()
 )
 
 Template.finances_tab.helpers(
@@ -219,6 +217,18 @@ Template.finances_tab.helpers(
         return 'ETH'
       return symbol
 )
+
+Template.members_tab.helpers(
+  member_list:
+    () ->
+      return memberList.get()
+
+  not_signing_up:
+    () ->
+      return !isSigningUp.get()
+)
+
+#Events
 
 Template.body.events(
   'submit .dasp_addr_input':
@@ -292,54 +302,8 @@ Template.repo_tab.events(
       copyTextToClipboard("https://gateway.ipfs.io/ipfs/#{dasp.repoIPFSHash}/repo.git")
 )
 
-Template.members_tab.events(
-  'click .signup_freelancer':
-    (event) ->
-      isSigningUp.set(true)
-      signUpType = 'freelancer'
+Template.tasks_tab.events(
 
-  'click .signup_shareholder':
-    (event) ->
-      isSigningUp.set(true)
-      signUpType = 'shareholder'
-
-  'click .cancel_signup':
-    (event) ->
-      isSigningUp.set(false)
-
-  'click .refresh_member_list':
-    (event) ->
-      dasp.getMemberList((error, result) ->
-        if error != null
-          showToastMsg('Load Member Data Error')
-          throw error
-        memberList.set(result)
-      )
-
-  'submit .signup_username':
-    (event) ->
-      event.preventDefault()
-
-      target = event.target
-      userName = target.username.value
-
-      dasp.signUp(signUpType, userName, (error) ->
-        if error != null
-          showToastMsg('Sign Up Error')
-          throw error
-        else
-          dasp.getMemberList((error, result) ->
-            if error != null
-              showToastMsg('Sign Up Error')
-              throw error
-            else
-              memberList.set(result)
-              showToastMsg('Sign Up Success')
-              throw error
-          )
-      )
-      isSigningUp.set(false)
-      target.username.value = ''
 )
 
 Template.finances_tab.events(
@@ -375,4 +339,45 @@ Template.finances_tab.events(
       )
 
       return
+)
+
+Template.members_tab.events(
+  'click .signup_freelancer':
+    (event) ->
+      isSigningUp.set(true)
+      signUpType = 'freelancer'
+
+  'click .signup_shareholder':
+    (event) ->
+      isSigningUp.set(true)
+      signUpType = 'shareholder'
+
+  'click .cancel_signup':
+    (event) ->
+      isSigningUp.set(false)
+
+  'submit .signup_username':
+    (event) ->
+      event.preventDefault()
+
+      target = event.target
+      userName = target.username.value
+
+      dasp.signUp(signUpType, userName, (error) ->
+        if error != null
+          showToastMsg('Sign Up Error')
+          throw error
+        else
+          dasp.getMemberList((error, result) ->
+            if error != null
+              showToastMsg('Sign Up Error')
+              throw error
+            else
+              memberList.set(result)
+              showToastMsg('Sign Up Success')
+              throw error
+          )
+      )
+      isSigningUp.set(false)
+      target.username.value = ''
 )

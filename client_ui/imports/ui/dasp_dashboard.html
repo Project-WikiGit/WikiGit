@@ -152,7 +152,37 @@
 </template>
 
 <template name="tasks_tab">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+            <!--Post task button-->
+            <button class="post_task_btn mdl-button mdl-js-button  mdl-button--raised mdl-button--colored" style="float:left; margin-top: 1%; margin-bottom: 2.2%;">
+                <i class="material-icons">add</i>
+                Post Task
+            </button>
 
+            <!--Task list-->
+            <table class="mdl-data-table mdl-js-data-table" width="100%">
+                <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Name</th>
+                    <th class="mdl-data-table__cell--non-numeric">IPFS Hash</th>
+                    <th>File Size</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each task_list}}
+                    <tr class="file_item">
+                        <td class="mdl-data-table__cell--non-numeric">{{Name}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{Hash}}</td>
+                        <td>{{Size}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+    </div>
 </template>
 
 <template name="finances_tab">
@@ -278,11 +308,6 @@
             </form>
             <button class="cancel_signup mdl-button mdl-js-button mdl-button--icon" style="float:left; margin-top: 1%;{{#if not_signing_up}}display: none;{{/if}}">
                 <i class="material-icons">cancel</i>
-            </button>
-
-            <!--Refresh Button-->
-            <button class="refresh_member_list mdl-button mdl-js-button mdl-button--fab  mdl-button--mini-fab mdl-js-ripple-effect" style="float:right; margin-top: 1%; margin-bottom: 2.2%;">
-                <i class="material-icons">refresh</i>
             </button>
 
             <!--Member list-->
