@@ -30,7 +30,7 @@ Currently, WikiGit is in its early stages and is being worked by a handful of pe
 
 * Node.js ^6.11.0
 * Meteor ^1.6
-* Coffeescript ^ 2.0.1
+* Coffeescript ^2.0.1
 * Browser with web3.js support
 
 #### Running
@@ -38,6 +38,8 @@ Currently, WikiGit is in its early stages and is being worked by a handful of pe
 Under /client_ui/, enter the following in command line:
 
 > npm install
+>
+> coffee -c .
 >
 > meteor run
 

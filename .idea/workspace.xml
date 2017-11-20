@@ -7,9 +7,7 @@
     <list default="true" id="ce9e50c8-b486-4520-b7a4-bc8adbd3536d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Technical Details.md" afterPath="$PROJECT_DIR$/Technical Details.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" afterPath="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/truffle.js" afterPath="$PROJECT_DIR$/dev/truffle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/package.json" afterPath="$PROJECT_DIR$/dev/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/client_ui/.meteor/local/" />
@@ -27,7 +25,7 @@
       <file leaf-file-name="dasp_dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
+            <state relative-caret-position="411">
               <caret line="179" column="45" lean-forward="false" selection-start-line="179" selection-start-column="45" selection-end-line="179" selection-end-column="45" />
               <folding>
                 <element signature="n#template#0;n#!!top" expanded="false" />
@@ -84,8 +82,8 @@
       <file leaf-file-name="tasks_handler.sol" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dev/contracts/tasks_handler.sol">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7637">
-              <caret line="282" column="51" lean-forward="false" selection-start-line="282" selection-start-column="51" selection-end-line="282" selection-end-column="51" />
+            <state relative-caret-position="553">
+              <caret line="30" column="68" lean-forward="false" selection-start-line="30" selection-start-column="68" selection-end-line="30" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -136,13 +134,13 @@
         <option value="$PROJECT_DIR$/dev/contracts/member_handler.sol" />
         <option value="$PROJECT_DIR$/dev/contracts/vault.sol" />
         <option value="$PROJECT_DIR$/dev/migrations/config.json" />
-        <option value="$PROJECT_DIR$/dev/package.json" />
         <option value="$PROJECT_DIR$/dev/build/contracts/a_dummy" />
         <option value="$PROJECT_DIR$/dev/migrations/2_core_contracts.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.coffee" />
         <option value="$PROJECT_DIR$/client_ui/imports/daemon/git-ipfs.coffee" />
         <option value="$PROJECT_DIR$/dev/truffle.js" />
         <option value="$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html" />
+        <option value="$PROJECT_DIR$/dev/package.json" />
       </list>
     </option>
   </component>
@@ -437,7 +435,7 @@
       <workItem from="1509608581470" duration="258000" />
       <workItem from="1509610877796" duration="60922000" />
       <workItem from="1510733347766" duration="4615000" />
-      <workItem from="1511076554140" duration="19858000" />
+      <workItem from="1511076554140" duration="24225000" />
     </task>
     <task id="LOCAL-00003" summary="Finished Finances Tab in UI">
       <created>1510038158513</created>
@@ -488,11 +486,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511142592645</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updated Readme.md and Technical Details.md">
+      <created>1511161359374</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1511161359374</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114684000" />
+    <option name="totallyTimeSpent" value="119051000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -513,7 +518,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32624114" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2147923" sideWeight="0.4910148" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30395138" sideWeight="0.4883721" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30395138" sideWeight="0.4883721" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39924905" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -568,7 +573,8 @@
     <MESSAGE value="Updated README.md, added config file for contract migration." />
     <MESSAGE value="Updated Readme" />
     <MESSAGE value="Fixed bugs, refactored git-ipfs daemon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs, refactored git-ipfs daemon" />
+    <MESSAGE value="Updated Readme.md and Technical Details.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Readme.md and Technical Details.md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -577,14 +583,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client_ui/imports/abi/vaultABI.json" />
-    <entry file="file://$PROJECT_DIR$/dev/build/contracts/Vault.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="400" column="3" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="400" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client_ui/imports/abi/memberABI.json" />
     <entry file="file://$PROJECT_DIR$/dev/build/contracts/GitHandler.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -776,22 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dev/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client_ui/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dev/migrations/config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
@@ -901,7 +883,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client_ui/imports/ui/dasp_dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
+        <state relative-caret-position="411">
           <caret line="179" column="45" lean-forward="false" selection-start-line="179" selection-start-column="45" selection-end-line="179" selection-end-column="45" />
           <folding>
             <element signature="n#template#0;n#!!top" expanded="false" />
@@ -921,10 +903,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client_ui/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_ui/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106063">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dev/contracts/tasks_handler.sol">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7637">
-          <caret line="282" column="51" lean-forward="false" selection-start-line="282" selection-start-column="51" selection-end-line="282" selection-end-column="51" />
+        <state relative-caret-position="553">
+          <caret line="30" column="68" lean-forward="false" selection-start-line="30" selection-start-column="68" selection-end-line="30" selection-end-column="68" />
           <folding />
         </state>
       </provider>
