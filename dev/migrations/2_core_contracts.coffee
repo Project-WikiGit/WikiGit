@@ -33,8 +33,7 @@ module.exports = (deployer) ->
 
     getABIHash = (modName) ->
       for f in abiFiles
-        #js-ipfs-api bug in Windows
-        if f.path == "D:WebstormProjects/WikiGit/dev/build/contracts/#{modName}.json"
+        if f.path == "contracts/#{modName}.json"
           return f.hash
 
     mainHash = getABIHash('Main')

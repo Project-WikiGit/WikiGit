@@ -52,8 +52,7 @@
         var f, i, len;
         for (i = 0, len = abiFiles.length; i < len; i++) {
           f = abiFiles[i];
-          //js-ipfs-api bug in Windows
-          if (f.path === `D:WebstormProjects/WikiGit/dev/build/contracts/${modName}.json`) {
+          if (f.path === `contracts/${modName}.json`) {
             return f.hash;
           }
         }

@@ -8,8 +8,9 @@ import './dasp_dashboard.html'
 
 export DASP_Address = new ReactiveVar("")
 
-#Shared variables
-dasp = new DASP()
+export dasp = new DASP()
+
+import {StartDaemon} from '../daemon/git-ipfs.js'
 
 showToastMsg = (msg) ->
   snackbarContainer = document.querySelector('#status_toast')
@@ -71,6 +72,9 @@ refreshDasp = () ->
     if error != null
       showToastMsg('Ethereum Connection Error')
       throw error
+    #Start daemon
+    StartDaemon()
+
     #Init repo tab
     dasp.getRepoFile('', (error, type, result) ->
       if error != null
@@ -303,6 +307,8 @@ Template.repo_tab.events(
 )
 
 Template.tasks_tab.events(
+  'click .post_task_btn':
+    (event) ->
 
 )
 

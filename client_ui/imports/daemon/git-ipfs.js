@@ -9,10 +9,10 @@
   to merge the solution into the DASP's repo, publish the resulting repo onto IPFS,
   and send its IPFS multihash back to GitHandler as the current location of the DASP's repo.
 */
-var Web3, fs, git, gitHandlerAddr, gitHandlerContract, hexToStr, ipfs, ipfsAPI, keccak256, mainAbi, mainAddr, mainContract, tasksHandlerAddr, tasksHandlerContract, web3;
+var Web3, fs, git, hexToStr, ipfs, ipfsAPI, keccak256, web3;
 
 import {
-  DASP_Address
+  dasp
 } from '../ui/dasp_dashboard.js';
 
 //Import web3
@@ -54,68 +54,13 @@ hexToStr = function(hex) {
   return str;
 };
 
-//Initialize main contract
-mainAddr = DASP_Address.get();
-
-mainAbi = require('../abi/mainABI.json');
-
-mainContract = new web3.eth.Contract(mainAbi, mainAddr);
-
-tasksHandlerAddr = tasksHandlerContract = null;
-
-gitHandlerAddr = gitHandlerContract = null;
-
-//Get TasksHandler address
-mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(function(result) {
-  //Initialize TaskHandler module
-  tasksHandlerAddr = result;
-  return main.methods.getABIHashForMod('0x' + keccak256('TASKS')).call().then(function(abiHash) {
-    return new Promise(function(fullfill, reject) {
-      return ipfs.files.cat(hexToStr(abiHash), function(error, stream) {
-        if (error !== null) {
-          reject(error);
-        }
-        stream.pipe(bl(function(error, data) {
-          var abi;
-          if (error !== null) {
-            reject(error);
-          }
-          abi = JSON.parse(data.toString()).abi;
-          tasksHandlerContract = new web3.eth.Contract(abi, tasksHandlerAddr);
-          fullfill();
-        }));
-      });
-    });
-  });
-}).then(function() {
-  //Get GitHandler address
-  return mainContract.methods.moduleAddresses('0x' + keccak256('GIT')).call().then(function(result) {
-    //Initialize GitHandler module
-    gitHandlerAddr = result;
-    return main.methods.getABIHashForMod('0x' + keccak256('GIT')).call().then(function(abiHash) {
-      return new Promise(function(fullfill, reject) {
-        return ipfs.files.cat(hexToStr(abiHash), function(error, stream) {
-          if (error !== null) {
-            reject(error);
-          }
-          stream.pipe(bl(function(error, data) {
-            var abi;
-            if (error !== null) {
-              reject(error);
-            }
-            abi = JSON.parse(data.toString()).abi;
-            gitHandlerContract = new web3.eth.Contract(abi, gitHandlerAddr);
-            fullfill();
-          }));
-        });
-      });
-    });
-  });
-}).then(function() {
-  var solutionAcceptedEvent;
-  //Listen for solution accepted event
+export var StartDaemon = function() {
+  var gitHandlerContract, solutionAcceptedEvent, tasksHandlerContract;
+  //Fetch contract abstractions
+  tasksHandlerContract = dasp.contracts.tasks;
+  gitHandlerContract = dasp.contracts.git;
   solutionAcceptedEvent = tasksHandlerContract.events.TaskSolutionAccepted();
-  return solutionAcceptedEvent.on('data', function(event) {
+  solutionAcceptedEvent.on('data', function(event) {
     var patchIPFSHash;
     patchIPFSHash = hexToStr(event.returnValues.patchIPFSHash);
     return gitHandlerContract.methods.getCurrentIPFSHash().call().then(function(result) {
@@ -170,6 +115,6 @@ mainContract.methods.moduleAddresses('0x' + keccak256('TASKS')).call().then(func
       });
     });
   });
-});
+};
 
 //# sourceMappingURL=git-ipfs.js.map
