@@ -1,5 +1,7 @@
 ## Technical Details
 
+This document describes the details of the three components of WikiGit: the back end, the front end, and the developer tools. The back end is under [/dev/contracts/](/dev/contracts/), the front end is under [/client_ui/](/client_ui/), and the developer tools is under [/dev/](/dev/).
+
 ### The Back End
 
 The back end includes a ***DAO*** with a fully fledged voting mechanism; a ***MemberHandler*** that acts as a member manifest, with different rights associated with each member group; a ***Vault*** that allows for the safe withdrawl of funds, as well as ***reactive token minting*** that can be used for things like ICOs and honorary tokens (such as the unicorn token issued to people who donated to the Ethereum project); a ***TasksHandler*** for publishing tasks and accepting solutions on the crowdsourcing platform; and a ***GitHandler*** for communicating with the Git repository hosted by IPFS and storing the address of the repository.
@@ -54,11 +56,11 @@ For more information about the back end, just check out the code! All of the con
 
 ### The Front End
 
-The front end is a client-side web app that will be hosted on the IPFS network. It is the gateway for the members of a DASP to interact with it, as well as what a DASP would use to add/remove modules from the back end.
+The front end is a client-side web app that will be hosted on the IPFS network. It will include a registry where users can discover projects, as well as the UI needed to interact with DASPs.
 
-The front end uses web3.js to communicate with a DASP's back end, and gift (a wrapper for the Git CLI) & js-ipfs-api to communicate with the DASP's Git repository on IPFS. 
+The front end is based on Meteor and Node.js. It uses web3.js to communicate with a DASP's back end, and gift (a wrapper for the Git CLI) & js-ipfs-api to communicate with the DASP's Git repository on IPFS. 
 
-The front end includes a daemon, which uses all of the node.js modules mentioned above to connect a DASP with its Git repo. It works like this: the daemon listens for the TaskSolutionAccepted() event from the GitHandler module in the back end. Upon such an event, the daemon would clone the DASP's Git repo, pull from the updated repo where the task has been completed to merge the solution into the DASP's repo, publish the resulting repo onto IPFS, and send its IPFS multihash back to GitHandler as the current location of the DASP's repo. The ideal process would be where a solution's submitter can only upload a Git patch instead of the entire repo, but due to the limitations of the gift module, this currently cannot be implemented.
+The front end includes a daemon, which uses all of the Node.js modules mentioned above to connect a DASP with its Git repo. It works like this: the daemon listens for the TaskSolutionAccepted() event from the GitHandler module in the back end. Upon such an event, the daemon would clone the DASP's Git repo, pull from the updated repo where the task has been completed to merge the solution into the DASP's repo, publish the resulting repo onto IPFS, and send its IPFS multihash back to GitHandler as the current location of the DASP's repo. The ideal process would be where a solution's submitter can only upload a Git patch instead of the entire repo, but due to the limitations of the gift module, this currently cannot be implemented.
 
 ### Developer Tools
 

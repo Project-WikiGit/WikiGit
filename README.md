@@ -29,7 +29,7 @@ Currently, WikiGit is in its early stages and is being worked by a handful of pe
 #### Prerequisites
 
 * Node.js ^6.11.0
-* Meteor ^1.5.2.2
+* Meteor ^1.6
 * Coffeescript ^ 2.0.1
 * Browser with web3.js support
 
@@ -58,7 +58,7 @@ Note: you need the back end smart contracts deployed on the current network firs
 
 First, edit /dev/migrate/config.json to include desired migration parameters. Then, under /dev/, enter the following in command line:
 
-> testrpc -l 6600000
+> testrpc -l 5500000
 
 Or, if you want to use Geth,
 
@@ -71,6 +71,10 @@ In a new command line instance, enter
 > truffle migrate
 
 The contracts would be deployed onto the specified network.
+
+## Technical Details
+
+Details of the project is in [Technical Details.md](https://github.com/Project-WikiGit/WikiGit/blob/master/Technical%20Details.md)
 
 ---
 

@@ -165,17 +165,21 @@
             <table class="mdl-data-table mdl-js-data-table" width="100%">
                 <thead>
                 <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Name</th>
-                    <th class="mdl-data-table__cell--non-numeric">IPFS Hash</th>
-                    <th>File Size</th>
+                    <th class="mdl-data-table__cell--non-numeric">Title</th>
+                    <th>ETH Reward</th>
+                    <th>Reputation Reward</th>
+                    <th class="mdl-data-table__cell--non-numeric">Token Reward</th>
+                    <th class="mdl-data-table__cell--non-numeric">Current Workers</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#each task_list}}
                     <tr class="file_item">
-                        <td class="mdl-data-table__cell--non-numeric">{{Name}}</td>
-                        <td class="mdl-data-table__cell--non-numeric">{{Hash}}</td>
-                        <td>{{Size}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">Title</td>
+                        <td>ETH Reward</td>
+                        <td>Reputation Reward</td>
+                        <td class="mdl-data-table__cell--non-numeric">Token Reward</td>
+                        <td class="mdl-data-table__cell--non-numeric">Current Workers</td>
                     </tr>
                 {{/each}}
                 </tbody>
