@@ -32,8 +32,7 @@ contract TasksHandler is Module {
     }
 
     /*
-        Defines a task solution. Solutions take the form of Git patches, and are currently stored onchain.
-        Future versions will move the patch data to decentralized storage platforms like Swarm and IPFS.
+        Defines a task solution.
     */
     struct TaskSolution {
         string metadata; //Metadata of the task. Format dependent on the higher level UI.
