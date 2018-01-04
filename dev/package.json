@@ -5,7 +5,8 @@
     "babel-runtime": "^6.26.0",
     "gift": "^0.10.0",
     "ipfs-api": "^15.1.0",
-    "js-sha3": "^0.6.1"
+    "js-sha3": "^0.6.1",
+    "zeppelin-solidity": "^1.5.0"
   },
   "devDependencies": {
     "coffeescript": "^2.0.1",

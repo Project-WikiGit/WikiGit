@@ -11,52 +11,25 @@
 
 pragma solidity ^0.4.18;
 
-import './erc20.sol';
+import './token.sol';
 import './vault.sol';
 import './tasks_handler.sol';
 import './member_handler.sol';
 
 contract Dao is Module {
-    /*
-        Defines an ERC20 token recognized by the DAO.
-    */
-    struct RecognizedToken {
-        string name;
-        string symbol;
-        address tokenAddress;
-    }
-
-    /*
-        Defines a certain type of voting.
-        The weights are the linear coefficients for tallying the votes.
-    */
-    struct VotingType {
-        string name;
-        string description;
-        uint quorumPercent;
-        uint minForPercent; //Minimum proportion of for votes needed to pass the voting.
-        uint activeTimeInBlocks; //The number of blocks for which the voting is active.
-        uint goodRepWeight;
-        uint badRepWeight;
-        bytes32[] votableGroupList;
-        mapping(uint => uint) tokenWeight; //From token's index in recognizedTokenList to weight
-        mapping(bytes32 => bool) isEligible; //From group name's keccak256 hash to bool. For checking whether a group is allowed to vote.
-    }
-
     struct Voting {
         string name;
         string description;
-        uint typeId; //The index of the voting type in the votingTypeList array.
         address creator;
         uint startBlockNumber;
         uint forVotes;
         uint againstVotes;
         uint votedMemberCount;
-        bytes32[] executionHashList; //The list of hashes of the transaction bytecodes that are executed after the voting is passed.
-        string executionModule; //The name of the module that'll execute the transaction bytecode.
+        bytes32 executionHash; //The hash of the transaction bytecode that is executed after the voting is passed.
+        address executionTarget; //The address that the transaction would be sent to.
         mapping(address => bool) hasVoted;
         bool isInvalid;
-        bool passed;
+        bool isPassed;
     }
 
     modifier notBanned {
@@ -73,53 +46,49 @@ contract Dao is Module {
         _;
     }
 
-    Voting[] public votingList;
-    VotingType[] public votingTypeList;
-    RecognizedToken[] public recognizedTokenList;
+    //Voting session parameters
+    uint public quorumPercent; //Decimal (ex. 34.567%)
+    uint public minForPercent; //Minimum proportion of for votes needed to pass the voting. Decimal.
+    uint public activeTimeInBlocks; //The number of blocks for which the voting is active.
+    uint public goodRepWeight; //Decimal
+    uint public badRepWeight; //Decimal
+    uint public tokenWeight; //Decimal
 
-    bool public isInitialized;
+    Voting[] public votingList;
 
     event VotingCreated(uint votingId);
     event VotingConcluded(uint votingId, bool passed);
 
     //Initializing
 
-    function Dao(address mainAddr) Module(mainAddr) public {
-
-    }
-
-    //Not in constructor to lower deployment cost
-    function init() public {
-        require(! isInitialized);
-        isInitialized = true;
-
-        bytes32 fullTimeHash = keccak256('full_time');
-
-        //Initialize voting types
-        votingTypeList.length += 1;
-
-        VotingType storage vType = votingTypeList[votingTypeList.length - 1];
-        vType.name = 'Default';
-        vType.description = 'For initializing';
-        vType.quorumPercent = 100;
-        vType.minForPercent = 100;
-        vType.activeTimeInBlocks = 25;
-        vType.goodRepWeight = 1;
-        vType.badRepWeight = 1;
-        vType.votableGroupList.push(fullTimeHash);
-
-        votingTypeList[votingTypeList.length - 1].isEligible[fullTimeHash] = true;
+    function Dao(
+        address _mainAddr,
+        uint _quorumPercent,
+        uint _minForPercent,
+        uint _activeTimeInBlocks,
+        uint _goodRepWeight,
+        uint _badRepWeight,
+        uint _tokenWeight
+    )
+        Module(_mainAddr)
+        public
+    {
+        quorumPercent = _quorumPercent;
+        minForPercent = _minForPercent;
+        activeTimeInBlocks = _activeTimeInBlocks;
+        goodRepWeight = _goodRepWeight;
+        badRepWeight = _badRepWeight;
+        tokenWeight = _tokenWeight;
     }
 
     //Voting
 
     function createVoting(
-        string name,
-        string description,
-        uint votingTypeId,
-        uint startBlockNumber,
-        bytes32[] executionHashList,
-        string executionModule
+        string _name,
+        string _description,
+        uint _startBlockNumber,
+        bytes32 _executionHash,
+        address _executionTarget
     )
         public
         needsRight('create_voting')
@@ -127,256 +96,132 @@ contract Dao is Module {
         require(keccak256(votingTypeList[votingTypeId].name) != keccak256(''));
 
         votingList.push(Voting({
-            name: name,
-            description: description,
-            typeId: votingTypeId,
+            name: _name,
+            description: _description,
             creator: msg.sender,
-            startBlockNumber: startBlockNumber,
-            executionHashList: executionHashList,
-            executionModule: executionModule,
+            startBlockNumber: _startBlockNumber,
+            executionHash: _executionHash,
+            executionTarget: _executionTarget,
             forVotes: 0,
             againstVotes: 0,
             votedMemberCount: 0,
             isInvalid: false,
-            passed:false
+            isPassed:false
         }));
 
         VotingCreated(votingList.length - 1);
     }
 
-    function invalidateVotingAtIndex(uint index) public onlyMod('DAO') {
-        require(index < votingList.length);
+    function invalidateVotingAtIndex(uint _index) public onlyMod('DAO') {
+        require(_index < votingList.length);
 
-        votingList[index].isInvalid = true;
+        votingList[_index].isInvalid = true;
     }
 
-    function vote(uint votingId, bool support) public needsRight('vote') {
-        Voting storage voting = votingList[votingId];
-        VotingType storage vType = votingTypeList[voting.typeId];
+    function vote(uint _votingId, bool _support) public needsRight('vote') {
+        Voting storage voting = votingList[_votingId];
 
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
         var (,goodRep, badRep) = h.memberList(h.memberId(msg.sender));
 
         require(!voting.isInvalid);
-        require(block.number >= voting.startBlockNumber && block.number < voting.startBlockNumber + vType.activeTimeInBlocks);
+        require(block.number >= voting.startBlockNumber && block.number < voting.startBlockNumber + activeTimeInBlocks);
         require(!voting.hasVoted[msg.sender]);
-        require(vType.isEligible[h.memberGroupNameHash(msg.sender)]);
 
         voting.hasVoted[msg.sender] = true;
+        voting.votedMemberCount += 1;
 
-        int memberVotes = int(vType.goodRepWeight * goodRep) - int(vType.badRepWeight * badRep);
-        for (uint i = 0; i < recognizedTokenList.length; i++) {
-            RecognizedToken storage t = recognizedTokenList[i];
+        int memberVotes = int(goodRepWeight * goodRep / 10**decimals) - int(badRepWeight * badRep / 10**decimals);
+        Token token = Token(moduleAddress('TOKEN'));
+        memberVotes += int(tokenWeight * token.balanceOf(msg.sender) / 10**(2 * decimals));
 
-            require(t.tokenAddress != 0);
-
-            ERC20 token = ERC20(t.tokenAddress);
-            memberVotes += int(vType.tokenWeight[i] * token.balanceOf(msg.sender));
-        }
         if (memberVotes < 0) {
             memberVotes = 0;
         }
-        if (support) {
+
+        if (_support) {
             voting.forVotes += uint(memberVotes);
         } else {
             voting.againstVotes += uint(memberVotes);
         }
-        voting.votedMemberCount += 1;
     }
 
-    function concludeVoting(uint votingId) public needsRight('vote') {
-        Voting storage voting = votingList[votingId];
+    function concludeVoting(uint _votingId) public needsRight('vote') {
+        Voting storage voting = votingList[_votingId];
         require(!voting.isInvalid);
         voting.isInvalid = true;
 
-        VotingType storage vType = votingTypeList[voting.typeId];
-        require(block.number >= voting.startBlockNumber + vType.activeTimeInBlocks);
+        require(block.number >= voting.startBlockNumber + activeTimeInBlocks);
 
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
 
-        uint votingMemberCount;
-        for (uint i = 0; i < vType.votableGroupList.length; i++) {
-            votingMemberCount += h.groupMemberCount(vType.votableGroupList[i]);
-        }
+        uint teamMemberCount = h.groupMemberCount(keccak256('team_member'));
 
-        voting.passed = (voting.forVotes / (voting.forVotes + voting.againstVotes) * 100 >= vType.minForPercent)
-                        && (voting.votedMemberCount / votingMemberCount * 100 >= vType.quorumPercent);
-        VotingConcluded(votingId, voting.passed);
+        voting.isPassed = (voting.forVotes * 100 * 10**decimals / (voting.forVotes + voting.againstVotes) >= minForPercent)
+                        && (voting.votedMemberCount * 100 * 10**decimals / teamMemberCount >= quorumPercent);
+        VotingConcluded(_votingId, voting.isPassed);
     }
 
     function executeVoting(
-        uint votingId,
-        uint bytecodeHashId,
-        bytes executionBytecode
+        uint _votingId,
+        bytes _executionBytecode
     )
         public
         needsRight('vote')
     {
-        Voting storage voting = votingList[votingId];
-        require(voting.passed);
-        require(voting.executionHashList[bytecodeHashId] == keccak256(executionBytecode));
+        Voting storage voting = votingList[_votingId];
+        require(voting.isPassed);
+        require(voting.executionHash == keccak256(_executionBytecode));
 
-        moduleAddress(voting.executionModule).call(executionBytecode);
-        delete voting.executionHashList[bytecodeHashId];
+        voting.executionTarget.call(_executionBytecode);
     }
 
-    function createVotingType(
-        string name,
-        string description,
-        uint quorumPercent,
-        uint minForPercent,
-        uint activeTimeInBlocks,
-        uint goodRepWeight,
-        uint badRepWeight,
-        uint[] tokenIdList,
-        uint[] tokenWeightList,
-        bytes32[] votableGroupList
-    )
-        public
-        onlyMod('DAO')
-    {
-        require(tokenIdList.length == tokenWeightList.length);
-
-        pushNewVotingType(
-            name,
-            description,
-            quorumPercent,
-            minForPercent,
-            activeTimeInBlocks,
-            goodRepWeight,
-            badRepWeight,
-            votableGroupList
-        );
-
-        for (uint i = 0; i < votableGroupList.length; i++) {
-            votingTypeList[votingTypeList.length - 1].isEligible[votableGroupList[i]] = true;
-        }
-
-        setVotingTypeTokenWeights(tokenIdList, tokenWeightList);
-    }
-
-    //Split out as an independent function to prevent StackTooDeep error
-    function pushNewVotingType(
-        string name,
-        string description,
-        uint quorumPercent,
-        uint minForPercent,
-        uint activeTimeInBlocks,
-        uint goodRepWeight,
-        uint badRepWeight,
-        bytes32[] votableGroupList
-    )
-        internal
-    {
-        votingTypeList.push(VotingType({
-            name: name,
-            description: description,
-            quorumPercent: quorumPercent,
-            minForPercent: minForPercent,
-            activeTimeInBlocks: activeTimeInBlocks,
-            goodRepWeight: goodRepWeight,
-            badRepWeight: badRepWeight,
-            votableGroupList: votableGroupList
-        }));
-    }
-
-    //Split out as an independent function to prevent StackTooDeep error
-    function setVotingTypeTokenWeights(uint[] tokenIdlist, uint[] tokenWeightList) internal {
-        for (uint i = 0; i < tokenIdlist.length; i++) {
-            uint id = tokenIdlist[i];
-            uint weight = tokenWeightList[i];
-            votingTypeList[votingTypeList.length - 1].tokenWeight[id] = weight;
-        }
-    }
-
-    function removeVotingTypeAtIndex(uint index) public onlyMod('DAO') {
-        delete votingTypeList[index];
-    }
-
-    //Token functions
-
-    function addRecognizedToken(
-        string name,
-        string symbol,
-        address tokenAddress,
-        uint rewardTokenCap
-    )
-        public
-        onlyMod('DAO')
-    {
-        recognizedTokenList.push(RecognizedToken({
-            name: name,
-            symbol: symbol,
-            tokenAddress: tokenAddress
-        }));
-
+    function paySolutionReward(uint _taskId, uint _solId) public onlyMod('TASKS') {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        handler.setCap('token', rewardTokenCap, tokenAddress);
-    }
-
-    function removeRecognizedTokenAtIndex(uint index) public onlyMod('DAO')
-    {
-        require(index < recognizedTokenList.length);
-
-        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        handler.deleteRewardTokenCap(recognizedTokenList[index].tokenAddress);
-
-        delete recognizedTokenList[index];
-    }
-
-    function paySolutionReward(uint taskId, uint solId) public onlyMod('TASKS') {
-        TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        var (_,,rewardInWeis, rewardGoodRep,) = handler.taskList(taskId);
-        var (__,submitter,) = handler.taskSolutionList(taskId, solId);
+        var (_,,rewardInWeis, rewardTokenAmount, rewardGoodRep,) = handler.taskList(_taskId);
+        var (__,submitter,) = handler.taskSolutionList(_taskId, _solId);
 
         //Reward in ether
         Vault vault = Vault(moduleAddress('VAULT'));
-        vault.addPendingWithdrawl(rewardInWeis, submitter, true);
+        vault.addPendingWithdrawl(rewardInWeis, submitter, true, true);
 
         //Reward in reputation
         paySolutionRewardGoodRep(submitter, rewardGoodRep);
 
         //Reward in tokens
-        for (uint i = 0; i < handler.getTRewardTokenListCount(taskId); i++) {
-            uint id = handler.getTRewardTokenIndex(taskId, i);
-            uint reward = handler.getTRewardTokenAmount(taskId, i);
-
-            RecognizedToken storage token = recognizedTokenList[id];
-
-            vault.addPendingTokenWithdrawl(reward, submitter, token.symbol, token.tokenAddress, true);
-        }
+        vault.addPendingWithdrawl(rewardTokenAmount, submitter, true, false);
     }
 
     //Split out as an independent function to prevent StackTooDeep error
-    function paySolutionRewardGoodRep(address submitter, uint rewardGoodRep) internal {
+    function paySolutionRewardGoodRep(address _submitter, uint _rewardGoodRep) internal {
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
-        h.incMemberGoodRep(submitter, rewardGoodRep);
+        h.incMemberGoodRep(_submitter, _rewardGoodRep);
     }
 
     /*
         Used for penalizing malicious solution submitters.
     */
     function penalizeSolutionSubmitter(
-        uint taskId,
-        uint solId,
-        bool banSubmitter
+        uint _taskId,
+        uint _solId,
+        bool _banSubmitter
     )
         public
         onlyMod('DAO')
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        var (_,,,, penaltyBadRep,) = handler.taskList(taskId);
-        var (__,submitter,) = handler.taskSolutionList(taskId, solId);
+        var (_,,,, penaltyBadRep,) = handler.taskList(_taskId);
+        var (__,submitter,) = handler.taskSolutionList(_taskId, _solId);
 
         //Check if submitter has already been penalized
-        require(!handler.tHasBeenPenalized(taskId, submitter));
-        handler.setPenalizedStatus(taskId, submitter, true);
+        require(!handler.tHasBeenPenalized(_taskId, submitter));
+        handler.setPenalizedStatus(_taskId, submitter, true);
 
         //Penalize reputation
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
         h.incMemberBadRep(submitter, penaltyBadRep);
 
-        if (banSubmitter) {
+        if (_banSubmitter) {
             h.alterBannedStatus(submitter, true);
         }
     }
@@ -387,40 +232,8 @@ contract Dao is Module {
         return votingList.length;
     }
 
-    function getVotingTypeListCount() public view returns(uint) {
-        return votingTypeList.length;
-    }
-
-    function getRecognizedTokenListCount() public view returns(uint) {
-        return recognizedTokenList.length;
-    }
-
-    function getVTVotableGroup(uint typeId, uint index) public view returns(bytes32) {
-        return votingTypeList[typeId].votableGroupList[index];
-    }
-
-    function getVTVotableGroupListCount(uint typeId) public view returns(uint) {
-        return votingTypeList[typeId].votableGroupList.length;
-    }
-
-    function vtTokenWeight(uint typeId, uint tokenId) public view returns(uint) {
-        return votingTypeList[typeId].tokenWeight[tokenId];
-    }
-
-    function vtIsEligible(uint typeId, bytes32 groupHash) public view returns(bool) {
-        return votingTypeList[typeId].isEligible[groupHash];
-    }
-
-    function getVExecutionHash(uint votingId, uint index) public view returns(bytes32) {
-        return votingList[votingId].executionHashList[index];
-    }
-
-    function getVExecutionHashLishCount(uint votingId) public view returns(uint) {
-        return votingList[votingId].executionHashList.length;
-    }
-
-    function vHasVoted(uint votingId, address addr) public view returns(bool) {
-        return votingList[votingId].hasVoted[addr];
+    function vHasVoted(uint _votingId, address _addr) public view returns(bool) {
+        return votingList[_votingId].hasVoted[_addr];
     }
 
     //Fallback

@@ -30,34 +30,34 @@ contract GitHandler is Module {
     mapping(uint => uint) public prevHashIDPointer; //Stores the pointers pointing from an IPFS hash's index to the index of the previous hash with respect to the tree structure.
     uint public currentHashID; //Stores the index of the IPFS hash of the Git repository at the current state.
 
-    function GitHandler(bytes repoHash, address mainAddr) Module(mainAddr) public {
-        ipfsHashTree.push(repoHash);
+    function GitHandler(bytes _repoHash, address _mainAddr) Module(_mainAddr) public {
+        ipfsHashTree.push(_repoHash);
         prevHashIDPointer[0] = 0; //For clarity
         currentHashID = 0; //For clarity
     }
 
-    function setCurrentIPFSHashID(uint id) public onlyMod('DAO') {
-        currentHashID = id;
+    function setCurrentIPFSHashID(uint _id) public onlyMod('DAO') {
+        currentHashID = _id;
     }
 
     function commitTaskSolutionToRepo(
-        uint taskId,
-        uint solId,
-        bytes newHash
+        uint _taskId,
+        uint _solId,
+        bytes _newHash
     )
         public
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
-        var (,poster,,,,isInvalid, acceptedSolutionID, hasAcceptedSolution) = handler.taskList(taskId);
-        var (_,submitter,) = handler.taskSolutionList(taskId, solId);
+        var (,poster,,,,isInvalid, acceptedSolutionID, hasAcceptedSolution) = handler.taskList(_taskId);
+        var (_,submitter,) = handler.taskSolutionList(_taskId, _solId);
 
         require(poster == msg.sender); //Only the task's poster can commit.
         require(hasAcceptedSolution); //Can only commit after a solution has been accepted.
         require(isInvalid);
-        require(acceptedSolutionID == solId); //Has to be the accepted solution.
-        require(!handler.tHasBeenPenalized(taskId, submitter)); //Solution can't have been penalized.
+        require(acceptedSolutionID == _solId); //Has to be the accepted solution.
+        require(!handler.tHasBeenPenalized(_taskId, submitter)); //Solution can't have been penalized.
 
-        ipfsHashTree.push(newHash);
+        ipfsHashTree.push(_newHash);
         prevHashIDPointer[ipfsHashTree.length - 1] = currentHashID;
         currentHashID = ipfsHashTree.length - 1;
     }
