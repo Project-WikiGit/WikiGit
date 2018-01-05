@@ -107,9 +107,7 @@ contract MemberHandler is Module {
         //Check if msg.sender has any voting shares
         Dao dao = Dao(moduleAddress('DAO'));
         Token token = Token(moduleAddress('TOKEN'));
-        if (token.balanceOf(msg.sender) == 0) {
-            revert();
-        }
+        require(token.balanceOf(msg.sender) > 0);
 
         memberId[msg.sender] = memberList.length;
         memberList.push(Member({

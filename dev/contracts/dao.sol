@@ -175,7 +175,7 @@ contract Dao is Module {
         require(voting.isPassed);
         require(voting.executionHash == keccak256(_executionBytecode));
 
-        if (!voting.executionTarget.call(_executionBytecode)) revert();
+        require(voting.executionTarget.call(_executionBytecode));
     }
 
     function paySolutionReward(uint _taskId, uint _solId) public onlyMod('TASKS') {
