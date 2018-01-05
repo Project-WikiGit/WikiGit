@@ -59,16 +59,16 @@ contract MemberHandler is Module {
         setGroupRight('team_member', 'submit_task', true);
         setGroupRight('team_member', 'submit_task_rewardless', true);
         setGroupRight('team_member', 'vote', true);
+        setGroupRight('team_member', 'quorum_include', true);
         setGroupRight('team_member', 'submit_solution', true);
-        setGroupRight('team_member', 'accept_solution', true);
         setGroupRight('team_member', 'vote_solution', true);
+        setGroupRight('team_member', 'accept_hash', true);
 
         //Part time contributor rights
         setGroupRight('contributor', 'create_voting', true);
         setGroupRight('contributor', 'submit_task_rewardless', true);
         setGroupRight('contributor', 'vote', true);
         setGroupRight('contributor', 'submit_solution', true);
-        setGroupRight('contributor', 'vote_solution', true);
 
         //Pure shareholder (shareholder who doesn't contribute) rights
         setGroupRight('pure_shareholder', 'vote', true);

@@ -13,6 +13,7 @@ contract Token is MintableToken, Module {
         string _name,
         string _symbol
     )
+        public
         Module(_mainAddr)
     {
         name = _name;

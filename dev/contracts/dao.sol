@@ -93,8 +93,6 @@ contract Dao is Module {
         public
         needsRight('create_voting')
     {
-        require(keccak256(votingTypeList[votingTypeId].name) != keccak256(''));
-
         votingList.push(Voting({
             name: _name,
             description: _description,
@@ -129,7 +127,11 @@ contract Dao is Module {
         require(!voting.hasVoted[msg.sender]);
 
         voting.hasVoted[msg.sender] = true;
-        voting.votedMemberCount += 1;
+
+        //Only team members count towards quorum
+        if (h.memberHasRight(msg.sender, 'quorum_include')) {
+            voting.votedMemberCount += 1;
+        }
 
         int memberVotes = int(goodRepWeight * goodRep / 10**decimals) - int(badRepWeight * badRep / 10**decimals);
         Token token = Token(moduleAddress('TOKEN'));
@@ -173,7 +175,7 @@ contract Dao is Module {
         require(voting.isPassed);
         require(voting.executionHash == keccak256(_executionBytecode));
 
-        voting.executionTarget.call(_executionBytecode);
+        if (!voting.executionTarget.call(_executionBytecode)) revert();
     }
 
     function paySolutionReward(uint _taskId, uint _solId) public onlyMod('TASKS') {
@@ -203,27 +205,18 @@ contract Dao is Module {
     */
     function penalizeSolutionSubmitter(
         uint _taskId,
-        uint _solId,
-        bool _banSubmitter
+        uint _solId
     )
         public
-        onlyMod('DAO')
+        onlyMod('TASKS')
     {
         TasksHandler handler = TasksHandler(moduleAddress('TASKS'));
         var (_,,,, penaltyBadRep,) = handler.taskList(_taskId);
         var (__,submitter,) = handler.taskSolutionList(_taskId, _solId);
 
-        //Check if submitter has already been penalized
-        require(!handler.tHasBeenPenalized(_taskId, submitter));
-        handler.setPenalizedStatus(_taskId, submitter, true);
-
         //Penalize reputation
         MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
         h.incMemberBadRep(submitter, penaltyBadRep);
-
-        if (_banSubmitter) {
-            h.alterBannedStatus(submitter, true);
-        }
     }
 
     //Getters

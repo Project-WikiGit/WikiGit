@@ -184,21 +184,19 @@ contract Vault is Module {
 
     function startCoinOffering(
         uint _multiplier,
-        address _tokenAddress,
         uint _startBlockNumber,
         uint _endBlockNumber,
-        uint _donationCapInWeis
+        uint _hardCapInWeis
     )
         public
         onlyMod('DAO')
     {
         currentCoinOffering = CoinOffering({
             multiplier: _multiplier,
-            tokenAddress: _tokenAddress,
             startBlockNumber: _startBlockNumber,
             endBlockNumber: _endBlockNumber,
-            totalDonationInWeis: 0,
-            donationCapInWeis: _donationCapInWeis
+            raisedFundsInWeis: 0,
+            hardCapInWeis: _hardCapInWeis
         });
     }
 

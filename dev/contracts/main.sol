@@ -18,7 +18,7 @@ contract Module {
     modifier onlyMod(string mod) { require(msg.sender == moduleAddress(mod)); _; }
 
     address public mainAddress;
-    uint8 public constant decimals = 18;
+    uint public constant decimals = 18;
 
     function Module(address _mainAddress) public {
         mainAddress = _mainAddress;

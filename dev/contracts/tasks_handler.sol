@@ -15,6 +15,8 @@ import './dao.sol';
 import './member_handler.sol';
 
 contract TasksHandler is Module {
+    enum TaskState { Open, Solved, Invalid }
+
     struct TaskListing {
         string metadata; //Metadata of the task. Format dependent on the higher level UI.
         address poster;
@@ -22,9 +24,9 @@ contract TasksHandler is Module {
         uint rewardTokenAmount; //Amount of rewarded tokens
         uint rewardGoodRep; //Reward in good reputation.
         uint penaltyBadRep; //Penalty in bad reputation if a solution is deemed malicious.
-        bool isInvalid;
+        TaskState state;
         uint acceptedSolutionID; //Index of the accepted solution.
-        bool hasAcceptedSolution;
+        mapping(address => bool) hasUpvoted; //Records whether a team member has upvoted a solution.
         mapping(address => bool) hasSubmitted; //Records whether a user has already submitted a solution.
         mapping(address => bool) hasBeenPenalized; //Recordes whether a user has been penalized for a malicious solution.
         mapping(address => uint) memberSolId; //From member address to index of member's solution submission.
@@ -39,11 +41,12 @@ contract TasksHandler is Module {
         bytes patchIPFSHash; //IPFS hash of the Git patch.
         /*
             Solution voting allow members to express their evaluations of a solution.
-            Does not have any actual effect on the solution acceptance process.
+            Solutions that receives upvote from more than 2/3 of team members will be accepted.
+            Solutions that receives downvote from more than 2/3 of team members will be open to penalization.
         */
         uint upvotes;
         uint downvotes;
-        mapping(address => bool) hasVoted;
+        mapping(address => bool) hasDownvoted;
     }
 
     modifier needsRight(string right) {
@@ -107,9 +110,8 @@ contract TasksHandler is Module {
             rewardTokenAmount: _rewardTokenAmount,
             rewardGoodRep: _rewardGoodRep,
             penaltyBadRep: _penaltyBadRep,
-            isInvalid: false,
-            acceptedSolutionID: 0,
-            hasAcceptedSolution: false
+            state: TaskState.Open,
+            acceptedSolutionID: 0
         }));
         taskSolutionList.length += 1;
     }
@@ -136,9 +138,8 @@ contract TasksHandler is Module {
             rewardTokenAmount: 0,
             rewardGoodRep: _rewardGoodRep,
             penaltyBadRep: _penaltyBadRep,
-            isInvalid: false,
-            acceptedSolutionID: 0,
-            hasAcceptedSolution: false
+            state: TaskState.Open,
+            acceptedSolutionID: 0
         }));
 
         taskSolutionList.length += 1;
@@ -146,7 +147,8 @@ contract TasksHandler is Module {
 
     function invalidateTaskListingAtIndex(uint _index) public onlyMod('DAO') {
         require(_index < taskList.length);
-        taskList[_index].isInvalid = true;
+        require(taskList[_index].state == TaskState.Open);
+        taskList[_index].state = TaskState.Invalid;
     }
 
     function submitSolution(
@@ -161,8 +163,7 @@ contract TasksHandler is Module {
 
         TaskListing storage task = taskList[_taskId];
 
-        require(!task.isInvalid);
-        require(msg.sender != task.poster); //Prevent self-serving tasks
+        require(task.state == TaskState.Open);
 
         if (! task.hasSubmitted[msg.sender]) {
             task.hasSubmitted[msg.sender] = true;
@@ -182,7 +183,6 @@ contract TasksHandler is Module {
     }
 
     function voteOnSolution(
-        address _sender,
         uint _taskId,
         uint _solId,
         bool _isUpvote
@@ -192,37 +192,35 @@ contract TasksHandler is Module {
     {
         require(_taskId < taskList.length);
         require(_solId < taskSolutionList[_taskId].length);
-
-        TaskSolution storage sol = taskSolutionList[_taskId][_solId];
-
-        require(!sol.hasVoted[_sender]);
-        sol.hasVoted[_sender] = true;
+        require(taskList[_taskId].state == TaskState.Open);
 
         if (_isUpvote) {
+            TaskListing storage task = taskList[_taskId];
+            require(! task.hasUpvoted[msg.sender]);
             sol.upvotes += 1;
         } else {
+            TaskSolution storage sol = taskSolutionList[_taskId][_solId];
+            require(! sol.hasDownvoted[msg.sender]);
             sol.downvotes += 1;
         }
     }
 
     /*
         Accepts a solution and pays the rewards to the solution submitter.
-        Can only be called by the poster of the task listing.
     */
     function acceptSolution(uint _taskId, uint _solId) public {
         require(_taskId < taskList.length); //Ensure that taskId is valid.
         TaskListing storage task = taskList[_taskId];
-
-        require(_solId < taskSolutionList[_taskId].length); //Ensure that solId is valid.
-
-        TaskSolution storage sol = taskSolutionList[_taskId][_solId];
-
-        require(task.poster == msg.sender); //Ensure that the caller is the poster of the task listing.
-
+        require(task.state == TaskState.Open);
         require(!task.hasBeenPenalized[taskSolutionList[_taskId][_solId].submitter]);
 
-        task.isInvalid = true;
-        task.hasAcceptedSolution = true;
+        require(_solId < taskSolutionList[_taskId].length); //Ensure that solId is valid.
+        TaskSolution storage sol = taskSolutionList[_taskId][_solId];
+
+        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
+        require(sol.upvotes * 3 >= h.groupMemberCount('team_member') * 2); //At least 2/3 of team members upvoted
+
+        task.state = TaskState.Solved;
         task.acceptedSolutionID = _solId;
 
         //Broadcast acceptance
@@ -231,6 +229,20 @@ contract TasksHandler is Module {
         //Pay submitter of solution
         Dao dao = Dao(moduleAddress('DAO'));
         dao.paySolutionReward(_taskId, _solId);
+    }
+
+    function penalizeSolutionSubmitter(uint _taskId, uint _solId) public {
+        require(_solId < taskSolutionList[_taskId].length); //Ensure that solId is valid.
+        TaskSolution storage sol = taskSolutionList[_taskId][_solId];
+
+        require(!tHasBeenPenalized(_taskId, sol.submitter));
+        setPenalizedStatus(_taskId, sol.submitter, true);
+
+        MemberHandler h = MemberHandler(moduleAddress('MEMBER'));
+        require(sol.downvotes * 3 >= h.groupMemberCount('team_member') * 2); //At least 2/3 of team members downvoted
+
+        Dao dao = Dao(moduleAddress('DAO'));
+        dao.penalizeSolutionSubmitter(_taskId, _solId);
     }
 
     function setCap(
@@ -269,7 +281,18 @@ contract TasksHandler is Module {
         return taskList[_taskId].memberSolId[_addr];
     }
 
-    function sHasVoted(
+    function tHasUpvoted(
+        uint _taskId,
+        address _addr
+    )
+        public
+        view
+        returns(bool)
+    {
+        return taskList[_taskId].hasUpvoted[_addr];
+    }
+
+    function sHasDownvoted(
         uint _taskId,
         uint _solId,
         address _addr
@@ -278,7 +301,7 @@ contract TasksHandler is Module {
         view
         returns(bool)
     {
-        return taskSolutionList[_taskId][_solId].hasVoted[_addr];
+        return taskSolutionList[_taskId][_solId].hasDownvoted[_addr];
     }
 
     //Fallback
