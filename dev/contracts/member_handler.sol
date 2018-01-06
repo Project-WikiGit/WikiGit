@@ -7,9 +7,10 @@
 
 pragma solidity ^0.4.18;
 
+import 'zeppelin-solidity/contracts/math/SafeMath.sol';
 import './main.sol';
-import './erc20.sol';
 import './dao.sol';
+import './token.sol';
 
 contract MemberHandler is Module {
     /*
@@ -23,10 +24,12 @@ contract MemberHandler is Module {
         uint badRep; //Bad reputation
     }
 
-    Member[] public memberList;
-
     //Should only be used in functions meant to be directly called by members and don't need any rights.
     modifier notBanned { require(!isBanned[msg.sender]); _; }
+
+    uint public memberCount;
+
+    Member[] public memberList;
 
     //From member address to the index of the member in memberList.
     mapping(address => uint) public memberId;
@@ -41,33 +44,31 @@ contract MemberHandler is Module {
 
     mapping(address => bool) public isBanned;
 
-    function MemberHandler(string creatorUserName, address mainAddr) Module(mainAddr) public {
-        //Add msg.sender as member #1
+    function MemberHandler(string _creatorUserName, address _mainAddr) Module(_mainAddr) public {
         memberList.push(Member('',0,'',0,0)); //Member at index 0 is reserved, for efficiently checking whether an address has already been registered.
-        memberList.push(Member(creatorUserName, msg.sender, 'full_time', 1, 0));
+
+        //Add msg.sender as member #1
+        memberList.push(Member(_creatorUserName, msg.sender, 'team_member', 1, 0));
         memberId[msg.sender] = 1;
+        memberCount += 1;
+        groupMemberCount[keccak256('team_member')] += 1;
 
         //Initialize group rights
-        //Full time contributor rights
-        setGroupRight('full_time', 'create_voting', true);
-        setGroupRight('full_time', 'submit_task', true);
-        setGroupRight('full_time', 'submit_task_rewardless', true);
-        setGroupRight('full_time', 'vote', true);
-        setGroupRight('full_time', 'submit_solution', true);
-        //setGroupRight('full_time', 'accept_Solution', true);
-        setGroupRight('full_time', 'vote_solution', true);
-        setGroupRight('full_time', 'access_proj_management', true);
+        //Team member rights
+        setGroupRight('team_member', 'create_voting', true);
+        setGroupRight('team_member', 'submit_task', true);
+        setGroupRight('team_member', 'submit_task_rewardless', true);
+        setGroupRight('team_member', 'vote', true);
+        setGroupRight('team_member', 'quorum_include', true);
+        setGroupRight('team_member', 'submit_solution', true);
+        setGroupRight('team_member', 'vote_solution', true);
+        setGroupRight('team_member', 'accept_hash', true);
 
         //Part time contributor rights
-        setGroupRight('part_time', 'create_voting', true);
-        setGroupRight('part_time', 'submit_task_rewardless', true);
-        setGroupRight('part_time', 'vote', true);
-        setGroupRight('part_time', 'submit_solution', true);
-        setGroupRight('part_time', 'vote_solution', true);
-        setGroupRight('part_time', 'access_proj_management', true);
-
-        //Freelancer rights
-        setGroupRight('freelancer', 'submit_solution', true);
+        setGroupRight('contributor', 'create_voting', true);
+        setGroupRight('contributor', 'submit_task_rewardless', true);
+        setGroupRight('contributor', 'vote', true);
+        setGroupRight('contributor', 'submit_solution', true);
 
         //Pure shareholder (shareholder who doesn't contribute) rights
         setGroupRight('pure_shareholder', 'vote', true);
@@ -77,58 +78,30 @@ contract MemberHandler is Module {
     //Member functions
 
     function addMember(
-        string userName,
-        address userAddress,
-        string groupName,
-        uint goodRep,
-        uint badRep
+        string _userName,
+        address _userAddress,
+        string _groupName,
+        uint _goodRep,
+        uint _badRep
     )
         public
         onlyMod('DAO')
     {
-        require(memberId[userAddress] == 0); //Prevent altering existing members. ID 0 is reserved for creator.
+        require(memberId[_userAddress] == 0); //Prevent altering existing members. ID 0 is reserved for creator.
         memberList.push(Member({
-            userName: userName,
-            userAddress: userAddress,
-            groupName: groupName,
-            goodRep: goodRep,
-            badRep: badRep
+            userName: _userName,
+            userAddress: _userAddress,
+            groupName: _groupName,
+            goodRep: _goodRep,
+            badRep: _badRep
         }));
-        memberId[userAddress] = memberList.length;
-        groupMemberCount[keccak256(groupName)] += 1;
-    }
-
-    //Used by shareholders who do not contribute to the project to add themselves into the member list,
-    //so that they can vote.
-    function setSelfAsPureShareholder(string userName) public notBanned {
-        require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
-        //Check if msg.sender has any voting shares
-        Dao dao = Dao(moduleAddress('DAO'));
-        bool hasShares;
-        for (uint i = 0; i < dao.getRecognizedTokenListCount(); i++) {
-            var(,tokenAddress) = dao.recognizedTokenList(i);
-            ERC20 token = ERC20(tokenAddress);
-            if (token.balanceOf(msg.sender) > 0) {
-                hasShares = true;
-                break;
-            }
-        }
-        require(hasShares);
-
-        memberId[msg.sender] = memberList.length;
-        memberList.push(Member({
-            userName: userName,
-            userAddress: msg.sender,
-            groupName: 'pure_shareholder',
-            goodRep: 0,
-            badRep: 0
-        }));
-
-        groupMemberCount[keccak256('pure_shareholder')] += 1;
+        memberId[_userAddress] = memberList.length - 1;
+        memberCount += 1;
+        groupMemberCount[keccak256(_groupName)] += 1;
     }
 
     //Used by freelancers to add themselves into the member list so that they can submit task solutions.
-    function setSelfAsFreelancer(string userName) public notBanned {
+    function setSelfAsContributor(string userName) public notBanned {
         require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
 
         memberId[msg.sender] = memberList.length;
@@ -141,49 +114,83 @@ contract MemberHandler is Module {
         }));
     }
 
-    function removeMemberWithAddress(address addr) public onlyMod('DAO') {
-        uint index = memberId[addr];
+    //Used by shareholders who do not contribute to the project to add themselves into the member list,
+    //so that they can vote.
+    function setSelfAsPureShareholder(string _userName) public notBanned {
+        require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
+        //Check if msg.sender has any voting shares
+        Token token = Token(moduleAddress('TOKEN'));
+        require(token.balanceOf(msg.sender) > 0);
+
+        memberId[msg.sender] = memberList.length;
+        memberList.push(Member({
+            userName: _userName,
+            userAddress: msg.sender,
+            groupName: 'pure_shareholder',
+            goodRep: 0,
+            badRep: 0
+        }));
+
+        memberCount += 1;
+        groupMemberCount[keccak256('pure_shareholder')] += 1;
+    }
+
+    function removeMemberWithAddress(address _addr) public onlyMod('DAO') {
+        uint index = memberId[_addr];
         require(index != 0); //Ensure member exists.
 
         Member storage member = memberList[index];
         require(keccak256(member.groupName) != keccak256(''));
 
+        memberCount -= 1;
         groupMemberCount[keccak256(member.groupName)] -= 1;
 
         delete memberList[index];
-        delete memberId[addr];
+        delete memberId[_addr];
     }
 
-    function alterBannedStatus(address addr, bool newStatus) public onlyMod('DAO') {
-        require(memberId[addr] != 0); //Ensure member exists.
+    function alterBannedStatus(address _addr, bool _newStatus) public onlyMod('DAO') {
+        require(memberId[_addr] != 0); //Ensure member exists.
 
-        Member storage member = getMemberAtAddress(addr);
-        if (newStatus && !isBanned[addr]) {
+        Member storage member = getMemberAtAddress(_addr);
+        if (_newStatus && !isBanned[_addr]) {
             groupMemberCount[keccak256(member.groupName)] -= 1;
-        } else if (!newStatus && isBanned[addr]) {
+        } else if (!_newStatus && isBanned[_addr]) {
             groupMemberCount[keccak256(member.groupName)] += 1;
         }
-        isBanned[addr] = newStatus;
+        isBanned[_addr] = _newStatus;
     }
 
-    function incMemberGoodRep(address addr, uint amount) public onlyMod('DAO') {
-        require(memberId[addr] != 0); //Ensure member exists.
+    function incMemberGoodRep(address _addr, uint _amount) public onlyMod('DAO') {
+        require(memberId[_addr] != 0); //Ensure member exists.
 
-        Member storage member = getMemberAtAddress(addr);
-        member.goodRep += amount;
+        Member storage member = getMemberAtAddress(_addr);
+        member.goodRep += _amount;
     }
 
-    function incMemberBadRep(address addr, uint amount) public onlyMod('DAO') {
-        require(memberId[addr] != 0); //Ensure member exists.
+    function incMemberBadRep(address _addr, uint _amount) public onlyMod('DAO') {
+        require(memberId[_addr] != 0); //Ensure member exists.
 
-        Member storage member = getMemberAtAddress(addr);
-        member.badRep += amount;
+        Member storage member = getMemberAtAddress(_addr);
+        member.badRep += _amount;
     }
 
-    function changeMemberGroup(uint id, string newGroupName) public onlyMod('DAO') {
-        groupMemberCount[keccak256(memberList[id].groupName)] -= 1;
-        groupMemberCount[keccak256(newGroupName)] += 1;
-        memberList[id].groupName = newGroupName;
+    function changeMemberGroup(uint _id, string _newGroupName) public onlyMod('DAO') {
+        groupMemberCount[keccak256(memberList[_id].groupName)] -= 1;
+        groupMemberCount[keccak256(_newGroupName)] += 1;
+        memberList[_id].groupName = _newGroupName;
+    }
+
+    function changeSelfName(string _newName) public notBanned {
+        require(keccak256(getMemberAtAddress(msg.sender).groupName) != keccak256(''));
+        getMemberAtAddress(msg.sender).userName = _newName;
+    }
+
+    function changeSelfAddress(address _newAddress) public notBanned {
+        require(keccak256(getMemberAtAddress(msg.sender).groupName) != keccak256(''));
+        getMemberAtAddress(msg.sender).userAddress = _newAddress;
+        memberId[_newAddress] = memberId[msg.sender];
+        memberId[msg.sender] = 0;
     }
 
     //Do not confuse with setGroupRight(). This function allows votings to execute setGroupRight().
@@ -198,34 +205,22 @@ contract MemberHandler is Module {
         setGroupRight(groupName, rightName, hasRight);
     }
 
-    function changeSelfName(string newName) public notBanned {
-        require(keccak256(getMemberAtAddress(msg.sender).groupName) != keccak256(''));
-        getMemberAtAddress(msg.sender).userName = newName;
-    }
-
-    function changeSelfAddress(address newAddress) public notBanned {
-        require(keccak256(getMemberAtAddress(msg.sender).groupName) != keccak256(''));
-        getMemberAtAddress(msg.sender).userAddress = newAddress;
-        memberId[newAddress] = memberId[msg.sender];
-        memberId[msg.sender] = 0;
-    }
-
     //Getters
 
-    function getMemberAtAddress(address addr) internal view  returns(Member storage) {
-        return memberList[memberId[addr]];
+    function getMemberAtAddress(address _addr) internal view  returns(Member storage) {
+        return memberList[memberId[_addr]];
     }
 
-    function getGroupRight(string groupName, string right) public view returns(bool) {
-        return groupRights[keccak256(groupName)][keccak256(right)];
+    function getGroupRight(string _groupName, string _right) public view returns(bool) {
+        return groupRights[keccak256(_groupName)][keccak256(_right)];
     }
 
-    function memberHasRight(address addr, string right) public view returns(bool) {
-        return getGroupRight(getMemberAtAddress(addr).groupName, right);
+    function memberHasRight(address _addr, string _right) public view returns(bool) {
+        return getGroupRight(getMemberAtAddress(_addr).groupName, _right);
     }
 
-    function memberGroupNameHash(address addr) public view returns(bytes32) {
-        return keccak256(getMemberAtAddress(addr).groupName);
+    function memberGroupNameHash(address _addr) public view returns(bytes32) {
+        return keccak256(getMemberAtAddress(_addr).groupName);
     }
 
     function getMemberListCount() public view returns(uint) {
@@ -236,13 +231,13 @@ contract MemberHandler is Module {
 
     //Do not confuse with setRightOfGroup(). This is an internal helper function.
     function setGroupRight(
-        string groupName,
-        string right,
-        bool hasRight
+        string _groupName,
+        string _right,
+        bool _hasRight
     )
         internal
     {
-        groupRights[keccak256(groupName)][keccak256(right)] = hasRight;
+        groupRights[keccak256(_groupName)][keccak256(_right)] = _hasRight;
     }
 
     //Fallback

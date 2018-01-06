@@ -2,7 +2,7 @@
     vault.sol
     Created by Zefram Lou (Zebang Liu) as part of the WikiGit project.
 
-    This file implements the DAP's vault, or in other words the manager
+    This file implements the DASP's vault, or in other words the manager
     of the DAP's funds. It allows for the delayed withdrawl of ethers
     and/or ERC20 tokens (the delay prevents malicious withdrawls), and
     giving people who donate ethers to the vault custom tokens in return.
@@ -12,9 +12,8 @@
 
 pragma solidity ^0.4.18;
 
+import './token.sol';
 import './main.sol';
-
-import './erc20.sol';
 
 contract Vault is Module {
     /*
@@ -23,24 +22,11 @@ contract Vault is Module {
         tokens hosted at tokenAddress.
         The use of oracles is not yet implemented.
     */
-    struct PayBehavior {
+    struct CoinOffering {
         /*
-            Number of tokens that would be granted to donor for each input currency unit.
+            Number of tokens that would be granted to donor for each input currency unit. Decimal.
         */
         uint multiplier;
-
-        /*
-            Address of an oracle that returns the price of the desired input currency,
-            such as USD, in Weis.
-            Use zero if Wei is the desired input currency unit.
-            Use of oracles not yet implemented.
-        */
-        //address oracleAddress;
-
-        /*
-            Address of the contract that grants donor tokens.
-        */
-        address tokenAddress;
 
         /*
             The pay behavior will only be valid if the current block number is
@@ -55,10 +41,10 @@ contract Vault is Module {
         uint endBlockNumber;
 
         /*
-            Implements a cap for the total amount of donation.
+            Implements a cap for the total amount of raised funds.
         */
-        uint totalDonationInWeis;
-        uint donationCapInWeis;
+        uint raisedFundsInWeis;
+        uint hardCapInWeis;
     }
 
     /*
@@ -69,32 +55,7 @@ contract Vault is Module {
     */
     struct PendingWithdrawl {
         /*
-            The amount of the withdrawl, in weis.
-        */
-        uint amountInWeis;
-
-        /*
-            Address of the receipient.
-        */
-        address to;
-
-        /*
-            The block number until which the actual withdrawl of funds cannot be made.
-        */
-        uint frozenUntilBlock;
-
-        /*
-            Indicates whether this withdrawl is invalid.
-        */
-        bool isInvalid;
-    }
-
-    /*
-        Defines a pending withdrawl of ERC20 tokens. Similar to PendingWithdrawl.
-    */
-    struct PendingTokenWithdrawl {
-        /*
-            The amount of the withdrawl.
+            The amount of the withdrawl, in weis if it's an Ether withdrawl.
         */
         uint amount;
 
@@ -108,254 +69,155 @@ contract Vault is Module {
         */
         uint frozenUntilBlock;
 
+        bool isEther;
+
         /*
             Indicates whether this withdrawl is invalid.
         */
         bool isInvalid;
-
-        /*
-            The symbol of the token. Doesn't serve any use apart from enhancing readability.
-        */
-        string tokenSymbol;
-
-        /*
-            The address of the ERC20 token contract.
-        */
-        address tokenAddress;
     }
 
-    PayBehavior[] public payBehaviorList; //List of pay behaviors.
+    CoinOffering public currentCoinOffering;
     PendingWithdrawl[] public pendingWithdrawlList; // List of pending withdrawls.
-    PendingTokenWithdrawl[] public pendingTokenWithdrawlList; //List of pending token withdrawls.
 
     uint public withdrawlFreezeTime; //The time for which a withdrawl requested by a DAO voting is frozen, in blocks.
     uint public rewardFreezeTime; //The time for which a withdrawl requested by a member rewarding someone who completed a task, in blocks.
 
     uint public frozenFunds; //The amount of ethers currently frozen, in weis.
-    mapping(address => uint) public frozenTokens; //The amount of ERC20 tokens currently frozen. Mapping from token address to amount.
+    uint public frozenTokens; //The amount of tokens currently frozen.
 
-    function Vault(address mainAddr) Module(mainAddr) public {
+    function Vault(
+        address _mainAddr,
+        uint _rewardFreezeTime,
+        uint _withdrawlFreezeTime
+    )
+        Module(_mainAddr)
+        public
+    {
         //Initialize withdrawl freeze times
-        rewardFreezeTime = 3524; //Roughly 24 hours
-        withdrawlFreezeTime = 3524; //Roughly 24 hours
+        rewardFreezeTime = _rewardFreezeTime;
+        withdrawlFreezeTime = _withdrawlFreezeTime;
     }
 
-    //Import and export functions for updating modules.
-    /*
-    //Called by the old vault to transfer data to the new vault.
-    function importFromVault(uint length) onlyMod('VAULT') {
-        Vault oldVault = Vault(moduleAddress('VAULT'));
-        for (uint i = 0; i < length; i++) {
-            var (multiplier, oracleAddress, tokenAddress, startBlockNumber, endBlockNumber, _, donationCapInWeis)
-                = oldVault.payBehaviorList(i);
-            payBehaviorList[i] = PayBehavior({
-                multiplier: multiplier,
-                oracleAddress: oracleAddress,
-                tokenAddress: tokenAddress,
-                startBlockNumber: startBlockNumber,
-                endBlockNumber: endBlockNumber,
-                totalDonationInWeis: 0,
-                donationCapInWeis: donationCapInWeis
-            });
-        }
-    }
-
-    //Transfers all data and funds to the new vault.
-    function exportToVault(address newVaultAddr, bool burn) onlyMod('DAO') {
-        Vault newVault = Vault(newVaultAddr);
-        newVault.importFromVault(payBehaviorList.length);
-        if (burn) {
-            selfdestruct(newVaultAddr);
-        } else {
-            newVault.transfer(this.balance);
-        }
-    }
-    */
     //Withdrawl handlers
 
     function addPendingWithdrawl(
-        uint amountInWeis,
-        address to,
-        bool isReward
+        uint _amount,
+        address _to,
+        bool _isReward,
+        bool _isEther
     )
         public
         onlyMod('DAO')
     {
-        uint availableFunds = this.balance - frozenFunds;
-        require(availableFunds >= amountInWeis); //Make sure there's enough free ether in the vault
-        require(to.balance + amountInWeis > to.balance); //Prevent overflow
-
-        frozenFunds += amountInWeis; //Freeze the pending withdrawl's amount.
-
         uint blocksUntilWithdrawl;
-        if (isReward) {
+        if (_isReward) {
             blocksUntilWithdrawl = rewardFreezeTime;
         } else {
             blocksUntilWithdrawl = withdrawlFreezeTime;
+        }
+
+        //Check if vault has enough funds for the withdrawl
+        //If so, freeze the fund that will be withdrawn
+        if (_isEther) {
+            uint availableFunds = this.balance - frozenFunds;
+            require(availableFunds >= _amount); //Make sure there's enough free ether in the vault
+            require(_to.balance + _amount > _to.balance); //Prevent overflow
+
+            frozenFunds += _amount; //Freeze the pending withdrawl's amount.
+        } else {
+            Token token = Token(moduleAddress('TOKEN'));
+            uint availableTokens = token.balanceOf(address(this)) - frozenTokens;
+            require(availableTokens >= _amount); //Make sure there's enough unfrozen tokens in the vault
+            require(token.balanceOf(_to) + _amount > token.balanceOf(_to)); //Prevent overflow
+
+            frozenTokens += _amount; //Freezes the pending withdrawl's amount.
         }
 
         pendingWithdrawlList.push(PendingWithdrawl({
-            amountInWeis: amountInWeis,
-            to: to,
+            amount: _amount,
+            to: _to,
             frozenUntilBlock: block.number + blocksUntilWithdrawl,
+            isEther: _isEther,
             isInvalid: false
         }));
     }
 
-    function addPendingTokenWithdrawl(
-        uint amount,
-        address to,
-        string symbol,
-        address tokenAddr,
-        bool isReward
-    )
-        public
-        onlyMod('DAO')
-    {
-        ERC20 token = ERC20(tokenAddr);
-        uint availableTokens = token.balanceOf(this) - frozenTokens[tokenAddr];
-        require(availableTokens >= amount); //Make sure there's enough unfrozen tokens in the vault
-        require(token.balanceOf(to) + amount > token.balanceOf(to)); //Prevent overflow
-
-        frozenTokens[tokenAddr] += amount; //Freezes the pending withdrawl's amount.
-
-        uint blocksUntilWithdrawl;
-        if (isReward) {
-            blocksUntilWithdrawl = rewardFreezeTime;
-        } else {
-            blocksUntilWithdrawl = withdrawlFreezeTime;
-        }
-
-        pendingTokenWithdrawlList.push(PendingTokenWithdrawl({
-            amount: amount,
-            to: to,
-            frozenUntilBlock: block.number + blocksUntilWithdrawl,
-            tokenSymbol: symbol,
-            tokenAddress: tokenAddr,
-            isInvalid: false
-        }));
-    }
-
-    function payoutPendingWithdrawl(uint id) public {
-        require(id < pendingWithdrawlList.length); //Ensure the id is valid.
-        PendingWithdrawl storage w = pendingWithdrawlList[id];
+    function payoutPendingWithdrawl(uint _id) public {
+        require(_id < pendingWithdrawlList.length); //Ensure the id is valid.
+        PendingWithdrawl storage w = pendingWithdrawlList[_id];
         require(!w.isInvalid); //Ensure the withdrawl is valid.
         require(block.number >= w.frozenUntilBlock); //Ensure the vetting period has ended.
 
         w.isInvalid = true;
-        frozenFunds -= w.amountInWeis; //Defrost the frozen funds for payout.
 
-        w.to.transfer(w.amountInWeis);
-    }
-
-    function payoutPendingTokenWithdrawl(uint id) public {
-        require(id < pendingTokenWithdrawlList.length); //Ensure the id is valid.
-        PendingTokenWithdrawl storage w = pendingTokenWithdrawlList[id];
-        require(!w.isInvalid); //Ensure the withdrawl is valid.
-        require(block.number >= w.frozenUntilBlock); //Ensure the vetting period has ended.
-
-        w.isInvalid = true;
-        frozenTokens[w.tokenAddress] -= w.amount; //Defrost the frozen funds for payout.
-
-        ERC20 token = ERC20(w.tokenAddress);
-        token.transfer(w.to, w.amount);
-    }
-
-    function invalidatePendingWithdrawl(uint id) public onlyMod('DAO') {
-        require(id < pendingWithdrawlList.length);
-        PendingWithdrawl storage w = pendingWithdrawlList[id];
-        w.isInvalid = true;
-        frozenFunds -= w.amountInWeis; //Defrost the frozen funds.
-    }
-
-    function invalidatePendingTokenWithdrawl(uint id) public onlyMod('DAO') {
-        require(id < pendingTokenWithdrawlList.length);
-        PendingTokenWithdrawl storage w = pendingTokenWithdrawlList[id];
-        w.isInvalid = true;
-        frozenTokens[w.tokenAddress] -= w.amount; //Defrost the frozen funds.
-    }
-
-    function changeFreezeTime(uint newTime, bool isReward) public onlyMod('DAO') {
-        if (isReward) {
-            rewardFreezeTime = newTime;
+        if (w.isEther) {
+            frozenFunds -= w.amount; //Defrost the frozen funds for payout.
+            w.to.transfer(w.amount);
         } else {
-            withdrawlFreezeTime = newTime;
+            frozenTokens -= w.amount; //Defrost the frozen funds for payout.
+            Token token = Token(moduleAddress('TOKEN'));
+            token.transfer(w.to, w.amount);
         }
     }
 
-    //Pay behavior manipulators.
+    function invalidatePendingWithdrawl(uint _id) public onlyMod('DAO') {
+        require(_id < pendingWithdrawlList.length);
+        PendingWithdrawl storage w = pendingWithdrawlList[_id];
+        w.isInvalid = true;
+        if (w.isEther) {
+            frozenFunds -= w.amount; //Defrost the frozen funds.
+        } else {
+            frozenTokens -= w.amount; //Defrost the frozen funds.
+        }
+    }
 
-    function addPayBehavior(
-        uint multiplier,
-        //address oracleAddress,
-        address tokenAddress,
-        uint startBlockNumber,
-        uint endBlockNumber,
-        uint donationCapInWeis
+    function changeFreezeTime(uint _newTime, bool _isReward) public onlyMod('DAO') {
+        if (_isReward) {
+            rewardFreezeTime = _newTime;
+        } else {
+            withdrawlFreezeTime = _newTime;
+        }
+    }
+
+    //Coin offering manipulators.
+
+    function startCoinOffering(
+        uint _multiplier,
+        uint _startBlockNumber,
+        uint _endBlockNumber,
+        uint _hardCapInWeis
     )
         public
         onlyMod('DAO')
     {
-        payBehaviorList.push(PayBehavior({
-            multiplier: multiplier,
-            //oracleAddress: oracleAddress,
-            tokenAddress: tokenAddress,
-            startBlockNumber: startBlockNumber,
-            endBlockNumber: endBlockNumber,
-            totalDonationInWeis: 0,
-            donationCapInWeis: donationCapInWeis
-        }));
-    }
-    /*
-    function removePayBehaviorAtIndex(uint index) onlyMod('DAO') {
-        delete payBehaviorList[index];
+        currentCoinOffering = CoinOffering({
+            multiplier: _multiplier,
+            startBlockNumber: _startBlockNumber,
+            endBlockNumber: _endBlockNumber,
+            raisedFundsInWeis: 0,
+            hardCapInWeis: _hardCapInWeis
+        });
     }
 
-    function removeAllPayBehaviors() onlyMod('DAO') {
-        delete payBehaviorList;
-    }
-    */
     //Handles incoming donation.
     function() public payable {
-        for (uint i = 0; i < payBehaviorList.length; i++) {
-            PayBehavior storage behavior = payBehaviorList[i];
-            if (behavior.startBlockNumber < block.number && block.number < behavior.endBlockNumber) {
-                //Todo: implement specific interface for oracle and token
-                //if (behavior.oracleAddress == 0) {
-                    //Ensure cap won't be exceeded
-                    require(behavior.totalDonationInWeis + msg.value <= behavior.donationCapInWeis);
-                    //Prevent overflow
-                    require(behavior.totalDonationInWeis + msg.value >= behavior.totalDonationInWeis);
+        if (currentCoinOffering.startBlockNumber < block.number && block.number < currentCoinOffering.endBlockNumber) {
+            //Ensure cap won't be exceeded
+            require(currentCoinOffering.raisedFundsInWeis + msg.value <= currentCoinOffering.hardCapInWeis);
+            //Prevent overflow
+            require(currentCoinOffering.raisedFundsInWeis + msg.value >= currentCoinOffering.raisedFundsInWeis);
 
-                    behavior.totalDonationInWeis += msg.value;
+            currentCoinOffering.raisedFundsInWeis += msg.value;
 
-                    ERC20 token = ERC20(behavior.tokenAddress);
-                    //Using transfer() here to conform with ERC20. Effectively mint().
-                    //The token contract should have infinite tokens for the vault contract's account.
-                    token.transfer(msg.sender, behavior.multiplier * msg.value);
-                //} else {
-                    /*
-                    Oracle oracle = Oracle(behavior.oracleAddress);
-                    uint inputCurrencyPriceInWeis = oracle.getPrice();
-                    ERC20 token = ERC20(behavior.tokenAddress());
-                    token.transfer(msg.sender, behavior.multiplier * msg.value / inputCurrencyPriceInWeis);
-                    */
-                //}
-            }
+            Token token = Token(moduleAddress('TOKEN'));
+            token.mint(msg.sender, currentCoinOffering.multiplier * msg.value / decimals);
         }
     }
 
     //Getters
 
-    function getPayBehaviorListCount() public view returns(uint) {
-        return payBehaviorList.length;
-    }
-
     function getPendingWithdrawlListCount() public view returns(uint) {
         return pendingWithdrawlList.length;
-    }
-
-    function getPendingTokenWithdrawlListCount() public view returns(uint) {
-        return pendingTokenWithdrawlList.length;
     }
 }
