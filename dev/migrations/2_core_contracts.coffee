@@ -14,7 +14,8 @@ dao = artifacts.require 'Dao'
 member_handler = artifacts.require 'MemberHandler'
 vault = artifacts.require 'Vault'
 tasks_handler = artifacts.require 'TasksHandler'
-git_handler = artifacts.require 'GitHandler'
+repo_handler = artifacts.require 'RepoHandler'
+token = artifacts.require 'Token'
 
 #Import node modules
 ipfsAPI = require 'ipfs-api'
@@ -65,7 +66,8 @@ module.exports = (deployer) ->
               [member_handler, config.member_init_username, main.address],
               [vault, main.address],
               [tasks_handler, main.address],
-              [git_handler, newHash, main.address]
+              [repo_handler, main.address],
+              [token, main.address]
             ]).then(
               () ->
                 #Add core module addresses to main contract
@@ -76,25 +78,19 @@ module.exports = (deployer) ->
                       member_handler.address,
                       vault.address,
                       tasks_handler.address,
-                      git_handler.address
+                      repo_handler.address,
+                      token.address
                     ])
                 )
             ).then(
               () ->
-                #Initialize the DAO
-                return dao.deployed().then(
-                  (instance) ->
-                    return instance.init()
-                )
-            ).then(
-              () ->
                 #Initialize the ABI hashes
-                modAbsNames = ['Dao', 'MemberHandler', 'Vault', 'TasksHandler', 'GitHandler']
+                modAbsNames = ['Dao', 'MemberHandler', 'Vault', 'TasksHandler', 'RepoHandler', 'Token']
                 return main.deployed().then(
                   (instance) ->
                     initABIHashForMod = (modId) ->
                       return instance.initializeABIHashForMod(modId, getABIHash(modAbsNames[modId]))
-                    return Promise.all(initABIHashForMod(modId) for modId in [0..4])
+                    return Promise.all(initABIHashForMod(modId) for modId in [0..5])
                 )
             )
           )

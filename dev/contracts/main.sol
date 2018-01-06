@@ -24,7 +24,7 @@ contract Module {
         mainAddress = _mainAddress;
     }
 
-    function moduleAddress(string mod) internal view returns(address addr){
+    function moduleAddress(string mod) internal view returns(address addr) {
         Main main = Main(mainAddress);
         addr = main.moduleAddresses(keccak256(mod));
     }

@@ -105,7 +105,6 @@ contract MemberHandler is Module {
     function setSelfAsPureShareholder(string _userName) public notBanned {
         require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
         //Check if msg.sender has any voting shares
-        Dao dao = Dao(moduleAddress('DAO'));
         Token token = Token(moduleAddress('TOKEN'));
         require(token.balanceOf(msg.sender) > 0);
 
