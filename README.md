@@ -4,6 +4,8 @@ World's first ecosystem for decentralized innovation & cooperation, powered by E
 
 **TL;DR:** WikiGit empowers projects with governing, crowdsourcing, and crowdfunding mechanisms, which form reinforcement loops that provide projects with rapid and sustainable growth from their moments of creation.
 
+Current version: 0.2.0 (Grasshopper)
+
 ## Introduction
 
 ### The Vision

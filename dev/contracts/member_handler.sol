@@ -100,6 +100,20 @@ contract MemberHandler is Module {
         groupMemberCount[keccak256(_groupName)] += 1;
     }
 
+    //Used by freelancers to add themselves into the member list so that they can submit task solutions.
+    function setSelfAsContributor(string userName) public notBanned {
+        require(memberId[msg.sender] == 0); //Ensure user doesn't already exist
+
+        memberId[msg.sender] = memberList.length;
+        memberList.push(Member({
+            userName: userName,
+            userAddress: msg.sender,
+            groupName: 'freelancer',
+            goodRep: 0,
+            badRep: 0
+        }));
+    }
+
     //Used by shareholders who do not contribute to the project to add themselves into the member list,
     //so that they can vote.
     function setSelfAsPureShareholder(string _userName) public notBanned {
@@ -177,6 +191,18 @@ contract MemberHandler is Module {
         getMemberAtAddress(msg.sender).userAddress = _newAddress;
         memberId[_newAddress] = memberId[msg.sender];
         memberId[msg.sender] = 0;
+    }
+
+    //Do not confuse with setGroupRight(). This function allows votings to execute setGroupRight().
+    function setRightOfGroup(
+        string groupName,
+        string rightName,
+        bool hasRight
+    )
+        public
+        onlyMod('DAO')
+    {
+        setGroupRight(groupName, rightName, hasRight);
     }
 
     //Getters
